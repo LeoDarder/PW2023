@@ -1,11 +1,30 @@
 {
   "version": 3,
   "targets": {
-    "net7.0": {}
+    "net7.0": {
+      "ITS.PW2023.Simulator/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v7.0",
+        "compile": {
+          "bin/placeholder/ITS.PW2023.Simulator.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/ITS.PW2023.Simulator.dll": {}
+        }
+      }
+    }
   },
-  "libraries": {},
+  "libraries": {
+    "ITS.PW2023.Simulator/1.0.0": {
+      "type": "project",
+      "path": "../ITS.PW2023.Simulator/ITS.PW2023.Simulator.csproj",
+      "msbuildProject": "../ITS.PW2023.Simulator/ITS.PW2023.Simulator.csproj"
+    }
+  },
   "projectFileDependencyGroups": {
-    "net7.0": []
+    "net7.0": [
+      "ITS.PW2023.Simulator >= 1.0.0"
+    ]
   },
   "packageFolders": {
     "C:\\Users\\Leonardo Pecol\\.nuget\\packages\\": {},
@@ -37,7 +56,11 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
-          "projectReferences": {}
+          "projectReferences": {
+            "C:\\Users\\Leonardo Pecol\\Source\\Repos\\LeoDarder\\PW2023\\ITS.PW2023.Simulator\\ITS.PW2023.Simulator.csproj": {
+              "projectPath": "C:\\Users\\Leonardo Pecol\\Source\\Repos\\LeoDarder\\PW2023\\ITS.PW2023.Simulator\\ITS.PW2023.Simulator.csproj"
+            }
+          }
         }
       },
       "warningProperties": {

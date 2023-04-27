@@ -7,4 +7,8 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\ITS.PW2023.Simulator\ITS.PW2023.Simulator.csproj" />
+  </ItemGroup>
+
 </Project>
