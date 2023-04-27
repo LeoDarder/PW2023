@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Leonardo Pecol\\source\\repos\\ITS.PW2023\\ITS.PW2023.TestSimulator\\ITS.PW2023.TestSimulator.csproj": {}
+    "C:\\Users\\Leonardo Pecol\\Source\\Repos\\LeoDarder\\PW2023\\ITS.PW2023.TestSimulator\\ITS.PW2023.TestSimulator.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Leonardo Pecol\\source\\repos\\ITS.PW2023\\ITS.PW2023.TestSimulator\\ITS.PW2023.TestSimulator.csproj": {
+    "C:\\Users\\Leonardo Pecol\\Source\\Repos\\LeoDarder\\PW2023\\ITS.PW2023.TestSimulator\\ITS.PW2023.TestSimulator.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Leonardo Pecol\\source\\repos\\ITS.PW2023\\ITS.PW2023.TestSimulator\\ITS.PW2023.TestSimulator.csproj",
+        "projectUniqueName": "C:\\Users\\Leonardo Pecol\\Source\\Repos\\LeoDarder\\PW2023\\ITS.PW2023.TestSimulator\\ITS.PW2023.TestSimulator.csproj",
         "projectName": "ITS.PW2023.TestSimulator",
-        "projectPath": "C:\\Users\\Leonardo Pecol\\source\\repos\\ITS.PW2023\\ITS.PW2023.TestSimulator\\ITS.PW2023.TestSimulator.csproj",
+        "projectPath": "C:\\Users\\Leonardo Pecol\\Source\\Repos\\LeoDarder\\PW2023\\ITS.PW2023.TestSimulator\\ITS.PW2023.TestSimulator.csproj",
         "packagesPath": "C:\\Users\\Leonardo Pecol\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Leonardo Pecol\\source\\repos\\ITS.PW2023\\ITS.PW2023.TestSimulator\\obj\\",
+        "outputPath": "C:\\Users\\Leonardo Pecol\\Source\\Repos\\LeoDarder\\PW2023\\ITS.PW2023.TestSimulator\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
