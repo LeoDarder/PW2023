@@ -1,5 +1,5 @@
 <template>
-    <div class="app">
+    <div class="login">
         <div class="title">
             <h1>NOME APP</h1>
         </div>
@@ -13,7 +13,9 @@
                 <input type="password" class="form-control font" placeholder="Password" aria-label="Password" aria-describedby="addon-wrapping">
             </div>
             <div class="col-12">
-                <button type="submit" class="btn loginButton" @click="validateCredentials">LOGIN</button>
+                <button type="submit" class="btn loginButton" @click="validateCredentials" value="">
+                    <span><i class="bi bi-person-fill-check" style="font-size: large;"></i></span>
+                </button>
             </div>
         </div>
     </div>
@@ -24,17 +26,17 @@ export default {
         name: "LoginPage",
         methods: {
             validateCredentials() {
-                /*this.reditectToHomePage();*/
+                this.reditectToHomePage();
             },
-            redirectToHomePage() {
-                // redirect
+            reditectToHomePage() {
+                this.$emit("changeComponent", "HomePage")
             }
         }
 }
 </script>
 
 <style>
-    .app {
+    .login {
         top: 50%;
         position: absolute;
         transform: translate(0, -50%);
@@ -59,13 +61,39 @@ export default {
         color: var(--color-p3-text);
     }
     .loginButton {
+        height: 45px;
         border: 2px solid var(--color-p3-text);
         color: var(--color-p3-text);
         background-color: transparent;
+        transition: linear 1s;
     }
     .loginButton:hover {
         border: 2px solid var(--color-p3-text);
         color: var(--color-p3-bg);
         background-color: var(--color-p3-text);
+    }
+
+    .loginButton span {
+        cursor: pointer;
+        display: inline-block;
+        position: relative;
+        transition: 1s;
+    }
+    .loginButton span:after {
+        content: " LOGIN";
+        position: absolute;
+        opacity: 0;
+        top: 0;
+        left: 30px;
+        transition: 1s;
+        color: var(--color-p3-bg);
+    }
+    .loginButton:hover span {
+        padding-right: 60px;
+    }
+
+    .loginButton:hover span:after {
+        opacity: 1;
+        right: 0;
     }
 </style>

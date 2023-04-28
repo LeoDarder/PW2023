@@ -1,14 +1,26 @@
 <template>
-  <LoginPage></LoginPage>
+  <component @changeComponent="changeComponent" v-bind:is="displayedComponent"></component>
 </template>
 
 <script>
 import LoginPage from './components/Login.vue'
+import HomePage from './components/HomePage.vue';
 
 export default {
   name: 'App',
   components: {
-    LoginPage
+    LoginPage,
+    HomePage
+  },
+  data() {
+    return {
+      displayedComponent: "LoginPage"
+    }
+  },
+  methods: {
+    changeComponent(otherComponent) {
+      this.displayedComponent = otherComponent
+    }
   }
 }
 </script>
