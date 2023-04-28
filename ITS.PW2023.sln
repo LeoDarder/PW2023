@@ -9,6 +9,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ITS.PW2023.Simulator", "ITS
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "its.pw2023.appweb", "ITS.PW2023.AppWeb\its.pw2023.appweb.esproj", "{633CED74-6BD8-4129-A364-EAAA99897F95}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITS.PW2023.API", "ITS.PW2023.API\ITS.PW2023.API.csproj", "{32567749-2F8E-4116-8264-60D47004633F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -29,6 +31,10 @@ Global
 		{633CED74-6BD8-4129-A364-EAAA99897F95}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{633CED74-6BD8-4129-A364-EAAA99897F95}.Release|Any CPU.Build.0 = Release|Any CPU
 		{633CED74-6BD8-4129-A364-EAAA99897F95}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{32567749-2F8E-4116-8264-60D47004633F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{32567749-2F8E-4116-8264-60D47004633F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{32567749-2F8E-4116-8264-60D47004633F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{32567749-2F8E-4116-8264-60D47004633F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

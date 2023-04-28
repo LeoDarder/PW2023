@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Leonardo Pecol\\Source\\Repos\\LeoDarder\\PW2023\\ITS.PW2023.Simulator\\ITS.PW2023.Simulator.csproj": {}
+    "C:\\Users\\Leonardo Pecol\\Source\\Repos\\LeoDarder\\PW2023\\ITS.PW2023.API\\ITS.PW2023.API.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Leonardo Pecol\\Source\\Repos\\LeoDarder\\PW2023\\ITS.PW2023.Simulator\\ITS.PW2023.Simulator.csproj": {
+    "C:\\Users\\Leonardo Pecol\\Source\\Repos\\LeoDarder\\PW2023\\ITS.PW2023.API\\ITS.PW2023.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Leonardo Pecol\\Source\\Repos\\LeoDarder\\PW2023\\ITS.PW2023.Simulator\\ITS.PW2023.Simulator.csproj",
-        "projectName": "ITS.PW2023.Simulator",
-        "projectPath": "C:\\Users\\Leonardo Pecol\\Source\\Repos\\LeoDarder\\PW2023\\ITS.PW2023.Simulator\\ITS.PW2023.Simulator.csproj",
+        "projectUniqueName": "C:\\Users\\Leonardo Pecol\\Source\\Repos\\LeoDarder\\PW2023\\ITS.PW2023.API\\ITS.PW2023.API.csproj",
+        "projectName": "ITS.PW2023.API",
+        "projectPath": "C:\\Users\\Leonardo Pecol\\Source\\Repos\\LeoDarder\\PW2023\\ITS.PW2023.API\\ITS.PW2023.API.csproj",
         "packagesPath": "C:\\Users\\Leonardo Pecol\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Leonardo Pecol\\source\\repos\\LeoDarder\\PW2023\\ITS.PW2023.Simulator\\obj\\",
+        "outputPath": "C:\\Users\\Leonardo Pecol\\Source\\Repos\\LeoDarder\\PW2023\\ITS.PW2023.API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
@@ -42,6 +42,28 @@
       "frameworks": {
         "net7.0": {
           "targetAlias": "net7.0",
+          "dependencies": {
+            "Azure.Core": {
+              "target": "Package",
+              "version": "[1.31.0, )"
+            },
+            "Hyak.Common": {
+              "target": "Package",
+              "version": "[1.2.2, )"
+            },
+            "Microsoft.AspNetCore.OpenApi": {
+              "target": "Package",
+              "version": "[7.0.5, )"
+            },
+            "Microsoft.Azure.Common": {
+              "target": "Package",
+              "version": "[2.2.1, )"
+            },
+            "Swashbuckle.AspNetCore": {
+              "target": "Package",
+              "version": "[6.4.0, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -54,6 +76,9 @@
           "assetTargetFallback": true,
           "warn": true,
           "frameworkReferences": {
+            "Microsoft.AspNetCore.App": {
+              "privateAssets": "none"
+            },
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
