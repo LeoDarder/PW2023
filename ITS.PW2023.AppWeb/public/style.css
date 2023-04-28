@@ -1,0 +1,21 @@
+:root {
+    --color-p1-text: #504746; /* marrone scuro */
+    --color-p1-1: #B89685; /* caramello */
+    --color-p1-3: #BFADA3; /* beige */
+    --color-p1-4: #FBB7C0; /* rosino */
+    --color-p1-5: #B6244F; /* porpora */
+
+    --color-p2-text: #865439;
+    --color-p2-2: #C68B59;
+    --color-p2-3: #FCDEC0;
+    --color-p2-4: #8FC1D4;
+
+    --color-p3-text: #4F0E0E;
+    --color-p3-2: #BB8760;
+    --color-p3-3: #FFDADA;
+    --color-p3-bg: #FFF1F1;
+}
+
+body {
+    background-color: var(--color-p3-bg);
+}
