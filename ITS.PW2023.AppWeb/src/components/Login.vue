@@ -1,7 +1,7 @@
 <template>
     <div class="login">
         <div class="title">
-            <h1>NOME APP</h1>
+            <i class="bi bi-droplet-half" style="font-size: 100px;"></i>
         </div>
         <div class="loginForm">
             <div class="input-group flex-nowrap loginField">
@@ -54,44 +54,42 @@ export default {
     }
     .icon {
         font-size: large;
-        color: var(--color-p3-text);
+        color: var(--color-darkblue);
     }
     .font {
         font-family: Helvetica;
-        color: var(--color-p3-text);
+        color: var(--color-darkblue);
     }
     .loginButton {
         height: 45px;
-        border: 2px solid var(--color-p3-text);
-        color: var(--color-p3-text);
+        border: 2px solid var(--color-darkblue);
+        color: var(--color-darkblue);
         background-color: transparent;
-        transition: linear 1s;
     }
     .loginButton:hover {
-        border: 2px solid var(--color-p3-text);
-        color: var(--color-p3-bg);
-        background-color: var(--color-p3-text);
+        border: 2px solid var(--color-darkblue);
+        color: var(--color-beige);
+        background-color: var(--color-darkblue);
     }
-
     .loginButton span {
         cursor: pointer;
         display: inline-block;
         position: relative;
-        transition: 1s;
+        transition: 0.5s;
     }
     .loginButton span:after {
         content: " LOGIN";
         position: absolute;
         opacity: 0;
-        top: 0;
+        top: 50%;
         left: 30px;
-        transition: 1s;
-        color: var(--color-p3-bg);
+        transform: translate(0, -50%);
+        transition: 0.5s;
+        color: var(--color-beige);
     }
     .loginButton:hover span {
-        padding-right: 60px;
+        padding-right: 65px;
     }
-
     .loginButton:hover span:after {
         opacity: 1;
         right: 0;

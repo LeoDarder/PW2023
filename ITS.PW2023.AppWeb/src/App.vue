@@ -34,6 +34,6 @@ export default {
         display: flex;
         justify-content: center;
         align-items: center;
-        color: var(--color-p3-text);
+        color: var(--color-darkblue);
     }
 </style>
