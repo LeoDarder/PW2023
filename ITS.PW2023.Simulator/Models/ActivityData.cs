@@ -7,6 +7,7 @@
         public int Heartbeat { get; set; }
         public Position Position { get; set; }
         public int Laps { get; set; }
+        public DateTime Time { get; set; }
         public ActivityData(Guid device, Activity activity, int heartbeat, Position position)
         {
             IdDevice = device;
@@ -14,6 +15,7 @@
             Heartbeat = heartbeat;
             Position = position;
             Laps = activity.Laps;
+            Time = DateTime.Now;
         }
     }
 }

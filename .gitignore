@@ -1,0 +1,12 @@
+bin/
+obj/
+*.exe
+*.pdb
+
+# Ignora i file di configurazione specifici per l'utente
+*.user
+
+# Ignora i file di backup e i file temporanei
+*~
+*.bak
+*.tmp
