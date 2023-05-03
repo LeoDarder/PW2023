@@ -1,4 +1,6 @@
-﻿namespace ITS.PW2023.API.DataEngines
+﻿using Newtonsoft.Json;
+
+namespace ITS.PW2023.API.DataEngines
 {
     public class AzureTimeSeriesDataAccess
     {

@@ -1,4 +1,4 @@
-﻿namespace ITS.PW2023.Simulator.Models
+﻿namespace ITS.PW2023.API.Models
 {
     public class Position
     {
