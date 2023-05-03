@@ -33,7 +33,6 @@ namespace ITS.PW2023.API.DataAccess
 
                 using var writeApi = client.GetWriteApi();
                 writeApi.WriteMeasurement(activityData, WritePrecision.Ns, Bucket, Org);
-                
                 return Results.Ok();
             }
             catch (Exception ex)
@@ -47,10 +46,10 @@ namespace ITS.PW2023.API.DataAccess
         {
             [Column("Device", IsTag = true)] public string IdDevice { get; set; }
             [Column("Activity", IsTag = true)] public string IdActivity { get; set; }
-            [Column("PositionX", IsTag = true)] public double PositionX { get; set; }
-            [Column("PositionY", IsTag = true)] public double PositionY { get; set; }
+            [Column("PositionX")] public double PositionX { get; set; }
+            [Column("PositionY")] public double PositionY { get; set; }
             [Column("HeartBeat")] public int HeartBeat { get; set; }
-            [Column("Laps", IsTag = true)] public int Laps { get; set; }
+            [Column("Laps")] public int Laps { get; set; }
             [Column(IsTimestamp = true)] public DateTime Time { get; set; }
 
             public ActivitiesMonitor(ActivityData data)
