@@ -33,7 +33,7 @@ namespace ITS.PW2023.Simulator.Models
                 Console.WriteLine("No activity was started. Starting new activity...\n");
                 Console.WriteLine($"Device '{guid}' created a new activity: '{StartNewActivity()}'");
             }
-            return new ActivityData(guid, CurrentActivity!, GenerateHeartBeat(), GeneratePosition(), CurrentActivity.Laps);
+            return new ActivityData(guid, CurrentActivity, GenerateHeartBeat(), GeneratePosition());
         }
         private int GenerateHeartBeat()
         {
