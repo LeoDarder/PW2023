@@ -1,19 +1,21 @@
-﻿namespace ITS.PW2023.Simulator.Models
+﻿namespace ITS.PW2023.API.Models
 {
     public class ActivityData
     {
         public Guid IdDevice { get; set; }
-        public Activity Activity { get; set; }
+        public Guid IdActivity { get; set; }
         public int Heartbeat { get; set; }
         public Position Position { get; set; }
         public int Laps { get; set; }
-        public ActivityData(Guid device, Activity activity, int heartbeat, Position position, int laps)
+        public DateTime Time { get; set; }
+        public ActivityData(Guid iddevice, Guid idactivity, int heartbeat, Position position, int laps, DateTime time)
         {
-            Device = device;
-            Activity = activity;
+            IdDevice = iddevice;
+            IdActivity = idactivity;
             Heartbeat = heartbeat;
             Position = position;
             Laps = laps;
+            Time = time;
         }
     }
 }
