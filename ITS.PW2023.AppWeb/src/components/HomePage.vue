@@ -3,11 +3,9 @@
         <div class="header">
             <nav class="navbar">
                 <div class="nav-menu">
-                    <a class="nav-link active" aria-current="page" href="#">
-                        <i class="bi bi-droplet-half" style="font-size: xx-large;"></i>
-                    </a>
-                    <a class="nav-link" href="#">Qualcosa</a>
-                    <a class="nav-link" href="#">Qualcos'altro</a>
+                    <i class="bi bi-droplet-half" style="font-size: xx-large;"></i>
+                    <a class="nav-link active" aria-current="page" href="#WorkoutStatistics.vue">Workouts</a>
+                    <a class="nav-link" href="#GeneralStatistics.vue">General</a>
                 </div>
                 <div class="nav-logout">
                     <button class="btn logoutButton" type="button" @click="logout">
@@ -17,22 +15,77 @@
             </nav>
         </div>
         <div class="body">
-            <activity></activity>
+            <component 
+                @navigateTo="navigateTo"
+                v-bind:is="currentComponent"
+                :statistics="statistics"
+                :workouts="workouts">
+            </component>
         </div>
     </div>
 </template>
 
 <script>
-import Activity from './Activity.vue'
+import GeneralStatistics from './GeneralStatistics.vue';
+import WorkoutsStatistics from './WorkoutsStatistics.vue';
 
 export default {
     name: "HomePage",
     components: {
-        Activity
+        GeneralStatistics,
+        WorkoutsStatistics
+    },
+    data() {
+        return {
+            statistics: [],
+            workouts: [],
+            currentComponent: "WorkoutsStatistics"
+        }
+    },
+    mounted() {
+        this.defineStatistics();
+        this.defineWorkouts();
     },
     methods: {
         logout() {
             this.$emit("changeComponent", "LoginPage")
+        },
+        defineStatistics() {
+            var heartRate = {
+                id: 0,
+                icon: "bi bi-heart-pulse-fill",
+                title: "Heart rate",
+                text: "Heart rate tracking during workouts and while wearing the smartwatch"
+            }
+            var position = {
+                id: 1,
+                icon: "bi bi-geo-alt-fill",
+                title: "Position",
+                text: "Position tracking during workouts and while wearing the smartwatch"
+            }
+            var tubs = {
+                id: 2,
+                icon: "bi bi-life-preserver",
+                title: "No. tubs",
+                text: "No. tubs tracking during workouts"
+            }
+            this.statistics.push(heartRate, position, tubs);
+        },
+        defineWorkouts() {
+            for (var i = 0; i < 10; i++) {
+                var workout = {
+                    id: i,
+                    time: Date.now(),
+                    duration: Math.floor(Math.random() * 90),
+                    averageHeartRate: Math.floor(Math.random() * 100),
+                    lastPosition: "LAT 0.0.0",
+                    numberOfTubs: Math.floor(Math.random() * 10)
+                }
+                this.workouts.push(workout);
+            }
+        },
+        navigateTo(otherComponent) {
+            this.currentComponent = otherComponent;
         }
     }
 }
@@ -74,6 +127,7 @@ export default {
 .logoutButton span:after {
     content: " LOGOUT";
     position: absolute;
+    display: none;
     opacity: 0;
     top: 50%;
     left: 30px;
@@ -85,7 +139,11 @@ export default {
     padding-right: 80px;
 }
 .logoutButton:hover span:after {
+    display: block;
     opacity: 1;
     right: 0;
+}
+.body {
+    display: flex;
 }
 </style>

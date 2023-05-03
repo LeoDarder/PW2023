@@ -80,6 +80,7 @@ export default {
     .loginButton span:after {
         content: " LOGIN";
         position: absolute;
+        display: none;
         opacity: 0;
         top: 50%;
         left: 30px;
@@ -91,6 +92,7 @@ export default {
         padding-right: 65px;
     }
     .loginButton:hover span:after {
+        display: block;
         opacity: 1;
         right: 0;
     }

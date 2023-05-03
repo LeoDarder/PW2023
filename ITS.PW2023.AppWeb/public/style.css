@@ -9,3 +9,10 @@
 body {
     background-color: var(--color-backgroung);
 }
+
+.statisticPage {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin: auto;
+}
