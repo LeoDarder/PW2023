@@ -1,6 +1,6 @@
 <template>
     <div class="card">
-        <h1>#{{ id+1 }}</h1>
+        <h1 class="workoutId">#{{ id+1 }}</h1>
         <div class="card-body">
             <p class="card-text"><b>Date</b> {{ time }}</p>
             <p class="card-text"><b>Duration</b> {{ duration }} minutes</p>
@@ -52,26 +52,9 @@ export default {
 </script>
 
 <style>
-    .card {
-        width: 30vh;
-        margin: 30px 10px;
-    }
-    .activityIcon {
-        font-size: 80px;
+    .workoutId {
+        font-size: 50px;
         color: var(--color-darkblue);
-    }
-    .card-title {
-        font-weight: bold;
-    }
-    .details {
-        margin: 10px auto;
-        border: 2px solid var(--color-darkblue);
-        color: var(--color-darkblue);
-        background-color: transparent;
-    }
-    .details:hover {
-        border: 2px solid var(--color-darkblue);
-        color: var(--color-beige);
-        background-color: var(--color-darkblue);
+        /* text-shadow: 2px 2px 4px gray; */
     }
 </style>

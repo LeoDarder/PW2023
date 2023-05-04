@@ -1,14 +1,14 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 import {createRouter, createWebHistory} from 'vue-router';
-import WorkoutsStatistics from './components/WorkoutsStatistics.vue';
+import WorkoutStatistics from './components/WorkoutStatistics.vue';
 import GeneralStatistics from './components/GeneralStatistics.vue';
 
 const routes = [
     {
       path: '/',
       name: 'Workouts',
-      component: WorkoutsStatistics
+      component: WorkoutStatistics
     },
     {
       path: '/general',

@@ -2,12 +2,12 @@
     --color-darkblue: #1088a0;
     --color-blue: #78b2c4;
     --color-beige: #cfc1af;
-    --color-backgroung: #f6f0ea;
+    --color-background: #f6f0ea;
     --color-darkbeige: #cfad89;
 }
 
 body {
-    background-color: var(--color-backgroung);
+    background-color: var(--color-beige); /* da mettere --color-bg */
 }
 
 .statisticPage {
@@ -15,4 +15,28 @@ body {
     justify-content: center;
     flex-wrap: wrap;
     margin: auto;
+}
+.card {
+    width: 30vh;
+    margin: 30px 10px;
+    background-color: rgba(255, 255, 255, 0.3);
+    transition: 0.5s;
+}
+.card:hover {
+    background: rgba(255, 255, 255);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.card-title {
+    font-weight: bold;
+}
+.details {
+    margin: 10px auto;
+    border: 2px solid var(--color-darkblue);
+    color: var(--color-darkblue);
+    background-color: transparent;
+}
+.details:hover {
+    border: 2px solid var(--color-darkblue);
+    color: var(--color-beige);
+    background-color: var(--color-darkblue);
 }

@@ -17,7 +17,7 @@
 import WorkoutCard from './WorkoutCard.vue';
 
 export default {
-    name: "WorkoutsStatistics",
+    name: "WorkoutStatistics",
     components: {
         WorkoutCard
     },

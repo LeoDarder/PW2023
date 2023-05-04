@@ -30,7 +30,7 @@ export default {
     },
     methods: {
         navigateTo() {
-            this.$emit("navigateTo", "WorkoutsStatistics");
+            this.$emit("navigateTo", "WorkoutStatistics");
         },
         seeDetails() {
             // ...
@@ -47,19 +47,5 @@ export default {
     .activityIcon {
         font-size: 80px;
         color: var(--color-darkblue);
-    }
-    .card-title {
-        font-weight: bold;
-    }
-    .details {
-        margin: 10px auto;
-        border: 2px solid var(--color-darkblue);
-        color: var(--color-darkblue);
-        background-color: transparent;
-    }
-    .details:hover {
-        border: 2px solid var(--color-darkblue);
-        color: var(--color-beige);
-        background-color: var(--color-darkblue);
     }
 </style>
