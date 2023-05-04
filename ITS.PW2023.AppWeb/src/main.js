@@ -2,7 +2,9 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import {createRouter, createWebHistory} from 'vue-router';
 import WorkoutStatistics from './components/WorkoutStatistics.vue';
+import WorkoutDetails from './components/WorkoutDetails.vue';
 import GeneralStatistics from './components/GeneralStatistics.vue';
+import GeneralDetails from './components/GeneralDetails.vue';
 
 const routes = [
     {
@@ -14,6 +16,17 @@ const routes = [
       path: '/general',
       name: 'General',
       component: GeneralStatistics
+    },
+    {
+      path: '/workout/:id',
+      name: 'WorkoutDetails',
+      component: WorkoutDetails,
+      params: true
+    },
+    {
+      path: '/general/:title',
+      name: 'GeneralDetails',
+      component: GeneralDetails
     },
 ];
 

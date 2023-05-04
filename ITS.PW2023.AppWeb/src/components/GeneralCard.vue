@@ -5,7 +5,7 @@
             <h5 class="card-title">{{ setTitle }}</h5>
             <p class="card-text">{{ setText }}</p>
         </div>
-        <a href="#" class="btn details" @click="seeDetails">DETAILS</a>
+        <router-link :to="{ name: 'GeneralDetails', params: { title: setTitle }}" class="btn details">DETAILS</router-link>
     </div>
 </template>
 

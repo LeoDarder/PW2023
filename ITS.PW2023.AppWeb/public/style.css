@@ -4,10 +4,11 @@
     --color-beige: #cfc1af;
     --color-background: #f6f0ea;
     --color-darkbeige: #cfad89;
+    --color-white: #ffffff;
 }
 
 body {
-    background-color: var(--color-beige); /* da mettere --color-bg */
+    background-color: var(--color-beige); /* da mettere --color-background */
 }
 
 .statisticPage {
@@ -39,4 +40,10 @@ body {
     border: 2px solid var(--color-darkblue);
     color: var(--color-beige);
     background-color: var(--color-darkblue);
+}
+.detailCard {
+    width: 100%;
+    margin: 10px 10px;
+    background-color: var(--color-white);
+    border-radius: 6px;
 }

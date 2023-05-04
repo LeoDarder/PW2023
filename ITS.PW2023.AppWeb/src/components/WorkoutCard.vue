@@ -8,7 +8,7 @@
             <p class="card-text"><b>Last position</b> {{ lastPosition }}</p>
             <p class="card-text"><b>No. tubs</b> {{ numberOfTubs }}</p>
         </div>
-        <a href="#" class="btn details" @click="seeDetails">DETAILS</a>
+        <router-link :to="{ name: 'WorkoutDetails', params: { id: id }}" class="btn details">DETAILS</router-link>
     </div>
 </template>
 
@@ -41,11 +41,6 @@ export default {
         },
         setNumberOfTubs() {
             return this.numberOfTubs;
-        }
-    },
-    methods: {
-        seeDetails() {
-            // ...
         }
     }
 }
