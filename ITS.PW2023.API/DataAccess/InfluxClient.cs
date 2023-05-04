@@ -6,6 +6,7 @@ using InfluxDB.Client.Writes;
 using System.Net.Sockets;
 using ITS.PW2023.API.Models;
 using Microsoft.AspNetCore.Mvc;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ITS.PW2023.API.DataAccess
 {
@@ -64,6 +65,20 @@ namespace ITS.PW2023.API.DataAccess
             }
         }
 
+        public async Task<IResult> ReadAll()
+        {
+            try
+            {
+                using var client = Client;
 
+                var readapi = client.GetQueryApi();
+                var table = await readapi.QueryAsync("from(bucket: \"ActivitiesMonitor\")\r\n    |> range(start: 0)\r\n    |> filter(fn: (r) => r._measurement == \"ActivitiesMonitor\")", Org);
+                return Results.Ok(table);
+            }
+            catch (Exception ex)
+            {
+                return Results.Problem(ex.Message);
+            }
+        }
     }
 }

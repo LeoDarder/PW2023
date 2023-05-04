@@ -23,7 +23,13 @@ app.UseHttpsRedirection();
 app.MapPost("/writeData", (ActivityData data) =>
 {
     InfluxClient influx = new(builder.Configuration);
-    influx.WriteData(data);
+    return influx.WriteData(data);
+});
+
+app.MapGet("/readAllData", () =>
+{
+    InfluxClient influx = new(builder.Configuration);
+    return influx.ReadAll();
 });
 
 app.Run();
