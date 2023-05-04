@@ -18,16 +18,31 @@ export default {
     components: {
         GeneralCard
     },
-    props: [
-        'statistics'
-    ],
-    computed: {
-        setStatistics() {
-            console.log("statistics");
-            return this.statistics;
+    data() {
+        return {
+            statistics: []
         }
     },
-    methods: {
+    mounted () {
+        var heartRate = {
+            id: 0,
+            icon: "bi bi-heart-pulse-fill",
+            title: "Heart rate",
+            text: "Heart rate tracking during workouts and while wearing the smartwatch"
+        };
+        var position = {
+            id: 1,
+            icon: "bi bi-geo-alt-fill",
+            title: "Position",
+            text: "Position tracking during workouts and while wearing the smartwatch"
+        };
+        var tubs = {
+            id: 2,
+            icon: "bi bi-life-preserver",
+            title: "No. tubs",
+            text: "No. tubs tracking during workouts"
+        };
+        this.statistics.push(heartRate, position, tubs);
     }
 }
 </script>

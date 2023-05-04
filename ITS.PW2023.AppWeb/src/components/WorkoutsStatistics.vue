@@ -21,15 +21,23 @@ export default {
     components: {
         WorkoutCard
     },
-    props: [
-        'workouts'
-    ],
-    computed: {
-        setWorkouts() {
-            return this.workouts;
+    data() {
+        return {
+            workouts: []
         }
     },
-    methods: {
+    mounted() {
+        for (var i = 0; i < 10; i++) {
+            var workout = {
+                id: i,
+                time: Date.now(),
+                duration: Math.floor(Math.random() * 90),
+                averageHeartRate: Math.floor(Math.random() * 100),
+                lastPosition: "LAT 0.0.0",
+                numberOfTubs: Math.floor(Math.random() * 10)
+            };
+            this.workouts.push(workout);
+        }
     }
 }
 </script>
