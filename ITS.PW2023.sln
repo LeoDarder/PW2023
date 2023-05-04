@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.5.33530.505
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ITS.PW2023.TestSimulator", "ITS.PW2023.TestSimulator\ITS.PW2023.TestSimulator.csproj", "{DF708AE3-0EC5-4D9F-A169-311B0D0CED5D}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ITS.PW2023.Simulator", "ITS.PW2023.Simulator\ITS.PW2023.Simulator.csproj", "{4E4C295F-F096-4580-88FE-5E852641A518}"
 EndProject
 Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "its.pw2023.appweb", "ITS.PW2023.AppWeb\its.pw2023.appweb.esproj", "{633CED74-6BD8-4129-A364-EAAA99897F95}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITS.PW2023.API", "ITS.PW2023.API\ITS.PW2023.API.csproj", "{32567749-2F8E-4116-8264-60D47004633F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ITS.PW2023.API", "ITS.PW2023.API\ITS.PW2023.API.csproj", "{32567749-2F8E-4116-8264-60D47004633F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITS.PW2023.TestSimulator", "ITS.PW2023.TestSimulator\ITS.PW2023.TestSimulator.csproj", "{ADFD86EA-7CF2-48BB-B1F2-05551C8DB112}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{DF708AE3-0EC5-4D9F-A169-311B0D0CED5D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DF708AE3-0EC5-4D9F-A169-311B0D0CED5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DF708AE3-0EC5-4D9F-A169-311B0D0CED5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DF708AE3-0EC5-4D9F-A169-311B0D0CED5D}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4E4C295F-F096-4580-88FE-5E852641A518}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4E4C295F-F096-4580-88FE-5E852641A518}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4E4C295F-F096-4580-88FE-5E852641A518}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -35,6 +31,10 @@ Global
 		{32567749-2F8E-4116-8264-60D47004633F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32567749-2F8E-4116-8264-60D47004633F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32567749-2F8E-4116-8264-60D47004633F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{ADFD86EA-7CF2-48BB-B1F2-05551C8DB112}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{ADFD86EA-7CF2-48BB-B1F2-05551C8DB112}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{ADFD86EA-7CF2-48BB-B1F2-05551C8DB112}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{ADFD86EA-7CF2-48BB-B1F2-05551C8DB112}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
