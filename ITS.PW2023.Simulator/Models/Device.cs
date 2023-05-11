@@ -1,4 +1,5 @@
-﻿using System.Text.Json;
+﻿using System.Reflection.Metadata;
+using System.Text.Json;
 
 namespace ITS.PW2023.Simulator.Models
 {
@@ -10,6 +11,7 @@ namespace ITS.PW2023.Simulator.Models
         private int MinHeartbeat;                 //valore non usato
         private readonly int LowHeartbeatLimit = 30;
         private readonly int HighHeartbeatLimit = 200;
+        private readonly int[] PoolLenght = { 25, 50 };
         public Activity? CurrentActivity { get; set; }
         public Device(Guid deviceGuid, int maxheartbeat = 300, int minheartbeat = 0)
         {
@@ -21,7 +23,8 @@ namespace ITS.PW2023.Simulator.Models
         public Guid StartNewActivity()
         {
             Guid guid = Guid.NewGuid();
-            CurrentActivity = new Activity(guid);
+            Random rand = new Random();
+            CurrentActivity = new Activity(guid, PoolLenght[rand.Next(PoolLenght.Length)]);
             return guid;
         }
         public Activity? GetCurrentActivity() { return CurrentActivity; }
@@ -50,12 +53,35 @@ namespace ITS.PW2023.Simulator.Models
 
             return generatedHeartbeat;
         }
-        private Position GeneratePosition()              //TODO: genera anche valori non validi
+        private Position GeneratePosition()              
         {
-            double latitude = (Random.Shared.NextDouble() - 0.5) * 180;
-            double longitude = (Random.Shared.NextDouble() - 0.5) * 360;
+            //TODO: genera anche valori non validi
+
+            ////20% di chance di generare delle coordinate anomale (20% per testare)
+            //if (Random.Shared.Next(0, 100) <= 20)
+            //{
+
+            //}
+            //else
+            //{
+            //    Random rand = new Random();
+            //    // Genero una distanza casuale
+            //    double distance = rand.NextDouble();
+
+            //    // Calcolo delle coordinate randomiche
+            //    double latitude = (1 - distance) * CurrentActivity.PoolStart.Latitude + distance * CurrentActivity.PoolEnd.Latitude;
+            //    double longitude = (1 - distance) * CurrentActivity.PoolStart.Longitude + distance * CurrentActivity.PoolEnd.Longitude;
+            //}
+
+            Random rand = new Random();
+            // Genero una distanza casuale
+            double distance = rand.NextDouble();
+
+            // Calcolo delle coordinate randomiche
+            double latitude = (1 - distance) * CurrentActivity.PoolStart.Latitude + distance * CurrentActivity.PoolEnd.Latitude;
+            double longitude = (1 - distance) * CurrentActivity.PoolStart.Longitude + distance * CurrentActivity.PoolEnd.Longitude;
+
             return new Position(latitude, longitude);
         }
-
     }
 }
