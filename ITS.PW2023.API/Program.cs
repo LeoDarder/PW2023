@@ -26,10 +26,16 @@ app.MapPost("/writeData", (ActivityData data) =>
     return influx.WriteData(data);
 });
 
-app.MapGet("/readAllData", () =>
+app.MapGet("/getActivities", (string devGUID) =>
 {
     InfluxClient influx = new(builder.Configuration);
-    return influx.ReadAll();
+    return influx.ReadActivities(devGUID);
+});
+
+app.MapGet("/getRows", (string devGUID, string actGUID) =>
+{
+    InfluxClient influx = new(builder.Configuration);
+    return influx.ReadRows(devGUID, actGUID);
 });
 
 app.Run();

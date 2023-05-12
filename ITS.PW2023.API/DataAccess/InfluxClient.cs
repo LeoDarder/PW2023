@@ -1,12 +1,8 @@
-﻿using Newtonsoft.Json.Linq;
-using InfluxDB.Client;
+﻿using InfluxDB.Client;
 using InfluxDB.Client.Api.Domain;
 using InfluxDB.Client.Core;
-using InfluxDB.Client.Writes;
-using System.Net.Sockets;
+using InfluxDB.Client.Core.Flux.Domain;
 using ITS.PW2023.API.Models;
-using Microsoft.AspNetCore.Mvc;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ITS.PW2023.API.DataAccess
 {
@@ -65,15 +61,39 @@ namespace ITS.PW2023.API.DataAccess
             }
         }
 
-        public async Task<IResult> ReadAll()
+        public async Task<IResult> ReadActivities(string devGUID)
         {
             try
             {
                 using var client = Client;
 
+                string query = System.IO.File.ReadAllText("./Queries/Activities.txt").Replace("%%DEVICEHERE%%", devGUID);
+
                 var readapi = client.GetQueryApi();
-                var table = await readapi.QueryAsync("from(bucket: \"ActivitiesMonitor\")\r\n    |> range(start: 0)\r\n    |> filter(fn: (r) => r._measurement == \"ActivitiesMonitor\")", Org);
-                return Results.Ok(table);
+                List<FluxTable> table = await readapi.QueryAsync(query, Org);
+                List<ReturnedActivity> activities = ReturnedActivity.GetReturnedActivities(table);
+
+                return Results.Ok(activities);
+            }
+            catch (Exception ex)
+            {
+                return Results.Problem(ex.Message);
+            }
+        }
+
+        public async Task<IResult> ReadRows(string devGUID, string actGUID)
+        {
+            try
+            {
+                using var client = Client;
+
+                string query = System.IO.File.ReadAllText("./Queries/Activity.txt").Replace("%%DEVICEHERE%%", devGUID).Replace("%%ACTIVITYHERE%%", actGUID);
+
+                var readapi = client.GetQueryApi();
+                List<FluxTable> table = await readapi.QueryAsync(query, Org);
+                ReturnedRows rows = ReturnedRows.GetRows(table);
+
+                return Results.Ok(rows);
             }
             catch (Exception ex)
             {

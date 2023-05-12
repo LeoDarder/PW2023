@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\ITS.PW2023.API.props" />
+</Project>
