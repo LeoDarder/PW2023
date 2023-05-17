@@ -1,5 +1,0 @@
-from(bucket: "ActivitiesMonitor")
-    |> range(start: 0)
-    |> filter(fn: (r) => r._measurement == "ActivitiesMonitor")
-    |> filter(fn: (r) => r.Device == "%%DEVICEHERE%%")
-    |> filter(fn: (r) => r.Activity == "%%ACTIVITYHERE%%")
