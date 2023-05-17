@@ -1,5 +1,9 @@
+using ITS.PW2023.Simulator.Config;
 using ITS.PW2023.Simulator.Engine;
 using ITS.PW2023.Simulator.Models;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Options;
 
 namespace ITS.PW2023.TestSimulator
 {
@@ -7,12 +11,15 @@ namespace ITS.PW2023.TestSimulator
     {
         private readonly ILogger<Worker> _logger;
         private readonly HttpClient _httpClient;
+        private readonly Config _config;
 
-        public Worker(ILogger<Worker> logger, IHttpClientFactory httpClientFactory)
+        public Worker(ILogger<Worker> logger, IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
             _logger = logger;
             _httpClient = httpClientFactory.CreateClient();
             _httpClient.BaseAddress = new Uri("http://localhost");
+            _config = new Config();
+            configuration.GetSection(Config.ConfigPosition).Bind(_config);
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
