@@ -1,5 +1,7 @@
-﻿using System.Reflection.Metadata;
+﻿using ITS.PW2023.Simulator.Models;
+using System.ComponentModel;
 using System.Text.Json;
+using System.Text.Json.Serialization.Metadata;
 
 namespace ITS.PW2023.Simulator.Models
 {
@@ -9,15 +11,18 @@ namespace ITS.PW2023.Simulator.Models
 
         private readonly int MaxHeartbeat;
         private int MinHeartbeat;                 //valore non usato
-        private readonly int LowHeartbeatLimit = 30;
-        private readonly int HighHeartbeatLimit = 200;
-        private readonly int[] PoolLenght = { 25, 50 };
+        private readonly int LowHeartbeatLimit;
+        private readonly int HighHeartbeatLimit;
+        private readonly int HeartbeatErrorLimit;
         public Activity? CurrentActivity { get; set; }
-        public Device(Guid deviceGuid, int maxheartbeat = 300, int minheartbeat = 0)
+        public Device(Guid deviceGuid, Config config)
         {
             guid = deviceGuid;
-            MaxHeartbeat = maxheartbeat;
-            MinHeartbeat = minheartbeat;
+            MaxHeartbeat = config.Heartbeat.Max;
+            MinHeartbeat = config.Heartbeat.Min;
+            LowHeartbeatLimit = config.Heartbeat.LowLimit;
+            HighHeartbeatLimit = config.Heartbeat.HighLimit;
+            HeartbeatErrorLimit = config.Heartbeat.ErrorRate;
             CurrentActivity = null;
         }
         public Guid StartNewActivity()
@@ -42,9 +47,8 @@ namespace ITS.PW2023.Simulator.Models
         {
             int normalHeartbeatInterval = HighHeartbeatLimit - LowHeartbeatLimit;
             int generatedHeartbeat;
-            //20% di chance di generare un battito anomalo (20% per testare)
             //genera tutto a caso, senza criterio
-            if (Random.Shared.Next(0, 100) <= 20)
+            if (Random.Shared.Next(0, 100) <= HeartbeatErrorLimit)
             {
                 generatedHeartbeat = Random.Shared.Next(0, MaxHeartbeat - normalHeartbeatInterval);
                 if (generatedHeartbeat > LowHeartbeatLimit) generatedHeartbeat += normalHeartbeatInterval;

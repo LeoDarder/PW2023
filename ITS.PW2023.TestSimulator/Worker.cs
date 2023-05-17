@@ -1,3 +1,4 @@
+using ITS.PW2023.Simulator.Models;
 using ITS.PW2023.Simulator.Engine;
 using ITS.PW2023.Simulator.Models;
 
@@ -19,7 +20,7 @@ namespace ITS.PW2023.TestSimulator
         {
             Device[] devices =
             {
-                new Device(new Guid("7266b21b-7f83-4204-86f7-d7c2d615edac")),
+                new Device(new Guid("7266b21b-7f83-4204-86f7-d7c2d615edac"), _config),
                 new Device(new Guid("bd0bfc50-37cc-4994-9451-f6d99adc0f7d")),
                 new Device(new Guid("36cd50f0-fc01-4ddb-930d-011a7afcb417")),
                 new Device(new Guid("82e82431-a01a-4c57-8de7-2f4536639fe4")),
