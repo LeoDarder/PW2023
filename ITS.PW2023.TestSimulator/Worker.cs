@@ -7,12 +7,14 @@ namespace ITS.PW2023.TestSimulator
     {
         private readonly ILogger<Worker> _logger;
         private readonly HttpClient _httpClient;
+        private readonly IConfiguration _configuration;
 
-        public Worker(ILogger<Worker> logger, IHttpClientFactory httpClientFactory)
+        public Worker(ILogger<Worker> logger, IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
             _logger = logger;
             _httpClient = httpClientFactory.CreateClient();
-            _httpClient.BaseAddress = new Uri("http://localhost");
+            _configuration = configuration;
+            _httpClient.BaseAddress = new Uri(configuration.GetSection("Api").GetValue<string>("Endpoint"));
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
@@ -31,7 +33,7 @@ namespace ITS.PW2023.TestSimulator
                 new Device(new Guid("9af74f50-7bfd-4d9c-b1fc-9a6eea48b6f6"))
             };
 
-            Engine.Run(devices, _httpClient);
+            Engine.Run(devices, _httpClient, _configuration.GetSection("Api").GetValue<string>("SubscriptionKey"));
         }
     }
 }
