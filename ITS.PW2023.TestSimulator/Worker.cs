@@ -12,6 +12,7 @@ namespace ITS.PW2023.TestSimulator
         private readonly ILogger<Worker> _logger;
         private readonly HttpClient _httpClient;
         private readonly Config _config;
+        private readonly IConfiguration _configuration;
 
         public Worker(ILogger<Worker> logger, IHttpClientFactory httpClientFactory, IConfiguration configuration)
         {
