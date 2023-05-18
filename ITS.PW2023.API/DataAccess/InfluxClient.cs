@@ -8,6 +8,8 @@ namespace ITS.PW2023.API.DataAccess
 {
     public class InfluxClient
     {
+        private const string _queryActivities = "from(bucket: \"ActivitiesMonitor\")\r\n    |> range(start: 0)\r\n    |> filter(fn: (r) => r._measurement == \"ActivitiesMonitor\")\r\n    |> filter(fn: (r) => r.Device == \"%%DEVICEHERE%%\")";
+        private const string _queryActivity = "from(bucket: \"ActivitiesMonitor\")\r\n    |> range(start: 0)\r\n    |> filter(fn: (r) => r._measurement == \"ActivitiesMonitor\")\r\n    |> filter(fn: (r) => r.Device == \"%%DEVICEHERE%%\")\r\n    |> filter(fn: (r) => r.Activity == \"%%ACTIVITYHERE%%\")";
         private InfluxDBClient Client { get; set; }
         private string Bucket { get; set; }
         private string Org { get; set; }
@@ -67,7 +69,7 @@ namespace ITS.PW2023.API.DataAccess
             {
                 using var client = Client;
 
-                string query = System.IO.File.ReadAllText("./Queries/Activities.txt").Replace("%%DEVICEHERE%%", devGUID);
+                string query = _queryActivities.Replace("%%DEVICEHERE%%", devGUID);
 
                 var readapi = client.GetQueryApi();
                 List<FluxTable> table = await readapi.QueryAsync(query, Org);
@@ -87,7 +89,7 @@ namespace ITS.PW2023.API.DataAccess
             {
                 using var client = Client;
 
-                string query = System.IO.File.ReadAllText("./Queries/Activity.txt").Replace("%%DEVICEHERE%%", devGUID).Replace("%%ACTIVITYHERE%%", actGUID);
+                string query = _queryActivity.Replace("%%ACTIVITYHERE%%", actGUID);
 
                 var readapi = client.GetQueryApi();
                 List<FluxTable> table = await readapi.QueryAsync(query, Org);

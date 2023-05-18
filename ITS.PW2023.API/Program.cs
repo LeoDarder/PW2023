@@ -38,4 +38,10 @@ app.MapGet("/getRows", (string devGUID, string actGUID) =>
     return influx.ReadRows(devGUID, actGUID);
 });
 
+app.MapGet("/getUserData", (string username, string password) =>
+{
+    UserServices userServices = new(builder.Configuration);
+    return userServices.GetUserData(username, password);
+});
+
 app.Run();

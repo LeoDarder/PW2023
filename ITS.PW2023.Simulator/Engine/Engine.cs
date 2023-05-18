@@ -7,21 +7,20 @@ namespace ITS.PW2023.Simulator.Engine
 {
     public class Engine
     {
-        public static void Run(Device[] devices, HttpClient client)
+        public static void Run(Device[] devices, HttpClient client, string ApiSubKey)
         {
             Task[] tasks = new Task[10];
             for (int i = 0; i < devices.Length; i++)
             {
-                int index = i; // Store the current index in a local variable
                 tasks[i] = Task.Factory.StartNew(async () =>
                 {
                     while (true)
                     {
-                        ActivityData? data = devices[index].GenerateActivityData();
-
+                        ActivityData? data = devices[i].GenerateActivityData();
                         var serializedModel = JsonSerializer.Serialize(data);
-                        var content = new StringContent(serializedModel, Encoding.UTF8, "application/json");
-                        var response = await client.PostAsync("https://localhost:7030/writeData", content);
+                        var content = new StringContent(serializedModel, UTF8Encoding.UTF8, "application/json");
+                        content.Headers.Add("Ocp-Apim-Subscription-Key", ApiSubKey);
+                        var response = await client.PostAsync("/writeData", content);
                         Thread.Sleep(10000); // Wait for 10 seconds before repeating the task
                     }
                 }, TaskCreationOptions.LongRunning);
