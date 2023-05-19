@@ -27,7 +27,7 @@ export default {
 
 <style>
     #app {
-        font-family: Rockwell;
+        font-size: large;
         -webkit-font-smoothing: antialiased;
         -moz-osx-font-smoothing: grayscale;
         text-align: center;

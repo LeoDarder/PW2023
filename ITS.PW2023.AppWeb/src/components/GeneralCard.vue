@@ -46,6 +46,6 @@ export default {
     }
     .activityIcon {
         font-size: 80px;
-        color: var(--color-darkblue);
+        color: var(--color-);
     }
 </style>
