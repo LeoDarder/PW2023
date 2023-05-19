@@ -4,6 +4,7 @@ using System;
 using System.ComponentModel;
 using System.Text.Json;
 using System.Text.Json.Serialization.Metadata;
+using System.Transactions;
 
 namespace ITS.PW2023.Simulator.Models
 {
@@ -51,6 +52,7 @@ namespace ITS.PW2023.Simulator.Models
                 Console.WriteLine("No activity was started. Starting new activity...\n");
                 Console.WriteLine($"Device '{guid}' created a new activity: '{StartNewActivity()}'");
             }
+            GenerateLaps();
             return new ActivityData(guid, CurrentActivity, GenerateHeartBeat(), GeneratePosition());
         }
         private int GenerateHeartBeat()
@@ -95,6 +97,16 @@ namespace ITS.PW2023.Simulator.Models
             }
 
             return new Position(latitude, longitude);
+        }
+
+        private void GenerateLaps()
+        {
+            if (CurrentActivity.LapsCount == 3)
+            {
+                CurrentActivity.Laps++;
+                CurrentActivity.LapsCount = 0;
+            }else
+                CurrentActivity.LapsCount++;
         }
 
         // <summary>
