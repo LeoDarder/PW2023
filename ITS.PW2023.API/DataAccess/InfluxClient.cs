@@ -26,10 +26,9 @@ namespace ITS.PW2023.API.DataAccess
         {
             try
             {
+                if (data.Heartbeat < 20 || data.Heartbeat > 200 || data.Position.Latitude < -90 || data.Position.Latitude > 90 || data.Position.Longitude < -180 || data.Position.Longitude > 180) return Results.Problem("Almeno un dato generato contiene un errore");
                 using var client = Client;
-
                 var activityData = new ActivitiesMonitor(data);
-
                 using var writeApi = client.GetWriteApi();
                 writeApi.WriteMeasurement(activityData, WritePrecision.Ns, Bucket, Org);
                 return Results.Ok();
