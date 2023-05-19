@@ -38,7 +38,7 @@ namespace ITS.PW2023.TestSimulator
                 new Device(new Guid("9af74f50-7bfd-4d9c-b1fc-9a6eea48b6f6"), _config)
             };
 
-            Engine.Run(devices, _httpClient, _configuration.GetSection("Api").GetValue<string>("SubscriptionKey"));
+            Engine.Run(devices, _httpClient);
         }
     }
 }

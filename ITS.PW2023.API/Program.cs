@@ -9,6 +9,17 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<InfluxClient>();
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("cors-all",
+                        policy =>
+                        {
+                            policy.AllowAnyOrigin()
+                                .AllowAnyHeader()
+                                .AllowAnyMethod();
+                        });
+});
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -19,6 +30,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseCors("cors-all");
 
 app.MapPost("/writeData", (ActivityData data) =>
 {
@@ -36,6 +49,12 @@ app.MapGet("/getRows", (string devGUID, string actGUID) =>
 {
     InfluxClient influx = new(builder.Configuration);
     return influx.ReadRows(devGUID, actGUID);
+});
+
+app.MapGet("/getUserData", (string username, string password) =>
+{
+    UserServices userServices = new(builder.Configuration);
+    return userServices.GetUserData(username, password);
 });
 
 app.Run();
