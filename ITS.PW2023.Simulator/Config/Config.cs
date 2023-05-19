@@ -10,13 +10,13 @@ namespace ITS.PW2023.Simulator.Models
     public class Config
     {
         public const string ConfigPosition = "Config";
-        public Heartbeat Heartbeat { get; set; }
-        public Position Position { get; set; }
-        public Laptime LapTime { get; set; }
+        public HeartbeatConfig Heartbeat { get; set; }
+        public PositionConfig Position { get; set; }
+        public LaptimeConfig LapTime { get; set; }
         public int[] PoolLenghts { get; set; }
     }
 
-    public class Heartbeat
+    public class HeartbeatConfig
     {
         public int Max { get; set; }
         public int Min { get; set; }
@@ -25,12 +25,12 @@ namespace ITS.PW2023.Simulator.Models
         public int ErrorRate { get; set; }
     }
 
-    public class Position
+    public class PositionConfig
     {
         public int ErrorRate { get; set; }
     }
 
-    public class Laptime
+    public class LaptimeConfig
     {
         public int Min { get; set; }
         public int Max { get; set; }
