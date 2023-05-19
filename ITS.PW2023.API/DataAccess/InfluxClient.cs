@@ -90,6 +90,7 @@ namespace ITS.PW2023.API.DataAccess
                 using var client = Client;
 
                 string query = _queryActivity.Replace("%%ACTIVITYHERE%%", actGUID);
+                query = query.Replace("%%DEVICEHERE%%", devGUID);
 
                 var readapi = client.GetQueryApi();
                 List<FluxTable> table = await readapi.QueryAsync(query, Org);
