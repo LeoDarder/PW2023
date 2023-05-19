@@ -18,11 +18,12 @@ namespace ITS.PW2023.Simulator.Engine
                     {
                         ActivityData? data = devices[i].GenerateActivityData();
                         var serializedModel = JsonSerializer.Serialize(data);
-                        var content = new StringContent(serializedModel, UTF8Encoding.UTF8, "application/json");
+                        var content = new StringContent(serializedModel, Encoding.UTF8, "application/json");
                         content.Headers.Add("Ocp-Apim-Subscription-Key", ApiSubKey);
                         var response = await client.PostAsync("/writeData", content);
                         Thread.Sleep(10000); // Wait for 10 seconds before repeating the task
                     }
+
                 }, TaskCreationOptions.LongRunning);
             }
 
