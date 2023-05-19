@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ITS.PW2023.Simulator.Config
+namespace ITS.PW2023.Simulator.Models
 {
     public class Config
     {

@@ -1,5 +1,4 @@
-﻿using ITS.PW2023.Simulator.Config;
-using System.Text.Json;
+﻿using System.Text.Json;
 
 namespace ITS.PW2023.Simulator.Models
 {
