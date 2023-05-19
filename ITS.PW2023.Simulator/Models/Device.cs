@@ -64,7 +64,7 @@ namespace ITS.PW2023.Simulator.Models
 
             if (rand.Next(0, 100) <= HeartbeatErrorRate)
             {
-                generatedHeartbeat = GenerateError<int>(MinHeartbeat, MaxHeartbeat, LowHeartbeatLimit, HighHeartbeatLimit);
+                generatedHeartbeat = GenerateHeartBeatError(MaxHeartbeat, LowHeartbeatLimit, HighHeartbeatLimit);
             }
             else
                 generatedHeartbeat = CurrentActivity.PreviousHeartbeat == -1 ? rand.Next(LowHeartbeatLimit, HighHeartbeatLimit) : CurrentActivity.PreviousHeartbeat + rand.Next(-5, 6);
@@ -81,9 +81,9 @@ namespace ITS.PW2023.Simulator.Models
             {
                 // Generazione valori non validi
 
-                latitude = Math.Round(GenerateError<double>(-500, 500, -90, 90), 6);
+                latitude = Math.Round(GeneratePositionError(-500, 500, -90, 90), 6);
 
-                longitude = Math.Round(GenerateError<double>(-500, 500, -180, 180), 6);
+                longitude = Math.Round(GeneratePositionError(-500, 500, -180, 180), 6);
             }
             else
             {
@@ -102,7 +102,7 @@ namespace ITS.PW2023.Simulator.Models
 
         private void GenerateLaps()
         {
-            if (CurrentActivity.LapsCount == 3)
+            if (CurrentActivity.LapsCount >= 3)
             {
                 CurrentActivity.Laps++;
                 CurrentActivity.LapsCount = 0;
@@ -118,34 +118,30 @@ namespace ITS.PW2023.Simulator.Models
         /// <param name="MinNormal">Minimo valore nel range dei valori corretti (non generati)</param>
         /// <param name="MaxNormal">Massimo valore nel range dei valori corretti (non generati)</param>
         /// <returns>Ritorna il valore dell'errore generato nel tipo dichiarato (T)</returns>
-        private T GenerateError<T>(double Min, double Max, double MinNormal, double MaxNormal)
+        private int GenerateHeartBeatError(int Max, int MinNormal, int MaxNormal)
         {
             Random rand = new Random();
+            int interval = (MaxNormal - MinNormal);
+            int value = rand.Next(0, Max - interval);
+            if (value > MinNormal)
+                value += interval;
+            return value;
+        }
 
-            if (typeof(T) == typeof(int)) 
-            {
-                // Genero per tipi intero
-                int value = rand.Next(0, (int)((Max - Min) - (MaxNormal - MinNormal)));
-                if (value > MinNormal)
-                    value += (int)(Max - Min);
-
-                return (T)Convert.ChangeType(value, typeof(int));
-            }
-            else
-            {
-                double abs = Math.Abs(Min);
-                // Genero per tipi double, spostando tutti i valori in modo che siano positivi
-                Min += abs;
-                Max += abs;
-                MinNormal += abs;
-                MaxNormal += abs;
-                double value = (rand.NextDouble() * ((Max - Min) - (MaxNormal - MinNormal)));
-                if (value > MinNormal)
-                    value += (int)(Max - Min);
-                // alla fine aggiungo il valore tolto prima
-                value -= abs;
-                return (T)Convert.ChangeType(value, typeof(double));
-            } 
+        private double GeneratePositionError(double Min, double Max, double MinNormal, double MaxNormal)
+        {
+            Random rand = new Random();
+            double abs = Math.Abs(Min);
+            // Genero per tipi double, spostando tutti i valori in modo che siano positivi
+            Min += abs;
+            Max += abs;
+            MinNormal += abs;
+            MaxNormal += abs;
+            double value = (rand.NextDouble() * ((Max - Min) - (MaxNormal - MinNormal)));
+            if (value > MinNormal)
+                value += (int)(Max - Min);
+            // alla fine aggiungo il valore tolto prima
+            return value -= abs;
         }
     }
 }
