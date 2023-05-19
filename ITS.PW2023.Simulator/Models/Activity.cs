@@ -9,6 +9,7 @@ namespace ITS.PW2023.Simulator.Models
     public class Activity
     {
         public Guid guid = Guid.Empty;
+        public int PreviousHeartbeat = -1;
         public int Laps = 0;
         public Position PoolStart { get; set; }
         public Position PoolEnd { get; set; }

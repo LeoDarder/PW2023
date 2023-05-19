@@ -1,5 +1,6 @@
 ﻿using ITS.PW2023.Simulator.Models;
 using Newtonsoft.Json.Linq;
+using System;
 using System.ComponentModel;
 using System.Text.Json;
 using System.Text.Json.Serialization.Metadata;
@@ -54,15 +55,18 @@ namespace ITS.PW2023.Simulator.Models
         }
         private int GenerateHeartBeat()
         {
+            Random rand = new Random();
             int normalHeartbeatInterval = HighHeartbeatLimit - LowHeartbeatLimit;
             int generatedHeartbeat;
-            //genera tutto a caso, senza criterio
-            if (Random.Shared.Next(0, 100) <= HeartbeatErrorRate)
+
+            if (rand.Next(0, 100) <= HeartbeatErrorRate)
             {
                 generatedHeartbeat = GenerateError<int>(MinHeartbeat, MaxHeartbeat, LowHeartbeatLimit, HighHeartbeatLimit);
             }
-            else generatedHeartbeat = Random.Shared.Next(LowHeartbeatLimit, HighHeartbeatLimit);
+            else
+                generatedHeartbeat = CurrentActivity.PreviousHeartbeat == -1 ? rand.Next(LowHeartbeatLimit, HighHeartbeatLimit) : CurrentActivity.PreviousHeartbeat + rand.Next(-5, 6);
 
+            CurrentActivity.PreviousHeartbeat = generatedHeartbeat;
             return generatedHeartbeat;
         }
         private Position GeneratePosition()              
