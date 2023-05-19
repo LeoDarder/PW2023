@@ -1,5 +1,8 @@
-﻿using ITS.PW2023.Simulator.Config;
+﻿using ITS.PW2023.Simulator.Models;
+using Newtonsoft.Json.Linq;
+using System.ComponentModel;
 using System.Text.Json;
+using System.Text.Json.Serialization.Metadata;
 
 namespace ITS.PW2023.Simulator.Models
 {
@@ -9,20 +12,33 @@ namespace ITS.PW2023.Simulator.Models
 
         private readonly int MaxHeartbeat;
         private int MinHeartbeat;                 //valore non usato
-        private readonly int LowHeartbeatLimit = 30;
-        private readonly int HighHeartbeatLimit = 200;
+        private readonly int LowHeartbeatLimit;
+        private readonly int HighHeartbeatLimit;
+        private readonly int HeartbeatErrorRate;
+        private readonly int PositionErrorRate;
+        private readonly int[] PoolLenghts;
         public Activity? CurrentActivity { get; set; }
-        public Device(Guid deviceGuid, int maxheartbeat = 300, int minheartbeat = 0)
+        public Device(Guid deviceGuid, Config config)
         {
             guid = deviceGuid;
-            MaxHeartbeat = maxheartbeat;
-            MinHeartbeat = minheartbeat;
+
+            MaxHeartbeat = config.Heartbeat.Max;
+            MinHeartbeat = config.Heartbeat.Min;
+            LowHeartbeatLimit = config.Heartbeat.LowLimit;
+            HighHeartbeatLimit = config.Heartbeat.HighLimit;
+            HeartbeatErrorRate = config.Heartbeat.ErrorRate;
+
+            PoolLenghts = config.PoolLenghts.ToArray();
+
+            PositionErrorRate = config.Position.ErrorRate;
+
             CurrentActivity = null;
         }
         public Guid StartNewActivity()
         {
             Guid guid = Guid.NewGuid();
-            CurrentActivity = new Activity(guid);
+            Random rand = new Random();
+            CurrentActivity = new Activity(guid, PoolLenghts[rand.Next(PoolLenghts.Length)]);
             return guid;
         }
         public Activity? GetCurrentActivity() { return CurrentActivity; }
@@ -40,23 +56,79 @@ namespace ITS.PW2023.Simulator.Models
         {
             int normalHeartbeatInterval = HighHeartbeatLimit - LowHeartbeatLimit;
             int generatedHeartbeat;
-            //20% di chance di generare un battito anomalo (20% per testare)
             //genera tutto a caso, senza criterio
-            if (Random.Shared.Next(0, 100) <= 20)
+            if (Random.Shared.Next(0, 100) <= HeartbeatErrorRate)
             {
-                generatedHeartbeat = Random.Shared.Next(0, MaxHeartbeat - normalHeartbeatInterval);
-                if (generatedHeartbeat > LowHeartbeatLimit) generatedHeartbeat += normalHeartbeatInterval;
+                generatedHeartbeat = GenerateError<int>(MinHeartbeat, MaxHeartbeat, LowHeartbeatLimit, HighHeartbeatLimit);
             }
             else generatedHeartbeat = Random.Shared.Next(LowHeartbeatLimit, HighHeartbeatLimit);
 
             return generatedHeartbeat;
         }
-        private Position GeneratePosition()              //TODO: genera anche valori non validi
+        private Position GeneratePosition()              
         {
-            double latitude = (Random.Shared.NextDouble() - 0.5) * 180;
-            double longitude = (Random.Shared.NextDouble() - 0.5) * 360;
+            double latitude = 0, longitude = 0;
+            Random rand = new Random();
+
+            if (Random.Shared.Next(0, 100) <= PositionErrorRate)
+            {
+                // Generazione valori non validi
+
+                latitude = GenerateError<double>(-500, 500, -90, 90);
+
+                longitude = GenerateError<double>(-500, 500, -180, 180);
+            }
+            else
+            {
+                //Generazione valori validi
+
+                // Genero una distanza casuale
+                double distance = rand.NextDouble();
+
+                // Calcolo delle coordinate randomiche
+                latitude = (1 - distance) * CurrentActivity.PoolStart.Latitude + distance * CurrentActivity.PoolEnd.Latitude;
+                longitude = (1 - distance) * CurrentActivity.PoolStart.Longitude + distance * CurrentActivity.PoolEnd.Longitude;
+            }
+
             return new Position(latitude, longitude);
         }
 
+        // <summary>
+        /// Funzione che genera degli errori secondo i parametri forniti
+        /// </summary>
+        /// <param name="Min">Minimo valore di errore da generare</param>
+        /// <param name="Max">Massimo valore di errore da generare</param>
+        /// <param name="MinNormal">Minimo valore nel range dei valori corretti (non generati)</param>
+        /// <param name="MaxNormal">Massimo valore nel range dei valori corretti (non generati)</param>
+        /// <returns>Ritorna il valore dell'errore generato nel tipo dichiarato (T)</returns>
+        private T GenerateError<T>(double Min, double Max, double MinNormal, double MaxNormal)
+        {
+            Random rand = new Random();
+
+            if (typeof(T) == typeof(int)) 
+            {
+                // Genero per tipi intero
+                int value = rand.Next(0, (int)((Max - Min) - (MaxNormal - MinNormal)));
+                if (value > MinNormal)
+                    value += (int)(Max - Min);
+
+                return (T)Convert.ChangeType(value, typeof(int));
+            }
+            else
+            {
+                double abs = Math.Abs(Min);
+                // Genero per tipi double, spostando tutti i valori in modo che siano positivi
+                Min += abs;
+                Max += abs;
+                MinNormal += abs;
+                MaxNormal += abs;
+                double value = (rand.NextDouble() * ((Max - Min) - (MaxNormal - MinNormal)));
+                if (value > MinNormal)
+                    value += (int)(Max - Min);
+                // alla fine aggiungo il valore tolto prima
+                value -= abs;
+                return (T)Convert.ChangeType(value, typeof(double));
+            } 
+        }
     }
 }
