@@ -30,7 +30,7 @@ export default {
     },
     methods: {
         navigateTo() {
-            this.$emit("navigateTo", "WorkoutStatistics");
+            this.$emit("navigateTo", "ActivityStatistics");
         },
         seeDetails() {
             // ...

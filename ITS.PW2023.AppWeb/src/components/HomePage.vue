@@ -4,7 +4,7 @@
             <nav class="navbar">
                 <div class="nav-menu">
                     <i class="bi bi-droplet-half" style="font-size: xx-large;"></i>
-                    <router-link to="/" class="link">Workouts</router-link>
+                    <router-link to="/" class="link">Activities</router-link>
                     <router-link to="/general" class="link">General</router-link>
                 </div>
                 <div class="nav-logout">

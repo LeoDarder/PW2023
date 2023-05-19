@@ -28,19 +28,19 @@ export default {
             id: 0,
             icon: "bi bi-heart-pulse-fill",
             title: "Heart rate",
-            text: "Heart rate tracking during workouts and while wearing the smartwatch"
+            text: "Heart rate tracking during activities and while wearing the smartwatch"
         };
         var position = {
             id: 1,
             icon: "bi bi-geo-alt-fill",
             title: "Position",
-            text: "Position tracking during workouts and while wearing the smartwatch"
+            text: "Position tracking during activities and while wearing the smartwatch"
         };
         var tubs = {
             id: 2,
-            icon: "bi bi-life-preserver",
+            icon: "bi bi-water",
             title: "No. tubs",
-            text: "No. tubs tracking during workouts"
+            text: "No. tubs tracking during activities"
         };
         this.statistics.push(heartRate, position, tubs);
     }
