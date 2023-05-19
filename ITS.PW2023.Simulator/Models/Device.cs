@@ -67,9 +67,11 @@ namespace ITS.PW2023.Simulator.Models
                 generatedHeartbeat = GenerateHeartBeatError(MaxHeartbeat, LowHeartbeatLimit, HighHeartbeatLimit);
             }
             else
+            {
                 generatedHeartbeat = CurrentActivity.PreviousHeartbeat == -1 ? rand.Next(LowHeartbeatLimit, HighHeartbeatLimit) : CurrentActivity.PreviousHeartbeat + rand.Next(-5, 6);
-
-            CurrentActivity.PreviousHeartbeat = generatedHeartbeat;
+                CurrentActivity.PreviousHeartbeat = generatedHeartbeat;
+            }
+            
             return generatedHeartbeat;
         }
         private Position GeneratePosition()              
