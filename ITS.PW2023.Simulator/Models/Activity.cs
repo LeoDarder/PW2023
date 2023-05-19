@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ITS.PW2023.Simulator.Models
 {
@@ -19,7 +20,7 @@ namespace ITS.PW2023.Simulator.Models
             guid = activityGuid;
 
             // Coordinate di partenza
-            PoolStart = new Position((Random.Shared.NextDouble() - 0.5) * 180, (Random.Shared.NextDouble() - 0.5) * 360);
+            PoolStart = new Position(Math.Round((Random.Shared.NextDouble() - 0.5) * 180, 6), Math.Round((Random.Shared.NextDouble() - 0.5) * 360, 6));
 
             // Generazione casuale di una direzione in radianti
             Random rand = new Random();
@@ -31,7 +32,7 @@ namespace ITS.PW2023.Simulator.Models
             double lonDiff = latDiff / Math.Cos(Math.PI * PoolStart.Latitude / 180);
 
             // Calcolo delle coordinate finali
-            PoolEnd = new Position(PoolStart.Latitude + latDiff * Math.Cos(direction), PoolStart.Longitude + lonDiff * Math.Sin(direction));    
+            PoolEnd = new Position(PoolStart.Latitude + latDiff * Math.Cos(direction), PoolStart.Longitude + lonDiff * Math.Sin(direction));
         }
     }
 }

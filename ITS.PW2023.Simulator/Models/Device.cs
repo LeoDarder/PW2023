@@ -5,6 +5,7 @@ using System.ComponentModel;
 using System.Text.Json;
 using System.Text.Json.Serialization.Metadata;
 using System.Transactions;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace ITS.PW2023.Simulator.Models
 {
@@ -80,9 +81,9 @@ namespace ITS.PW2023.Simulator.Models
             {
                 // Generazione valori non validi
 
-                latitude = GenerateError<double>(-500, 500, -90, 90);
+                latitude = Math.Round(GenerateError<double>(-500, 500, -90, 90), 6);
 
-                longitude = GenerateError<double>(-500, 500, -180, 180);
+                longitude = Math.Round(GenerateError<double>(-500, 500, -180, 180), 6);
             }
             else
             {
@@ -92,8 +93,8 @@ namespace ITS.PW2023.Simulator.Models
                 double distance = rand.NextDouble();
 
                 // Calcolo delle coordinate randomiche
-                latitude = (1 - distance) * CurrentActivity.PoolStart.Latitude + distance * CurrentActivity.PoolEnd.Latitude;
-                longitude = (1 - distance) * CurrentActivity.PoolStart.Longitude + distance * CurrentActivity.PoolEnd.Longitude;
+                latitude = Math.Round((1 - distance) * CurrentActivity.PoolStart.Latitude + distance * CurrentActivity.PoolEnd.Latitude, 6); ;
+                longitude = Math.Round((1 - distance) * CurrentActivity.PoolStart.Longitude + distance * CurrentActivity.PoolEnd.Longitude, 6);
             }
 
             return new Position(latitude, longitude);
