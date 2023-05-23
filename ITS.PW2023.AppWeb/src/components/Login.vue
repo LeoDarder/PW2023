@@ -104,7 +104,7 @@ export default {
     display: none;
     opacity: 0;
     top: 50%;
-    left: 30px;
+    left: 25px;
     transform: translate(0, -50%);
     transition: 0.5s;
     color: var(--color-lightblue);

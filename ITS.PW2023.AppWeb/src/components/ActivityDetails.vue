@@ -1,20 +1,20 @@
 <template>
     <div class="detailCard">
-        <div class="general info">
-            <span><b>Activity</b> {{ actGuid }}</span>
-            <span><b>Date</b> {{ formatDate }}</span>
-            <span><b>Duration</b> {{ values.duration }} minutes</span>
+        <div class="info">
+            <span><b style="font-family: LemonMilk;">Activity</b> {{ actGuid }}</span>
+            <span><b style="font-family: LemonMilk;">Date</b> {{ formatDate }}</span>
+            <span><b style="font-family: LemonMilk;">Duration</b> {{ values.duration }} minutes</span>
         </div>
-        <div class="general graphs">
+        <div class="graphs">
+            <div class="laps">
+                <div class="lapsGraph" ref="laps"></div><br>
+                <p><b style="font-family: LemonMilk;">Goal</b> {{ goal }}</p>
+            </div>
             <div class="graph">
                 <canvas ref="graph"></canvas>
             </div>
-            <div class="laps">
-                <div class="lapsGraph" ref="laps"></div><br>
-                <p><b>Goal</b> {{ goal }}</p>
-            </div>
         </div>
-        <div class="general position" id="map"></div>
+        <div class="position" id="map"></div>
     </div>
 </template>
 
@@ -59,6 +59,55 @@ export default {
             this.values = await response.json();
             return this.values;
         },
+        initHRGraph(data) {
+            var values = JSON.parse(JSON.stringify(data.hbInstances));
+
+            new Chart(this.$refs.graph.getContext("2d"), {
+                type: 'line',
+                data: {
+                    labels: values.map(row => {
+                        var datetime = new Date(row.time);
+                        return `${datetime.toLocaleTimeString()}`
+                    }),
+                    datasets: [
+                        {
+                            label: "Average Heart Beat",
+                            data: values.map(row => row.heartBeat),
+                            fill: true,
+                            borderColor: '#ED6363', // red
+                            backgroundColor: 'rgba(237, 99, 99, 0.3)', // red opacity
+                            tension: 0.3
+                        }
+                    ]
+                }
+            })
+        },
+        initTubsGraph(data) {
+            this.goal = 10; // da prendere dal login
+            var laps = data.laps;
+            var perc = (laps / this.goal);
+
+            var lapsCompleted = new ProgressBar.Circle(this.$refs.laps, {
+                strokeWidth: 4,
+                duration: 1000,
+                easing: 'easeInOut',
+                color: '#146C94', // --color-darkblue
+                trailColor: '#AFD3E2', // --color-lightblue
+                trailWidth: 1.5,
+                step: function (state, circle) {
+                    if (laps === 0) {
+                        circle.setText('');
+                    }
+                    else {
+                        circle.setText(`<i class="bi bi-water"></i><br><p>${laps}</p>`);
+                    }
+
+                }
+            });
+            lapsCompleted.text.style.fontSize = '50px';
+            lapsCompleted.text.style.fontFamily = 'LemonMilk';
+            lapsCompleted.animate(perc >= 1 ? 1 : perc); // da 0.0 a 1.0
+        },
         initMap(data) {
             var lon = data.position.longitude;
             var lat = data.position.latitude;
@@ -74,96 +123,72 @@ export default {
             marker.bindPopup(`<b>LAT</b> ${lat}<br></br><b>LON</b> ${lon}`).openPopup();
 
             L.circle([lat, lon], {
-                color: '#1088a0', // dark blue
-                fillColor: '#78b2c4', // blue
+                color: '#ED6363', // red
+                fillColor: 'rgba(237, 99, 99, 0.3)', // red opacity
                 fillOpacity: 0.5,
                 radius: 20
             }).addTo(map);
         },
-        initHRGraph(data) {
-            var values = JSON.parse(JSON.stringify(data.hbInstances));
-
-            // TODO cambiare stile del grafico
-            new Chart(this.$refs.graph.getContext("2d"), {
-                type: 'line',
-                data: {
-                    labels: values.map(row => {
-                        var datetime = new Date(row.time);
-                        return `${datetime.toLocaleTimeString()}`
-                    }),
-                    datasets: [
-                        {
-                            label: "Average heart rate",
-                            data: values.map(row => row.heartBeat),
-                            fill: false,
-                            borderColor: '#1088a0', // dark blue
-                            tension: 0.1
-                        }
-                    ]
-                }
-            })
-        },
-        initTubsGraph(data) {
-            this.goal = 10; // da prendere dal login
-            var laps = data.laps;
-            var perc = (laps / this.goal);
-
-            var lapsCompleted = new ProgressBar.Circle(this.$refs.laps, {
-                strokeWidth: 4,
-                duration: 1000,
-                easing: 'easeInOut',
-                color: '#1088a0', // dark blue
-                trailColor: '#78b2c4', // blue
-                trailWidth: 1.5,
-                step: function (state, circle) {
-                    if (laps === 0) {
-                        circle.setText('');
-                    }
-                    else {
-                        circle.setText(`<i class="bi bi-water"></i><br><p>${laps}</p>`);
-                    }
-
-                }
-            });
-            lapsCompleted.text.style.fontSize = '50px';
-            lapsCompleted.animate(perc >= 1 ? 1 : perc); // da 0.0 a 1.0
-        }
     }
 }
 </script>
 
 <style>
+@font-face {
+    font-family: LemonMilk;
+    src: url(../../fonts/LEMONMILK-Medium.otf);
+}
+
 .detailCard {
     width: 100%;
 }
 
-.general {
-    width: 95%;
-    margin: 15px auto;
-    border: solid 1px grey;
-}
-
 .info {
+    margin: 10px 10px 0px 10px;
+    border-radius: 6px;
+    padding: 10px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
+    background-color: var(--color-white);
 }
 
 .graphs {
-    display: grid;
-    grid-template-columns: 70% 30%;
+    margin: 10px 10px 0px 10px;
+    border-radius: 6px;
+    display: flex;
 }
 
 .graph {
-    width: 90%;
+    width: 80%;
+    padding: 10px;
     margin: auto;
+    border-radius: 6px;
+    background-color: var(--color-white);
 }
 
 .laps {
-    width: 60%;
-    margin: auto;
+    width: 20%;
+    padding: 10px;
+    margin: 0px 10px 0px 0px;
+    border-radius: 6px;
+    background-color: var(--color-white);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+}
+
+.lapsGraph {
+    width: 90%;
+    margin: 0px auto;
+    position: relative;
 }
 
 .position {
-    height: 300px;
+    margin: 10px 10px 0px 10px;
+    border-radius: 6px;
+    padding: 10px;
+    height: 30%;
+    background-color: var(--color-white);
 }
 </style>
