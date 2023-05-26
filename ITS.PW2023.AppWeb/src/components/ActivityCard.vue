@@ -50,8 +50,14 @@ export default {
 .activityId {
     font-family: LemonMilk;
     font-style: italic;
-    font-size: 50px;
+    font-size: 40px;
     color: var(--color-blue);
     text-shadow: 2px 2px var(--color-darkblue);
+    margin: 0;
+}
+
+.card-body {
+    font-size: initial;
+    padding: 16px 16px 0px 16px;
 }
 </style>

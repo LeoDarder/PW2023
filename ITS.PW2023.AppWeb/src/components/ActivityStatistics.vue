@@ -1,5 +1,18 @@
 <template>
     <div class="statisticPage">
+        <!-- per ora non fanno nulla, vediamo se farli diventare cliccabili -->
+        <div class="general-data">
+            <div class="card general">
+                <h5 class="card-title">Avg. heart beat</h5>
+                <i class="bi bi-heart-pulse-fill card-icon"></i>
+                <h5 class="card-value">86</h5>
+            </div>
+            <div class="card general">
+                <h5 class="card-title">Avg. laps</h5>
+                <i class="bi bi-water card-icon"></i>
+                <h5 class="card-value">8</h5>
+            </div>
+        </div>
         <activity-card
             v-for="activity in activities"
             :key="activity.guid"
@@ -55,3 +68,20 @@ export default {
     }
 }
 </script>
+
+<style>
+.general-data {
+    display: flex;
+    flex-direction: column;
+}
+
+.general {
+    font-family: LemonMilk;
+    height: 30vh;
+    padding: 10px;
+    margin-bottom: 5vh;
+    display: flex;
+    justify-content: space-evenly;
+    background-color: var(--color-lightblue);
+}
+</style>
