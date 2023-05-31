@@ -18,6 +18,8 @@ namespace ITS.PW2023.Simulator.Models
         private readonly int LowHeartbeatLimit;
         private readonly int HighHeartbeatLimit;
         private readonly int HeartbeatErrorRate;
+        private readonly int LapsTotal;
+        private readonly int LapsCount;
         private readonly int PositionErrorRate;
         private readonly int[] PoolLenghts;
         public Activity? CurrentActivity { get; set; }
@@ -30,6 +32,9 @@ namespace ITS.PW2023.Simulator.Models
             LowHeartbeatLimit = config.Heartbeat.LowLimit;
             HighHeartbeatLimit = config.Heartbeat.HighLimit;
             HeartbeatErrorRate = config.Heartbeat.ErrorRate;
+
+            LapsTotal = Random.Shared.Next(config.Lap.Min, config.Lap.Max + 1);
+            LapsCount = config.Lap.LapsCount;
 
             PoolLenghts = config.PoolLenghts.ToArray();
 
@@ -45,12 +50,18 @@ namespace ITS.PW2023.Simulator.Models
             return guid;
         }
         public Activity? GetCurrentActivity() { return CurrentActivity; }
-        public void EndNewActivity() { CurrentActivity = null; }
+        public void EndCurrentActivity() { CurrentActivity = null; }
         public ActivityData? GenerateActivityData()
         {
             if (CurrentActivity == null)
             {
                 Console.WriteLine("No activity was started. Starting new activity...\n");
+                Console.WriteLine($"Device '{guid}' created a new activity: '{StartNewActivity()}'");
+            }
+            if(CurrentActivity.Laps >= LapsTotal)    // controllo se ho raggiunto i laps massimi e termino l'attività
+            {
+                EndCurrentActivity();
+                Console.WriteLine("Max laps. Starting new activity...\n");
                 Console.WriteLine($"Device '{guid}' created a new activity: '{StartNewActivity()}'");
             }
             GenerateLaps();
@@ -95,7 +106,7 @@ namespace ITS.PW2023.Simulator.Models
                 double distance = rand.NextDouble();
 
                 // Calcolo delle coordinate randomiche
-                latitude = Math.Round((1 - distance) * CurrentActivity.PoolStart.Latitude + distance * CurrentActivity.PoolEnd.Latitude, 6); ;
+                latitude = Math.Round((1 - distance) * CurrentActivity.PoolStart.Latitude + distance * CurrentActivity.PoolEnd.Latitude, 6);
                 longitude = Math.Round((1 - distance) * CurrentActivity.PoolStart.Longitude + distance * CurrentActivity.PoolEnd.Longitude, 6);
             }
 
@@ -104,12 +115,12 @@ namespace ITS.PW2023.Simulator.Models
 
         private void GenerateLaps()
         {
-            if (CurrentActivity.LapsCount >= 3)
+            if (CurrentActivity.LapsGenCount >= LapsCount)
             {
                 CurrentActivity.Laps++;
-                CurrentActivity.LapsCount = 0;
+                CurrentActivity.LapsGenCount = 0;
             }else
-                CurrentActivity.LapsCount++;
+                CurrentActivity.LapsGenCount++;
         }
 
         // <summary>

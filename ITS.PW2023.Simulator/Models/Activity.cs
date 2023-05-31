@@ -11,7 +11,7 @@ namespace ITS.PW2023.Simulator.Models
     {
         public Guid guid = Guid.Empty;
         public int PreviousHeartbeat = -1;
-        public int LapsCount = 0;
+        public int LapsGenCount = 0;
         public int Laps = 0;
         public Position PoolStart { get; set; }
         public Position PoolEnd { get; set; }
@@ -33,6 +33,7 @@ namespace ITS.PW2023.Simulator.Models
 
             // Calcolo delle coordinate finali
             PoolEnd = new Position(PoolStart.Latitude + latDiff * Math.Cos(direction), PoolStart.Longitude + lonDiff * Math.Sin(direction));
+
         }
     }
 }

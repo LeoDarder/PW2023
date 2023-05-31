@@ -12,7 +12,7 @@ namespace ITS.PW2023.Simulator.Models
         public const string ConfigPosition = "Config";
         public HeartbeatConfig Heartbeat { get; set; }
         public PositionConfig Position { get; set; }
-        public LaptimeConfig LapTime { get; set; }
+        public LapConfig Lap { get; set; }
         public int[] PoolLenghts { get; set; }
     }
 
@@ -30,9 +30,10 @@ namespace ITS.PW2023.Simulator.Models
         public int ErrorRate { get; set; }
     }
 
-    public class LaptimeConfig
+    public class LapConfig
     {
         public int Min { get; set; }
         public int Max { get; set; }
+        public int LapsCount { get; set; }
     }
 }

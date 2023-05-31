@@ -30,14 +30,14 @@ namespace ITS.PW2023.TestSimulator
             {
                 connection.Open();
 
-                string query = "SELECT TOP 10 device FROM users ODER BY NEWID()";
+                string query = "SELECT TOP 10 device FROM users ORDER BY NEWID()";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     using (SqlDataReader reader = command.ExecuteReader())
                     {
                         while (reader.Read())
                         {
-                            devices.Add(new Device(new Guid(reader.GetString(0)), _config));
+                            devices.Add(new Device(reader.GetGuid(0), _config));
                         }
                     }
                 }
