@@ -2,6 +2,6 @@
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ActiveDebugProfile>https</ActiveDebugProfile>
-    <NameOfLastUsedPublishProfile>C:\Users\Napo\Source\Repos\LeoDarder\PW2023\ITS.PW2023.API\Properties\PublishProfiles\CPER-PW2023-GRUPPO5-API - Zip Deploy.pubxml</NameOfLastUsedPublishProfile>
+    <NameOfLastUsedPublishProfile>C:\Users\Leonardo Pecol\Documents\GitHub\PW2023\ITS.PW2023.API\Properties\PublishProfiles\CPER-PW2023-GRUPPO5-API - Zip Deploy.pubxml</NameOfLastUsedPublishProfile>
   </PropertyGroup>
 </Project>
