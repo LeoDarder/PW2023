@@ -12,8 +12,8 @@
                     <canvas ref="graph"></canvas>
                 </div>
                 <div class="laps">
-                    <div class="lapsGraph" ref="laps"></div>
-                    <div class="description">
+                        <div class="lapsGraph" ref="laps"></div>
+                        <div class="description">
                         <span><b class="costumFont">LAPS COMPLETED</b> {{ values.laps }}</span><br>
                         <span><b class="costumFont">Goal</b> {{ goal }}</span><br>
                         <span><b class="costumFont">Distance</b> 1.5km</span>
@@ -82,7 +82,7 @@ export default {
                     }),
                     datasets: [
                         {
-                            label: "Average Heart Beat",
+                            label: "Avg. heart beat",
                             data: values.map(row => row.heartBeat),
                             fill: true,
                             borderColor: '#ED6363', // red
@@ -162,7 +162,7 @@ export default {
 .info {
     margin: 10px 10px 0px 10px;
     border-radius: 6px;
-    padding: 5px;
+    padding: 10px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     background-color: var(--color-white);
@@ -185,7 +185,7 @@ export default {
 
 .graph {
     width: 100%;
-    padding: 5px;
+    padding: 10px;
     margin-bottom: 10px;
     border-radius: 6px;
     background-color: var(--color-white);
@@ -197,18 +197,26 @@ export default {
     border-radius: 6px;
     margin-bottom: 10px;
     background-color: var(--color-white);
-    display: grid;
-    grid-template-columns: 50% 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+.lapsGraphs {
+    display: flex;
+    flex-direction: row;
 }
 
 .lapsGraph {
-    width: 12vw;
-    margin: auto;
+    width: 10vw;
+    margin-left: auto;
+    margin-right: 10px;
     position: relative;
 }
 
 .description {
     text-align: left;
+    margin-left: 10px;
+    margin-right: auto;
     display: flex;
     flex-direction: column;
     justify-content: center;

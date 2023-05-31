@@ -5,12 +5,12 @@
             <div class="card general">
                 <h5 class="card-title">Avg. heart beat</h5>
                 <i class="bi bi-heart-pulse-fill card-icon"></i>
-                <h5 class="card-value">86</h5>
+                <h5 class="card-value">{{ this.avgHeartBeat }}</h5>
             </div>
             <div class="card general">
                 <h5 class="card-title">Avg. laps</h5>
                 <i class="bi bi-water card-icon"></i>
-                <h5 class="card-value">8</h5>
+                <h5 class="card-value">{{ this.avgLaps }}</h5>
             </div>
         </div>
         <activity-card
@@ -39,7 +39,9 @@ export default {
     },
     data() {
         return {
-            activities: []
+            activities: [],
+            avgHeartBeat: null,
+            avgLaps: null
         }
     },
     mounted() {
@@ -47,15 +49,14 @@ export default {
     },
     methods: {
         async getValues() {
-            const response = await fetch(`${baseUrl}/getActivities?devGUID=${devGuid}`);
-            this.activities = await response.json();
+            const activities = await fetch(`${baseUrl}/getActivities?devGUID=${devGuid}`);
+            this.activities = await activities.json();
 
             this.activities.sort(function(a,b){
                 return new Date(b.date) - new Date(a.date);
             });
 
-            /*
-            STRUTTURA OGGETTO
+            /* STRUTTURA OGGETTO
             {
                 avgHB: 136.5
                 date: "2023-05-04T10:00:04.066517Z"
@@ -68,6 +69,15 @@ export default {
                 }
             }
             */
+
+            const avgHB = await fetch(`${baseUrl}/getAvgHB?devGUID={devGUID}${devGuid}`);
+            this.avgHeartBeat = await avgHB.json();
+            console.log("this.avgHeartBeat", this.avgHeartBeat);
+
+            const avgLaps = await fetch(`${baseUrl}/getAvgLaps?devGUID={devGUID}${devGuid}`);
+            this.avgLaps = await avgLaps.json();
+            console.log("this.avgLaps", this.avgLaps);
+
         }
     }
 }
