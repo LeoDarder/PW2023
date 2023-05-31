@@ -88,10 +88,9 @@ namespace ITS.PW2023.API.DataAccess
             {
                 using var client = Client;
 
-                var readapi = client.GetQueryApi();
-
                 string query = _queryAvgHB.Replace("%%DEVICEHERE%%", devGUID);
 
+                var readapi = client.GetQueryApi();
                 List<FluxTable> tables = await readapi.QueryAsync(query, Org);
 
                 int totalHB = 0;
@@ -120,10 +119,9 @@ namespace ITS.PW2023.API.DataAccess
             {
                 using var client = Client;
 
-                var readapi = client.GetQueryApi();
-
                 string query = _queryAvgLaps.Replace("%%DEVICEHERE%%", devGUID);
 
+                var readapi = client.GetQueryApi();
                 List<FluxTable> tables = await readapi.QueryAsync(query, Org);
 
                 int totallaps = 0;
@@ -133,7 +131,7 @@ namespace ITS.PW2023.API.DataAccess
                     totallaps += Convert.ToInt32(table.Records.Max(record => record.GetValueByKey("_value")));
                 }
 
-                return Results.Ok(Convert.ToInt32(totallaps / tables.Count));
+                return Results.Ok((totallaps / tables.Count).ToString("0.0"));
             }
             catch (Exception ex)
             {
