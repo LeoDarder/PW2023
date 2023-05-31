@@ -57,4 +57,16 @@ app.MapGet("/getUserData", (string username, string password) =>
     return userServices.GetUserData(username, password);
 });
 
+app.MapGet("/getAvgHB", (string devGUID) =>
+{
+    InfluxClient influx = new(builder.Configuration);
+    return influx.GetAvgHB(devGUID);
+});
+
+app.MapGet("/getAvgLaps", (string devGUID) =>
+{
+    InfluxClient influx = new(builder.Configuration);
+    return influx.GetAvgLaps(devGUID);
+});
+
 app.Run();

@@ -7,7 +7,7 @@ namespace ITS.PW2023.API.Models
         public string Guid { get; set; }
         public DateTime Date { get; set; }
         public double Duration { get; set; }
-        public double AvgHB { get; set; }
+        public int AvgHB { get; set; }
         public Position Position { get; set; }
         public long Laps { get; set; }
 
@@ -48,7 +48,7 @@ namespace ITS.PW2023.API.Models
 
                     if(String.Equals(firstRecord.GetField(), "HeartBeat"))
                     {
-                        act.AvgHB = table.Records.Average(x =>(long) x.GetValueByKey("_value"));
+                        act.AvgHB = Convert.ToInt32(table.Records.Average(x =>(long) x.GetValueByKey("_value")));
                     }
                     else if (String.Equals(firstRecord.GetField(), "PositionX"))
                     {
