@@ -195,6 +195,7 @@ export default {
     width: 100%;
     padding: 10px;
     border-radius: 6px;
+    margin-bottom: 10px;
     background-color: var(--color-white);
     display: grid;
     grid-template-columns: 50% 50%;
@@ -216,5 +217,6 @@ export default {
 .map {
     border-radius: 6px;
     width: 50%;
+    margin-bottom: 10px;
 }
 </style>
