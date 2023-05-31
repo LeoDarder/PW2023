@@ -12,11 +12,13 @@
                     <canvas ref="graph"></canvas>
                 </div>
                 <div class="laps">
+                    <span><b class="costumFont">LAPS COMPLETED</b></span><br>
+                    <div class="lapsGraphs">
                         <div class="lapsGraph" ref="laps"></div>
                         <div class="description">
-                        <span><b class="costumFont">LAPS COMPLETED</b> {{ values.laps }}</span><br>
-                        <span><b class="costumFont">Goal</b> {{ goal }}</span><br>
-                        <span><b class="costumFont">Distance</b> 1.5km</span>
+                            <span><b class="costumFont desc">Goal</b> {{ goal }}</span><br>
+                            <span><b class="costumFont desc">Distance</b> 1.5km</span>
+                        </div>
                     </div>
                 </div>
             </div>
