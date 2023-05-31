@@ -7,11 +7,11 @@ namespace ITS.PW2023.Simulator.Engine
 {
     public class Engine
     {
-        public static void Run(Device[] devices, HttpClient client, string ApiSubKey)
+        public static void Run(List<Device> devices, HttpClient client, string ApiSubKey)
         {
             while (true)
             {
-                for (int i = 0; i < devices.Length; i++)
+                for (int i = 0; i < devices.Count; i++)
                 {
                     ActivityData? data = devices[i].GenerateActivityData();
                     var serializedModel = JsonSerializer.Serialize(data);
