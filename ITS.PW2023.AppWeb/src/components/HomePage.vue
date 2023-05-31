@@ -46,6 +46,9 @@ export default {
     color: var(--color-lightblue);
     background-color: var(--color-darkblue);
     padding: 0 1%;
+    position: fixed;
+    top: 0px;
+    z-index: 999999;
 }
 
 .nav-menu {
@@ -120,4 +123,7 @@ export default {
 
 .body {
     display: flex;
+    width: 100%;
+    position: absolute;
+    top: 64px;
 }</style>
