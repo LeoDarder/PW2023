@@ -1,20 +1,27 @@
 <template>
     <div class="detailCard">
         <div class="info">
-            <span><b style="font-family: LemonMilk;">Activity</b> {{ actGuid }}</span>
-            <span><b style="font-family: LemonMilk;">Date</b> {{ formatDate }}</span>
-            <span><b style="font-family: LemonMilk;">Duration</b> {{ values.duration }} minutes</span>
+            <span><b class="costumFont">Date</b> {{ formatDate }}</span>
+            <span><b class="costumFont">Time</b> {{ formatTime }}</span>
+            <span><b class="costumFont">Duration</b> {{ values.duration }} minutes</span>
         </div>
         <div class="graphs">
-            <div class="laps">
-                <div class="lapsGraph" ref="laps"></div><br>
-                <p><b style="font-family: LemonMilk;">Goal</b> {{ goal }}</p>
+            <div class="small-graphs">
+                <div class="graph">
+                    <span><b class="costumFont">AVERAGE HEART BEAT</b></span><br>
+                    <canvas ref="graph"></canvas>
+                </div>
+                <div class="laps">
+                    <div class="lapsGraph" ref="laps"></div>
+                    <div class="description">
+                        <span><b class="costumFont">LAPS COMPLETED</b> {{ values.laps }}</span><br>
+                        <span><b class="costumFont">Goal</b> {{ goal }}</span><br>
+                        <span><b class="costumFont">Distance</b> 1.5km</span>
+                    </div>
+                </div>
             </div>
-            <div class="graph">
-                <canvas ref="graph"></canvas>
-            </div>
+            <div class="map" id="map"></div>
         </div>
-        <div class="position" id="map"></div>
     </div>
 </template>
 
@@ -40,6 +47,10 @@ export default {
         formatDate() {
             var date = new Date(this.values.date);
             return `${date.toLocaleDateString()}`
+        },
+        formatTime() {
+            var date = new Date(this.values.date);
+            return `${date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`
         }
     },
     mounted() {
@@ -47,8 +58,8 @@ export default {
         this.getValues()
             .then((data) => {
                 console.log(data);
-                this.initHRGraph(data);
-                this.initTubsGraph(data);
+                this.initHBGraph(data);
+                this.initLapsGraph(data);
                 this.initMap(data);
             })
 
@@ -59,7 +70,7 @@ export default {
             this.values = await response.json();
             return this.values;
         },
-        initHRGraph(data) {
+        initHBGraph(data) {
             var values = JSON.parse(JSON.stringify(data.hbInstances));
 
             new Chart(this.$refs.graph.getContext("2d"), {
@@ -82,7 +93,7 @@ export default {
                 }
             })
         },
-        initTubsGraph(data) {
+        initLapsGraph(data) {
             this.goal = 10; // da prendere dal login
             var laps = data.laps;
             var perc = (laps / this.goal);
@@ -104,7 +115,7 @@ export default {
 
                 }
             });
-            lapsCompleted.text.style.fontSize = '50px';
+            lapsCompleted.text.style.fontSize = '40px';
             lapsCompleted.text.style.fontFamily = 'LemonMilk';
             lapsCompleted.animate(perc >= 1 ? 1 : perc); // da 0.0 a 1.0
         },
@@ -139,56 +150,71 @@ export default {
     src: url(../../fonts/LEMONMILK-Medium.otf);
 }
 
+.costumFont {
+    font-family: LemonMilk;
+}
+
 .detailCard {
     width: 100%;
+    color: var(--color-darkblue);
 }
 
 .info {
     margin: 10px 10px 0px 10px;
     border-radius: 6px;
-    padding: 10px;
+    padding: 5px;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     background-color: var(--color-white);
 }
 
 .graphs {
+    display: flex;
+    flex-direction: row;
+    height: max-content;
     margin: 10px 10px 0px 10px;
+}
+
+.small-graphs {
+    width: 50%;
+    margin-right: 10px;
     border-radius: 6px;
     display: flex;
+    flex-direction: column;
 }
 
 .graph {
-    width: 80%;
-    padding: 10px;
-    margin: auto;
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 10px;
     border-radius: 6px;
     background-color: var(--color-white);
 }
 
 .laps {
-    width: 20%;
+    width: 100%;
     padding: 10px;
-    margin: 0px 10px 0px 0px;
     border-radius: 6px;
     background-color: var(--color-white);
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-
+    display: grid;
+    grid-template-columns: 50% 50%;
 }
 
 .lapsGraph {
-    width: 90%;
-    margin: 0px auto;
+    width: 12vw;
+    margin: auto;
     position: relative;
 }
 
-.position {
-    margin: 10px 10px 0px 10px;
+.description {
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.map {
     border-radius: 6px;
-    padding: 10px;
-    height: 30%;
-    background-color: var(--color-white);
+    width: 50%;
 }
 </style>

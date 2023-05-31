@@ -1,8 +1,8 @@
 <template>
     <div class="card">
-        <h1 class="activityId">#{{ shortId }}</h1>
+        <h1 class="cardTitle">{{ formatDate }}</h1>
+        <h1 class="cardSubtitle">{{ formatTime }}</h1>
         <div class="card-body">
-            <p class="card-text"><b style="font-family: LemonMilk;">Date</b><br>{{ formatDate }}</p>
             <p class="card-text"><b style="font-family: LemonMilk;">Duration</b><br>{{ duration }} minutes</p>
             <p class="card-text"><b style="font-family: LemonMilk;">Average heart beat</b><br>{{ avgHB }} bpm</p>
             <p class="card-text"><b style="font-family: LemonMilk;">Position</b><br>LON {{ position.longitude }}<br>LAT {{ position.latitude }}</p>
@@ -36,6 +36,10 @@ export default {
         formatDate() {
             var date = new Date(this.date);
             return `${date.toLocaleDateString()}`
+        },
+        formatTime() {
+            var date = new Date(this.date);
+            return `${date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`
         }
     }
 }
@@ -47,13 +51,21 @@ export default {
     src: url(../../fonts/LEMONMILK-Medium.otf);
 }
 
-.activityId {
+.cardTitle {
+    font-family: LemonMilk;
+    font-size: xx-large;
+    color: var(--color-blue);
+    text-shadow: 1.5px 1.5px var(--color-darkblue);
+    padding-top: 10px;
+    margin: 0px;
+}
+
+.cardSubtitle {
     font-family: LemonMilk;
     font-style: italic;
-    font-size: 40px;
+    font-size: x-large;
     color: var(--color-blue);
-    text-shadow: 2px 2px var(--color-darkblue);
-    margin: 0;
+    margin-bottom: 10px;
 }
 
 .card-body {

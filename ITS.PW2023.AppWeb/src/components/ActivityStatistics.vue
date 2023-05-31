@@ -50,6 +50,10 @@ export default {
             const response = await fetch(`${baseUrl}/getActivities?devGUID=${devGuid}`);
             this.activities = await response.json();
 
+            this.activities.sort(function(a,b){
+                return new Date(b.date) - new Date(a.date);
+            });
+
             /*
             STRUTTURA OGGETTO
             {
@@ -77,7 +81,7 @@ export default {
 
 .general {
     font-family: LemonMilk;
-    height: 30vh;
+    height: 28vh;
     padding: 10px;
     margin-bottom: 5vh;
     display: flex;
