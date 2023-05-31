@@ -8,6 +8,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<InfluxClient>();
+builder.Services.AddSingleton<UserServices>();
+
+UserServices userServices = new(builder.Configuration);
+InfluxClient influx = new(builder.Configuration);
 
 builder.Services.AddCors(options =>
 {
@@ -35,26 +39,32 @@ app.UseCors("cors-all");
 
 app.MapPost("/writeData", (ActivityData data) =>
 {
-    InfluxClient influx = new(builder.Configuration);
     return influx.WriteData(data);
 });
 
 app.MapGet("/getActivities", (string devGUID) =>
 {
-    InfluxClient influx = new(builder.Configuration);
     return influx.ReadActivities(devGUID);
 });
 
 app.MapGet("/getRows", (string devGUID, string actGUID) =>
 {
-    InfluxClient influx = new(builder.Configuration);
     return influx.ReadRows(devGUID, actGUID);
 });
 
 app.MapGet("/getUserData", (string username, string password) =>
 {
-    UserServices userServices = new(builder.Configuration);
     return userServices.GetUserData(username, password);
+});
+
+app.MapGet("/getAvgHB", (string devGUID) =>
+{
+    return influx.GetAvgHB(devGUID);
+});
+
+app.MapGet("/getAvgLaps", (string devGUID) =>
+{
+    return influx.GetAvgLaps(devGUID);
 });
 
 app.Run();

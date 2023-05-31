@@ -8,6 +8,8 @@ namespace ITS.PW2023.API.DataAccess
 {
     public class InfluxClient
     {
+        private const string _queryAvgHB = "from(bucket: \"ActivitiesMonitor\")\r\n  |> range(start: 0)\r\n  |> filter(fn: (r) => r._measurement == \"ActivitiesMonitor\")\r\n  |> filter(fn: (r) => r._field == \"HeartBeat\")\r\n  |> filter(fn: (r) => r.Device == \"7266b21b-7f83-4204-86f7-d7c2d615edac\")";
+        private const string _queryAvgLaps = "from(bucket: \"ActivitiesMonitor\")\r\n  |> range(start: 0)\r\n  |> filter(fn: (r) => r._measurement == \"ActivitiesMonitor\")\r\n  |> filter(fn: (r) => r._field == \"Laps\")\r\n  |> filter(fn: (r) => r.Device == \"7266b21b-7f83-4204-86f7-d7c2d615edac\")";
         private const string _queryActivities = "from(bucket: \"ActivitiesMonitor\")\r\n    |> range(start: 0)\r\n    |> filter(fn: (r) => r._measurement == \"ActivitiesMonitor\")\r\n    |> filter(fn: (r) => r.Device == \"%%DEVICEHERE%%\")";
         private const string _queryActivity = "from(bucket: \"ActivitiesMonitor\")\r\n    |> range(start: 0)\r\n    |> filter(fn: (r) => r._measurement == \"ActivitiesMonitor\")\r\n    |> filter(fn: (r) => r.Device == \"%%DEVICEHERE%%\")\r\n    |> filter(fn: (r) => r.Activity == \"%%ACTIVITYHERE%%\")";
         private InfluxDBClient Client { get; set; }
@@ -36,29 +38,6 @@ namespace ITS.PW2023.API.DataAccess
             catch (Exception ex)
             {
                 return Results.Problem(ex.Message);
-            }
-        }
-
-        [Measurement("ActivitiesMonitor")]
-        private class ActivitiesMonitor
-        {
-            [Column("Device", IsTag = true)] public string IdDevice { get; set; }
-            [Column("Activity", IsTag = true)] public string IdActivity { get; set; }
-            [Column("PositionX")] public double PositionX { get; set; }
-            [Column("PositionY")] public double PositionY { get; set; }
-            [Column("HeartBeat")] public int HeartBeat { get; set; }
-            [Column("Laps")] public int Laps { get; set; }
-            [Column(IsTimestamp = true)] public DateTime Time { get; set; }
-
-            public ActivitiesMonitor(ActivityData data)
-            {
-                IdDevice = data.IdDevice.ToString();
-                IdActivity = data.IdActivity.ToString();
-                PositionX = data.Position.Longitude;
-                PositionY = data.Position.Latitude;
-                HeartBeat = data.Heartbeat;
-                Laps = data.Laps;
-                Time = data.Time;
             }
         }
 
@@ -92,10 +71,69 @@ namespace ITS.PW2023.API.DataAccess
                 query = query.Replace("%%DEVICEHERE%%", devGUID);
 
                 var readapi = client.GetQueryApi();
-                List<FluxTable> table = await readapi.QueryAsync(query, Org);
-                ReturnedRows rows = ReturnedRows.GetRows(table);
+                List<FluxTable> tables = await readapi.QueryAsync(query, Org);
+                ReturnedRows rows = ReturnedRows.GetRows(tables);
 
                 return Results.Ok(rows);
+            }
+            catch (Exception ex)
+            {
+                return Results.Problem(ex.Message);
+            }
+        }
+
+        public async Task<IResult> GetAvgHB(string devGUID)
+        {
+            try
+            {
+                using var client = Client;
+
+                var readapi = client.GetQueryApi();
+
+                string query = _queryAvgHB.Replace("%%DEVICEHERE%%", devGUID);
+
+                List<FluxTable> tables = await readapi.QueryAsync(query, Org);
+
+                int totalHB = 0;
+                int instancesHB = 0;
+
+                foreach(var table in tables)
+                {
+                    table.Records.ForEach(record =>
+                    {
+                        totalHB += Int32.Parse(record.GetValueByKey("_value").ToString());
+                        instancesHB++;
+                    });
+                }
+
+                return Results.Ok(Convert.ToInt32(totalHB / instancesHB));
+            }
+            catch (Exception ex)
+            {
+                return Results.Problem(ex.Message);
+            }
+        }
+
+        public async Task<IResult> GetAvgLaps(string devGUID)
+        {
+            try
+            {
+                using var client = Client;
+
+                var readapi = client.GetQueryApi();
+
+                string query = _queryAvgLaps.Replace("%%DEVICEHERE%%", devGUID);
+
+                List<FluxTable> tables = await readapi.QueryAsync(query, Org);
+
+                int totallaps = 0;
+
+                foreach (var table in tables)
+                {
+                    totallaps += Convert.ToInt32(table.Records.Max(record => record.GetValueByKey("_value")));
+                }
+
+                return Results.Ok(Convert.ToInt32(totallaps / tables.Count));
             }
             catch (Exception ex)
             {
