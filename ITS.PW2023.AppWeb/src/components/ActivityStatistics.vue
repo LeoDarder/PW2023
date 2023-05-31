@@ -72,12 +72,9 @@ export default {
 
             const avgHB = await fetch(`${baseUrl}/getAvgHB?devGUID={devGUID}${devGuid}`);
             this.avgHeartBeat = await avgHB.json();
-            console.log("this.avgHeartBeat", this.avgHeartBeat);
 
             const avgLaps = await fetch(`${baseUrl}/getAvgLaps?devGUID={devGUID}${devGuid}`);
             this.avgLaps = await avgLaps.json();
-            console.log("this.avgLaps", this.avgLaps);
-
         }
     }
 }

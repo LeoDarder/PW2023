@@ -35,6 +35,7 @@ body {
 }
 .card-title {
     font-weight: bold;
+    margin-bottom: 0px;
 }
 .card-icon {
     font-size: 70px;
@@ -43,6 +44,7 @@ body {
 .card-value {
     font-weight: bold;
     font-size: xx-large;
+    margin-bottom: 0px;
 }
 .details {
     font-family: LemonMilk;
