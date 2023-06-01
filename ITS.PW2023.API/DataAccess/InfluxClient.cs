@@ -100,7 +100,7 @@ namespace ITS.PW2023.API.DataAccess
                 {
                     table.Records.ForEach(record =>
                     {
-                        totalHB += Int32.Parse(record.GetValueByKey("_value").ToString());
+                        totalHB += int.Parse(record.GetValueByKey("_value").ToString());
                         instancesHB++;
                     });
                 }
@@ -131,7 +131,7 @@ namespace ITS.PW2023.API.DataAccess
                     totallaps += Convert.ToInt32(table.Records.Max(record => record.GetValueByKey("_value")));
                 }
 
-                return Results.Ok((totallaps / tables.Count).ToString("0.0"));
+                return Results.Ok(Math.Round((decimal) totallaps / tables.Count, 2));
             }
             catch (Exception ex)
             {
