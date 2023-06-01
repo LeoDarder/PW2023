@@ -45,6 +45,7 @@ export default {
     width: 100%;
     color: var(--color-lightblue);
     background-color: var(--color-darkblue);
+    box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.5);
     padding: 0 1%;
     position: fixed;
     top: 0px;

@@ -26,7 +26,7 @@
         </div>
     </div>
     <div v-else class="loading">
-        <img :src="loadingImage" />
+        <img :src="loadingImage" style="margin-top: calc(50% + 64px);"/>
         <h4>LOADING ...</h4>
     </div>
 </template>

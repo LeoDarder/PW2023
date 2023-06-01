@@ -1,24 +1,28 @@
 <template>
-    <div v-if="!loading" class="statisticPage">
-        <activity-card
-            v-for="activity in activities"
-            :key="activity.guid"
-            :id="activity.guid"
-            :date="activity.date"
-            :duration="activity.duration"
-            :avgHB="activity.avgHB"
-            :position="activity.position"
-            :laps="activity.laps"
-        ></activity-card>
-    </div>
-    <div v-else class="loading">
-        <img :src="loadingImage" />
-        <h4>LOADING ...</h4>
+    <div class="statistics">
+        <side-bar @reloadActivities="getValues"></side-bar>
+        <div v-if="!loading" class="activities">
+            <activity-card
+                v-for="activity in activities"
+                :key="activity.guid"
+                :id="activity.guid"
+                :date="activity.date"
+                :duration="activity.duration"
+                :avgHB="activity.avgHB"
+                :position="activity.position"
+                :laps="activity.laps"
+            ></activity-card>
+        </div>
+        <div v-else class="loading">
+            <img :src="loadingImage" />
+            <h4>LOADING ...</h4>
+        </div>
     </div>
 </template>
 
 <script>
 import ActivityCard from './ActivityCard.vue';
+import SideBar from './SideBar.vue';
 
 const baseUrl = "https://cper-pw2023-gruppo5-api.azurewebsites.net";
 const devGuid = "36cd50f0-fc01-4ddb-930d-011a7afcb417";
@@ -26,7 +30,8 @@ const devGuid = "36cd50f0-fc01-4ddb-930d-011a7afcb417";
 export default {
     name: "ActivityStatistics",
     components: {
-        ActivityCard
+        ActivityCard,
+        SideBar
     },
     data() {
         return {
@@ -42,6 +47,7 @@ export default {
     },
     methods: {
         async getValues() {
+            console.log("FUNZIONAAAA");
             const activities = await fetch(`${baseUrl}/getActivities?devGUID=${devGuid}`);
             this.activities = await activities.json();
             this.loading = false;
@@ -63,30 +69,7 @@ export default {
                 }
             }
             */
-
-            const avgHB = await fetch(`${baseUrl}/getAvgHB?devGUID=${devGuid}`);
-            this.avgHeartBeat = await avgHB.json();
-
-            const avgLaps = await fetch(`${baseUrl}/getAvgLaps?devGUID=${devGuid}`);
-            this.avgLaps = await avgLaps.json();
         }
     }
 }
 </script>
-
-<style>
-.general-data {
-    display: flex;
-    flex-direction: column;
-}
-
-.general {
-    font-family: LemonMilk;
-    height: 28vh;
-    padding: 10px;
-    margin-bottom: 5vh;
-    display: flex;
-    justify-content: space-evenly;
-    background-color: var(--color-lightblue);
-}
-</style>

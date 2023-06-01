@@ -22,7 +22,16 @@ body {
     justify-content: center;
 }
 
-.statisticPage {
+.loading.side {
+    width: 100%;
+}
+
+.statistics {
+    display: flex;
+    flex-direction: row;
+}
+
+.activities {
     display: flex;
     justify-content: start;
     flex-wrap: wrap;
