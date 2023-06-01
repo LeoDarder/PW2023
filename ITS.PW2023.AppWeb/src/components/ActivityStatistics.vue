@@ -1,18 +1,5 @@
 <template>
-    <div class="statisticPage">
-        <!-- per ora non fanno nulla, vediamo se farli diventare cliccabili -->
-        <div class="general-data">
-            <div class="card general">
-                <h5 class="card-title">Avg. heart beat</h5>
-                <i class="bi bi-heart-pulse-fill card-icon"></i>
-                <h5 class="card-value">{{ this.avgHeartBeat }}</h5>
-            </div>
-            <div class="card general">
-                <h5 class="card-title">Avg. laps</h5>
-                <i class="bi bi-water card-icon"></i>
-                <h5 class="card-value">{{ this.avgLaps }}</h5>
-            </div>
-        </div>
+    <div v-if="!loading" class="statisticPage">
         <activity-card
             v-for="activity in activities"
             :key="activity.guid"
@@ -23,6 +10,10 @@
             :position="activity.position"
             :laps="activity.laps"
         ></activity-card>
+    </div>
+    <div v-else class="loading">
+        <img :src="loadingImage" />
+        <h4>LOADING ...</h4>
     </div>
 </template>
 
@@ -39,6 +30,8 @@ export default {
     },
     data() {
         return {
+            loading: true,
+            loadingImage: require("../../public/swimming-loader-1.gif"),
             activities: [],
             avgHeartBeat: null,
             avgLaps: null
@@ -51,6 +44,7 @@ export default {
         async getValues() {
             const activities = await fetch(`${baseUrl}/getActivities?devGUID=${devGuid}`);
             this.activities = await activities.json();
+            this.loading = false;
 
             this.activities.sort(function(a,b){
                 return new Date(b.date) - new Date(a.date);

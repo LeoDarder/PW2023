@@ -3,17 +3,23 @@
     --color-blue: #19A7CE;
     --color-lightblue: #AFD3E2;
     --color-beige: #F6F1F1;
-    
-    --color-white: #ffffff;
-}
 
-@font-face {
-    font-family: LemonMilk;
-    src: url(../../fonts/LEMONMILK-Medium.otf);
+    --color-white: #ffffff;
+    --color-black: #000000;
 }
 
 body {
     background-color: var(--color-beige);
+}
+
+.loading {
+    font-family: LemonMilk;
+    font-style: italic;
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+    justify-content: center;
 }
 
 .statisticPage {
@@ -22,31 +28,38 @@ body {
     flex-wrap: wrap;
     margin: 5vh 0vh 0vh 5vh;
 }
+
 .card {
     width: 240px;
     min-width: 220px;
     height: 61vh;
     margin: 0vh 5vh 5vh 0vh;
     background-color: rgba(255, 255, 255, 0.3);
+    /* --color-white */
     transition: 0.5s;
 }
+
 .card:hover {
     background: var(--color-white);
-    box-shadow: 2px 2px var(--color-darkblue);
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
 }
+
 .card-title {
     font-weight: bold;
     margin-bottom: 0px;
 }
+
 .card-icon {
     font-size: 70px;
     color: var(--color-darkblue);
 }
+
 .card-value {
     font-weight: bold;
     font-size: xx-large;
     margin-bottom: 0px;
 }
+
 .details {
     font-family: LemonMilk;
     margin: 10px auto;
@@ -54,6 +67,7 @@ body {
     color: var(--color-darkblue);
     background-color: transparent;
 }
+
 .details:hover {
     color: var(--color-lightblue);
     background-color: var(--color-darkblue);

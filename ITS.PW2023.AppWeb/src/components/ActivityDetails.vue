@@ -1,5 +1,5 @@
 <template>
-    <div class="detailCard">
+    <div v-if="!loading" class="detailCard">
         <div class="info">
             <span><b class="costumFont">Date</b> {{ formatDate }}</span>
             <span><b class="costumFont">Time</b> {{ formatTime }}</span>
@@ -25,6 +25,10 @@
             <div class="map" id="map"></div>
         </div>
     </div>
+    <div v-else class="loading">
+        <img :src="loadingImage" />
+        <h4>LOADING ...</h4>
+    </div>
 </template>
 
 <script>
@@ -39,6 +43,8 @@ export default {
     name: "ActivityDetails",
     data() {
         return {
+            loading: true,
+            loadingImage: require("../../public/swimming-loader-2.gif"),
             laps: null,
             goal: null,
             actGuid: null,
@@ -64,12 +70,12 @@ export default {
                 this.initLapsGraph(data);
                 this.initMap(data);
             })
-
     },
     methods: {
         async getValues() {
             const response = await fetch(`${baseUrl}/getRows?devGUID=${devGuid}&actGUID=${this.actGuid}`);
             this.values = await response.json();
+            this.loading = false;
             return this.values;
         },
         initHBGraph(data) {
@@ -147,11 +153,6 @@ export default {
 </script>
 
 <style>
-@font-face {
-    font-family: LemonMilk;
-    src: url(../../fonts/LEMONMILK-Medium.otf);
-}
-
 .costumFont {
     font-family: LemonMilk;
 }
