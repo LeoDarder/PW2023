@@ -30,7 +30,7 @@
 import ActivityCard from './ActivityCard.vue';
 
 const baseUrl = "https://cper-pw2023-gruppo5-api.azurewebsites.net";
-const devGuid = "aa76d690-29c4-4696-999d-997a18e46e75";
+const devGuid = "36cd50f0-fc01-4ddb-930d-011a7afcb417";
 
 export default {
     name: "ActivityStatistics",
@@ -70,10 +70,10 @@ export default {
             }
             */
 
-            const avgHB = await fetch(`${baseUrl}/getAvgHB?devGUID={devGUID}${devGuid}`);
+            const avgHB = await fetch(`${baseUrl}/getAvgHB?devGUID=${devGuid}`);
             this.avgHeartBeat = await avgHB.json();
 
-            const avgLaps = await fetch(`${baseUrl}/getAvgLaps?devGUID={devGUID}${devGuid}`);
+            const avgLaps = await fetch(`${baseUrl}/getAvgLaps?devGUID=${devGuid}`);
             this.avgLaps = await avgLaps.json();
         }
     }

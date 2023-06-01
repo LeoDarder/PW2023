@@ -33,7 +33,7 @@ import Chart from 'chart.js/auto';
 import ProgressBar from 'progressbar.js'
 
 const baseUrl = "https://cper-pw2023-gruppo5-api.azurewebsites.net";
-const devGuid = "aa76d690-29c4-4696-999d-997a18e46e75";
+const devGuid = "36cd50f0-fc01-4ddb-930d-011a7afcb417";
 
 export default {
     name: "ActivityDetails",
