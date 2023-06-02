@@ -11,6 +11,7 @@
                 :avgHB="activity.avgHB"
                 :position="activity.position"
                 :laps="activity.laps"
+                @openedDetails="openedDetails"
             ></activity-card>
         </div>
         <div v-else class="loading">
@@ -43,11 +44,12 @@ export default {
         }
     },
     mounted() {
+        this.$emit("openedActivities");
+
         this.getValues();
     },
     methods: {
         async getValues() {
-            console.log("FUNZIONAAAA");
             const activities = await fetch(`${baseUrl}/getActivities?devGUID=${devGuid}`);
             this.activities = await activities.json();
             this.loading = false;
@@ -69,6 +71,9 @@ export default {
                 }
             }
             */
+        },
+        openedDetails() {
+            this.$emit("openedDetails")
         }
     }
 }

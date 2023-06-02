@@ -8,12 +8,11 @@
             <p class="card-text"><b style="font-family: LemonMilk;">Position</b><br>LON {{ position.longitude }}<br>LAT {{ position.latitude }}</p>
             <p class="card-text"><b style="font-family: LemonMilk;">Laps</b><br>{{ laps }}</p>
         </div>
-        <router-link :to="{ name: 'ActivityDetails', params: { id: id } }" class="btn details">DETAILS</router-link>
+        <router-link :to="{ name: 'ActivityDetails', params: { id: id } }" class="btn details" @openedDetails="openedDetails">DETAILS</router-link>
     </div>
 </template>
 
 <script>
-
 export default {
     name: "ActivityCard",
     props: [
@@ -41,6 +40,11 @@ export default {
             var date = new Date(this.date);
             return `${date.toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})}`
         }
+    },
+    methods: {
+        openedDetails() {
+            this.$emit("openedDetails");
+        }
     }
 }
 </script>
@@ -56,7 +60,6 @@ export default {
     font-size: xx-large;
     color: var(--color-blue);
     text-shadow: 1.5px 1.5px var(--color-darkblue);
-    padding-top: 10px;
     margin: 0px;
 }
 
@@ -70,6 +73,9 @@ export default {
 
 .card-body {
     font-size: initial;
-    padding: 16px 16px 0px 16px;
+    padding: 0px 16px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 </style>

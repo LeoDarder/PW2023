@@ -1,6 +1,7 @@
 <template>
     <div v-if="!loading" class="detailCard">
         <div class="info">
+            <router-link to="/" class="btn back"><i class="bi bi-backspace-fill"></i></router-link>
             <span><b class="costumFont">Date</b> {{ formatDate }}</span>
             <span><b class="costumFont">Time</b> {{ formatTime }}</span>
             <span><b class="costumFont">Duration</b> {{ values.duration }} minutes</span>
@@ -62,6 +63,8 @@ export default {
         }
     },
     mounted() {
+        this.$emit("openedDetails");
+        
         this.actGuid = this.$route.params.id;
         this.getValues()
             .then((data) => {
@@ -165,9 +168,9 @@ export default {
 .info {
     margin: 10px 10px 0px 10px;
     border-radius: 6px;
-    padding: 10px;
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    align-items: center;
+    grid-template-columns: 4% 32% 32% 32%;
     background-color: var(--color-white);
 }
 

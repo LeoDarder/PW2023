@@ -4,7 +4,7 @@
             <nav class="navbar">
                 <div class="nav-menu">
                     <i class="bi bi-droplet-half" style="font-size: xx-large;"></i>
-                    <router-link to="/" class="link">Activities</router-link>
+                    <router-link to="/" class="link">{{ title }}</router-link>
                 </div>
                 <div class="nav-logout">
                     <button class="btn logoutButton" type="button" @click="logout">
@@ -14,7 +14,7 @@
             </nav>
         </div>
         <div class="body">
-            <router-view />
+            <router-view @openedDetails="changeTitleDetails" @openedActivities="changeTitleActivities"/>
         </div>
     </div>
 </template>
@@ -22,9 +22,20 @@
 <script>
 export default {
     name: "HomePage",
+    data() {
+        return {
+            title: ''
+        }
+    },
     methods: {
         logout() {
             this.$emit("changeComponent", "LoginPage");
+        },
+        changeTitleDetails() {
+            this.title = "Details"
+        },
+        changeTitleActivities() {
+            this.title = "Activities"
         }
     }
 }
