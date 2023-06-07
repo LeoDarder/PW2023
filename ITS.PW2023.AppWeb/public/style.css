@@ -84,6 +84,7 @@ body {
 
 .back {
     font-family: LemonMilk;
+    font-size: large;
     margin: 10px auto;
     border: 2px solid var(--color-darkblue);
     color: var(--color-darkblue);

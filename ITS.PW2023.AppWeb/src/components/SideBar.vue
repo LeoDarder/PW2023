@@ -10,7 +10,7 @@
                 <option value="3">Device 2</option>
             </select>
             <button class="btn reload" type="button" @click="$emit('reloadActivities')">
-                <span><i class="bi bi-cloud-arrow-down-fill"></i></span>
+                <span><i class="bi bi-cloud-download-fill"></i></span>
             </button>
         </div>
         <div v-if="!loading" class="general-data">

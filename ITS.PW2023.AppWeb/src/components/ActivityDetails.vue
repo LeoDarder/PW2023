@@ -1,7 +1,7 @@
 <template>
     <div v-if="!loading" class="detailCard">
         <div class="info">
-            <router-link to="/" class="btn back"><i class="bi bi-backspace-fill"></i></router-link>
+            <router-link to="/" class="btn back"><i class="bi bi-caret-left-fill"></i></router-link>
             <span><b class="costumFont">Date</b> {{ formatDate }}</span>
             <span><b class="costumFont">Time</b> {{ formatTime }}</span>
             <span><b class="costumFont">Duration</b> {{ values.duration }} minutes</span>
@@ -23,9 +23,9 @@
                     </div>
                 </div>
             </div>
-            <div class="map" id="map"></div>
+                <div class="map" id="map"></div>
+            </div>
         </div>
-    </div>
     <div v-else class="loading">
         <img :src="loadingImage" style="margin-top: calc(50% + 64px);"/>
         <h4>LOADING ...</h4>
@@ -121,7 +121,7 @@ export default {
                         circle.setText('');
                     }
                     else {
-                        circle.setText(`<i class="bi bi-water"></i><br><p>${laps}</p>`);
+                        circle.setText(`<i class="bi bi-water"></i><br><p style="margin:0px;">${laps}</p>`);
                     }
 
                 }

@@ -4,7 +4,7 @@
             <nav class="navbar">
                 <div class="nav-menu">
                     <i class="bi bi-droplet-half" style="font-size: xx-large;"></i>
-                    <router-link to="/" class="link">{{ title }}</router-link>
+                    <p class="header-title">{{ title }}</p>
                 </div>
                 <div class="nav-logout">
                     <button class="btn logoutButton" type="button" @click="logout">
@@ -70,25 +70,9 @@ export default {
     gap: 10px;
 }
 
-.link {
-    color: var(--color-lightblue);
-    background-color: transparent;
-    text-decoration: none;
-    border-bottom: solid 1px transparent;
-    transition: 0.5s;
-}
-
-.link::after {
-    content: '';
-    width: 0px;
-    height: 1px;
-    display: block;
-    background: var(--color-lightblue);
-    transition: 300ms;
-}
-
-.link:hover::after {
-    width: 100%;
+.header-title {
+    margin: 0px;
+    font-size: larger;
 }
 
 .logoutButton {
