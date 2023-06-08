@@ -23,6 +23,7 @@ namespace ITS.PW2023.API.Models
                 if (rows.Date == DateTime.MinValue)
                 {
                     rows.Date = (DateTime)firstRecord.GetTimeInDateTime();
+                    rows.Duration = Convert.ToInt32(((DateTime)table.Records.Max(x => x.GetTimeInDateTime()) - (DateTime)table.Records.Min(x => x.GetTimeInDateTime())).TotalMinutes);
                 }
 
                 if (String.Equals(firstRecord.GetField(), "PositionX"))

@@ -8,6 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<InfluxClient>();
+builder.Services.AddSingleton<UserServices>();
 
 builder.Services.AddCors(options =>
 {
@@ -33,39 +34,33 @@ app.UseHttpsRedirection();
 
 app.UseCors("cors-all");
 
-app.MapPost("/writeData", (ActivityData data) =>
+app.MapPost("/writeData", async (ActivityData data, InfluxClient influx) =>
 {
-    InfluxClient influx = new(builder.Configuration);
     return influx.WriteData(data);
 });
 
-app.MapGet("/getActivities", (string devGUID) =>
+app.MapGet("/getActivities", async (string devGUID, InfluxClient influx) =>
 {
-    InfluxClient influx = new(builder.Configuration);
     return influx.ReadActivities(devGUID);
 });
 
-app.MapGet("/getRows", (string devGUID, string actGUID) =>
+app.MapGet("/getRows", async (string devGUID, string actGUID, InfluxClient influx) =>
 {
-    InfluxClient influx = new(builder.Configuration);
     return influx.ReadRows(devGUID, actGUID);
 });
 
-app.MapGet("/getUserData", (string username, string password) =>
+app.MapGet("/getUserData", (string username, string password, UserServices userServices) =>
 {
-    UserServices userServices = new(builder.Configuration);
     return userServices.GetUserData(username, password);
 });
 
-app.MapGet("/getAvgHB", (string devGUID) =>
+app.MapGet("/getAvgHB", (string devGUID, InfluxClient influx) =>
 {
-    InfluxClient influx = new(builder.Configuration);
     return influx.GetAvgHB(devGUID);
 });
 
-app.MapGet("/getAvgLaps", (string devGUID) =>
+app.MapGet("/getAvgLaps", (string devGUID, InfluxClient influx) =>
 {
-    InfluxClient influx = new(builder.Configuration);
     return influx.GetAvgLaps(devGUID);
 });
 
