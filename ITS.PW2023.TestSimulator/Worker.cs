@@ -17,6 +17,7 @@ namespace ITS.PW2023.TestSimulator
         {
             _logger = logger;
             _httpClient = httpClientFactory.CreateClient();
+            _httpClient.Timeout = new TimeSpan(0, 0, 20);
             _config = new Config();
             _configuration = configuration;
             configuration.GetSection(Config.ConfigPosition).Bind(_config);

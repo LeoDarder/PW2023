@@ -100,7 +100,7 @@ namespace ITS.PW2023.API.DataAccess
                 {
                     table.Records.ForEach(record =>
                     {
-                        totalHB += Int32.Parse(record.GetValueByKey("_value").ToString());
+                        totalHB += int.Parse(record.GetValueByKey("_value").ToString());
                         instancesHB++;
                     });
                 }
