@@ -8,8 +8,8 @@ namespace ITS.PW2023.API.DataAccess
 {
     public class InfluxClient
     {
-        private const string _queryAvgHB = "from(bucket: \"ActivitiesMonitor\")\r\n  |> range(start: 0)\r\n  |> filter(fn: (r) => r._measurement == \"ActivitiesMonitor\")\r\n  |> filter(fn: (r) => r._field == \"HeartBeat\")\r\n  |> filter(fn: (r) => r.Device == \"7266b21b-7f83-4204-86f7-d7c2d615edac\")";
-        private const string _queryAvgLaps = "from(bucket: \"ActivitiesMonitor\")\r\n  |> range(start: 0)\r\n  |> filter(fn: (r) => r._measurement == \"ActivitiesMonitor\")\r\n  |> filter(fn: (r) => r._field == \"Laps\")\r\n  |> filter(fn: (r) => r.Device == \"7266b21b-7f83-4204-86f7-d7c2d615edac\")";
+        private const string _queryAvgHB = "from(bucket: \"ActivitiesMonitor\")\r\n  |> range(start: 0)\r\n  |> filter(fn: (r) => r._measurement == \"ActivitiesMonitor\")\r\n  |> filter(fn: (r) => r._field == \"HeartBeat\")\r\n  |> filter(fn: (r) => r.Device == \"%%DEVICEHERE%%\")";
+        private const string _queryAvgLaps = "from(bucket: \"ActivitiesMonitor\")\r\n  |> range(start: 0)\r\n  |> filter(fn: (r) => r._measurement == \"ActivitiesMonitor\")\r\n  |> filter(fn: (r) => r._field == \"Laps\")\r\n  |> filter(fn: (r) => r.Device == \"%%DEVICEHERE%%\")";
         private const string _queryActivities = "from(bucket: \"ActivitiesMonitor\")\r\n    |> range(start: 0)\r\n    |> filter(fn: (r) => r._measurement == \"ActivitiesMonitor\")\r\n    |> filter(fn: (r) => r.Device == \"%%DEVICEHERE%%\")";
         private const string _queryActivity = "from(bucket: \"ActivitiesMonitor\")\r\n    |> range(start: 0)\r\n    |> filter(fn: (r) => r._measurement == \"ActivitiesMonitor\")\r\n    |> filter(fn: (r) => r.Device == \"%%DEVICEHERE%%\")\r\n    |> filter(fn: (r) => r.Activity == \"%%ACTIVITYHERE%%\")";
         private InfluxDBClient Client { get; set; }
@@ -88,10 +88,9 @@ namespace ITS.PW2023.API.DataAccess
             {
                 using var client = Client;
 
-                var readapi = client.GetQueryApi();
-
                 string query = _queryAvgHB.Replace("%%DEVICEHERE%%", devGUID);
 
+                var readapi = client.GetQueryApi();
                 List<FluxTable> tables = await readapi.QueryAsync(query, Org);
 
                 int totalHB = 0;
@@ -101,7 +100,7 @@ namespace ITS.PW2023.API.DataAccess
                 {
                     table.Records.ForEach(record =>
                     {
-                        totalHB += Int32.Parse(record.GetValueByKey("_value").ToString());
+                        totalHB += int.Parse(record.GetValueByKey("_value").ToString());
                         instancesHB++;
                     });
                 }
@@ -120,10 +119,9 @@ namespace ITS.PW2023.API.DataAccess
             {
                 using var client = Client;
 
-                var readapi = client.GetQueryApi();
-
                 string query = _queryAvgLaps.Replace("%%DEVICEHERE%%", devGUID);
 
+                var readapi = client.GetQueryApi();
                 List<FluxTable> tables = await readapi.QueryAsync(query, Org);
 
                 int totallaps = 0;
@@ -133,7 +131,7 @@ namespace ITS.PW2023.API.DataAccess
                     totallaps += Convert.ToInt32(table.Records.Max(record => record.GetValueByKey("_value")));
                 }
 
-                return Results.Ok(Convert.ToInt32(totallaps / tables.Count));
+                return Results.Ok(Math.Round((decimal) totallaps / tables.Count, 1));
             }
             catch (Exception ex)
             {

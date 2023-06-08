@@ -17,6 +17,7 @@ namespace ITS.PW2023.TestSimulator
         {
             _logger = logger;
             _httpClient = httpClientFactory.CreateClient();
+            _httpClient.Timeout = new TimeSpan(0, 0, 20);
             _config = new Config();
             _configuration = configuration;
             configuration.GetSection(Config.ConfigPosition).Bind(_config);
@@ -30,7 +31,7 @@ namespace ITS.PW2023.TestSimulator
             {
                 connection.Open();
 
-                string query = "SELECT TOP 10 device FROM users ORDER BY NEWID()";
+                string query = "SELECT TOP 10 DeviceID FROM UsersDevices ORDER BY NEWID()";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
                     using (SqlDataReader reader = command.ExecuteReader())
