@@ -2,19 +2,20 @@
 
 @using Data
 
-<RadzenDataGrid Data="errors" TItem="Error" AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" AllowSorting="true">
-    <RadzenDataGridColumn TItem="Error" Property="DevGUID" Title="Device"/>
-    <RadzenDataGridColumn TItem="Error" Property="ActGUID" Title="Activity"/>
-    <RadzenDataGridColumn TItem="Error" Property="Field" Title="Field"/>
-    <RadzenDataGridColumn TItem="Error" Property="Data" Title="Data"/>
+<RadzenDataGrid Data="@errors" LoadData="@LoadData" TItem="Error" AllowGrouping="true" AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" AllowSorting="true">
+    <Columns>
+        <RadzenDataGridColumn TItem="Error" Property="devGUID" Title="Device" />
+        <RadzenDataGridColumn TItem="Error" Property="actGUID" Title="Activity" />
+        <RadzenDataGridColumn TItem="Error" Property="field" Title="Field" />
+        <RadzenDataGridColumn TItem="Error" Property="data" Title="Data" />
+    </Columns>
 </RadzenDataGrid>
 
 @code {
-    List<Error> errors = new();
+    IEnumerable<Error> errors;
 
-    protected override async Task OnInitializedAsync()
+    async Task LoadData()
     {
-        await base.OnInitializedAsync();
-        errors = Error.GetErrors();
+        errors = await Error.GetErrorsAsync();
     }
 }

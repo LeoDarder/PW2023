@@ -5,23 +5,25 @@ namespace ITS.PW2023.GRUPPO5.ErrorsWebView.Data
 {
     public class Error
     {
-        public string DevGUID { get; set; }
-        public string ActGUID { get; set; }
-        public string Field { get; set; }
-        public string Data { get; set; }
+        public string devGUID { get; set; }
+        public string actGUID { get; set; }
+        public string field { get; set; }
+        public string data { get; set; }
 
-        public static async Task<List<Error>> ErrorsAsync()
+        public static async Task<List<Error>> GetErrorsAsync()
         {
-            using HttpClient client = new();
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue("localhost:7030/GetErrors"));
+            try
+            {
+                using HttpClient client = new();
+                //client.DefaultRequestHeaders.Accept.Clear();
 
-            var json = await client.GetStringAsync(
-                    "localhost:7030/GetErrors");
-            var error = JsonSerializer.Deserialize<List<Error>>(json);
-
-            return error;
+                var json = await client.GetStringAsync("https://localhost:7030/getErrors");
+                return JsonSerializer.Deserialize<List<Error>>(json);
+            }
+            catch
+            {
+                return new List<Error>();
+            }
         }
     }
 }
