@@ -1,4 +1,5 @@
 ﻿using System.Net.Http.Headers;
+using System.Text.Json;
 
 namespace ITS.PW2023.GRUPPO5.ErrorsWebView.Data
 {
@@ -9,11 +10,18 @@ namespace ITS.PW2023.GRUPPO5.ErrorsWebView.Data
         public string Field { get; set; }
         public string Data { get; set; }
 
-        //public static async List<Error> GetErrors()
-        //{
-        //    using HttpClient client = new();
-        //    var json = await client.GetStringAsync("localhost:7030/GetErrors");
-            
-        //}
+        public static async Task<List<Error>> ErrorsAsync()
+        {
+            using HttpClient client = new();
+            client.DefaultRequestHeaders.Accept.Clear();
+            client.DefaultRequestHeaders.Accept.Add(
+                new MediaTypeWithQualityHeaderValue("localhost:7030/GetErrors"));
+
+            var json = await client.GetStringAsync(
+                    "localhost:7030/GetErrors");
+            var error = JsonSerializer.Deserialize<List<Error>>(json);
+
+            return error;
+        }
     }
 }
