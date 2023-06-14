@@ -1,9 +1,20 @@
 ﻿@page "/"
 
-<PageTitle>Index</PageTitle>
+@using Data
 
-<h1>Hello, world!</h1>
+<RadzenDataGrid Data="errors" TItem="Error" AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" AllowSorting="true">
+    <RadzenDataGridColumn TItem="Error" Property="DevGUID" Title="Device"/>
+    <RadzenDataGridColumn TItem="Error" Property="ActGUID" Title="Activity"/>
+    <RadzenDataGridColumn TItem="Error" Property="Field" Title="Field"/>
+    <RadzenDataGridColumn TItem="Error" Property="Data" Title="Data"/>
+</RadzenDataGrid>
 
-Welcome to your new app.
+@code {
+    List<Error> errors = new();
 
-<SurveyPrompt Title="How is Blazor working for you?" />
+    protected override async Task OnInitializedAsync()
+    {
+        await base.OnInitializedAsync();
+        errors = Error.GetErrors();
+    }
+}

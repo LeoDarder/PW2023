@@ -9,13 +9,11 @@ namespace ITS.PW2023.GRUPPO5.ErrorsWebView.Data
         public string Field { get; set; }
         public string Data { get; set; }
 
-        public static List<Error> Errors()
-        {
-            using HttpClient client = new();
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(
-                new MediaTypeWithQualityHeaderValue("application/vnd.github.v3+json"));
-
-        }
+        //public static async List<Error> GetErrors()
+        //{
+        //    using HttpClient client = new();
+        //    var json = await client.GetStringAsync("localhost:7030/GetErrors");
+            
+        //}
     }
 }
