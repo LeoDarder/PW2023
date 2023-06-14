@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Configuration;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +22,8 @@ namespace ITS.PW2023.Simulator.Models
         public int HighLimit { get; set; }
         public int LowLimit { get; set; }
         public int ErrorRate { get; set; }
+        public int MaxIncrease { get; set; }
+        public int MaxDecrease { get; set; }
     }
 
     public class PositionConfig

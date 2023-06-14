@@ -18,6 +18,8 @@ namespace ITS.PW2023.Simulator.Models
         private readonly int LowHeartbeatLimit;
         private readonly int HighHeartbeatLimit;
         private readonly int HeartbeatErrorRate;
+        private readonly int HeartbeatMaxIncrease;
+        private readonly int HeartbeatMaxDecrease;
         private readonly int LapsTotal;
         private readonly int LapsCount;
         private readonly int PositionErrorRate;
@@ -32,6 +34,8 @@ namespace ITS.PW2023.Simulator.Models
             LowHeartbeatLimit = config.Heartbeat.LowLimit;
             HighHeartbeatLimit = config.Heartbeat.HighLimit;
             HeartbeatErrorRate = config.Heartbeat.ErrorRate;
+            HeartbeatMaxIncrease = config.Heartbeat.MaxIncrease;
+            HeartbeatMaxDecrease = config.Heartbeat.MaxDecrease;
 
             LapsTotal = Random.Shared.Next(config.Lap.Min, config.Lap.Max + 1);
             LapsCount = config.Lap.LapsCount;
@@ -79,7 +83,7 @@ namespace ITS.PW2023.Simulator.Models
             }
             else
             {
-                generatedHeartbeat = CurrentActivity.PreviousHeartbeat == -1 ? rand.Next(LowHeartbeatLimit, HighHeartbeatLimit) : CurrentActivity.PreviousHeartbeat + rand.Next(-5, 6);
+                generatedHeartbeat = CurrentActivity.PreviousHeartbeat == -1 ? rand.Next(LowHeartbeatLimit, HighHeartbeatLimit) : CurrentActivity.PreviousHeartbeat + rand.Next(HeartbeatMaxDecrease, HeartbeatMaxIncrease + 1);
                 CurrentActivity.PreviousHeartbeat = generatedHeartbeat;
             }
             
