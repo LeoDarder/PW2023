@@ -1,7 +1,5 @@
 using ITS.PW2023.Simulator.Models;
 using ITS.PW2023.Simulator.Engine;
-using ITS.PW2023.Simulator.Models;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Data.SqlClient;
 
 namespace ITS.PW2023.TestSimulator
@@ -31,15 +29,13 @@ namespace ITS.PW2023.TestSimulator
             {
                 connection.Open();
 
-                string query = "SELECT TOP 10 device FROM users ORDER BY NEWID()";
+                string query = "SELECT TOP 10 DeviceID FROM UsersDevices ORDER BY NEWID()";
                 using (SqlCommand command = new SqlCommand(query, connection))
                 {
-                    using (SqlDataReader reader = command.ExecuteReader())
+                    using SqlDataReader reader = command.ExecuteReader();
+                    while (reader.Read())
                     {
-                        while (reader.Read())
-                        {
-                            devices.Add(new Device(reader.GetGuid(0), _config));
-                        }
+                        devices.Add(new Device(reader.GetGuid(0), _config));
                     }
                 }
                 connection.Close();

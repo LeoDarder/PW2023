@@ -1,5 +1,6 @@
 ﻿using InfluxDB.Client.Core.Exceptions;
 using ITS.PW2023.API.Models;
+using Microsoft.AspNetCore.Mvc;
 using System.Data.SqlClient;
 using System.Security.Cryptography;
 using System.Text;
@@ -8,7 +9,8 @@ namespace ITS.PW2023.API.DataAccess
 {
     public class UserServices
     {
-        private const string _query = $"SELECT ud.*  FROM [dbo].[UsersDevices] ud  JOIN users u ON ud.Username = u.username  WHERE u.username = '@username' AND  u.password = '@password'";
+        private const string _queryRead = $"SELECT ud.*  FROM [dbo].[UsersDevices] ud  JOIN users u ON ud.Username = u.username  WHERE u.username = '@username' AND  u.password = '@password'";
+        private const string _queryPost = "UPDATE [dbo].[UsersDevices] SET DeviceName = '@name' WHERE DeviceID = '@devGUID'";
 
         private string connString;
         public UserServices(IConfiguration configuration)
@@ -20,7 +22,7 @@ namespace ITS.PW2023.API.DataAccess
             var hashedBytes = SHA256.HashData(Encoding.UTF8.GetBytes(password));
             string hashedPassword = BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
 
-            string query = _query.Replace("@username", username).Replace("@password", hashedPassword);
+            string query = _queryRead.Replace("@username", username).Replace("@password", hashedPassword);
 
             using var conn = new SqlConnection(connString);
             var comm = new SqlCommand(query, conn);
@@ -47,6 +49,18 @@ namespace ITS.PW2023.API.DataAccess
             {
                 throw new NotFoundException("Wrong User or Password!");
             }
+        }
+
+        public int PostDeviceName(string devGUID, string deviceName)
+        {
+            string query = _queryPost.Replace("@name", deviceName).Replace("@devGUID", devGUID);
+
+            using var conn = new SqlConnection(connString);
+            var comm = new SqlCommand(query, conn);
+            //comm.Parameters.AddWithValue("name", deviceName);
+            //comm.Parameters.AddWithValue("devGUID", devGUID);
+            conn.Open();
+            return comm.ExecuteNonQuery();
         }
     }
 }

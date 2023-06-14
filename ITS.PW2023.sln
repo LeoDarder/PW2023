@@ -9,7 +9,9 @@ Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "its.pw2023.appweb", "ITS.PW
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ITS.PW2023.API", "ITS.PW2023.API\ITS.PW2023.API.csproj", "{32567749-2F8E-4116-8264-60D47004633F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITS.PW2023.TestSimulator", "ITS.PW2023.TestSimulator\ITS.PW2023.TestSimulator.csproj", "{ADFD86EA-7CF2-48BB-B1F2-05551C8DB112}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ITS.PW2023.TestSimulator", "ITS.PW2023.TestSimulator\ITS.PW2023.TestSimulator.csproj", "{ADFD86EA-7CF2-48BB-B1F2-05551C8DB112}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ITS.PW2023.GRUPPO5.ErrorsWebView", "ITS.PW2023.GRUPPO5.ErrorsWebView\ITS.PW2023.GRUPPO5.ErrorsWebView.csproj", "{BB934355-E421-4B07-B950-1FA1943A2BFB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -35,6 +37,10 @@ Global
 		{ADFD86EA-7CF2-48BB-B1F2-05551C8DB112}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ADFD86EA-7CF2-48BB-B1F2-05551C8DB112}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ADFD86EA-7CF2-48BB-B1F2-05551C8DB112}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BB934355-E421-4B07-B950-1FA1943A2BFB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BB934355-E421-4B07-B950-1FA1943A2BFB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BB934355-E421-4B07-B950-1FA1943A2BFB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BB934355-E421-4B07-B950-1FA1943A2BFB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

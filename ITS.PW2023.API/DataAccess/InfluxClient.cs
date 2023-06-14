@@ -1,6 +1,5 @@
 ﻿using InfluxDB.Client;
 using InfluxDB.Client.Api.Domain;
-using InfluxDB.Client.Core;
 using InfluxDB.Client.Core.Flux.Domain;
 using ITS.PW2023.API.Models;
 
@@ -12,26 +11,31 @@ namespace ITS.PW2023.API.DataAccess
         private const string _queryAvgLaps = "from(bucket: \"ActivitiesMonitor\")\r\n  |> range(start: 0)\r\n  |> filter(fn: (r) => r._measurement == \"ActivitiesMonitor\")\r\n  |> filter(fn: (r) => r._field == \"Laps\")\r\n  |> filter(fn: (r) => r.Device == \"%%DEVICEHERE%%\")";
         private const string _queryActivities = "from(bucket: \"ActivitiesMonitor\")\r\n    |> range(start: 0)\r\n    |> filter(fn: (r) => r._measurement == \"ActivitiesMonitor\")\r\n    |> filter(fn: (r) => r.Device == \"%%DEVICEHERE%%\")";
         private const string _queryActivity = "from(bucket: \"ActivitiesMonitor\")\r\n    |> range(start: 0)\r\n    |> filter(fn: (r) => r._measurement == \"ActivitiesMonitor\")\r\n    |> filter(fn: (r) => r.Device == \"%%DEVICEHERE%%\")\r\n    |> filter(fn: (r) => r.Activity == \"%%ACTIVITYHERE%%\")";
+        private const string _queryErrors = "from(bucket: \"SmartwatchErrors\")\r\n    |> range(start: 0)\r\n    |> filter(fn: (r) => r._measurement == \"ActivitiesMonitor\")\r\n";
         private InfluxDBClient Client { get; set; }
-        private string Bucket { get; set; }
-        private string Org { get; set; }
+        private const string Bucket = "ActivitiesMonitor";
+        private const string ErrorsBucket = "SmartwatchErrors";
+        private const string Org = "Gruppo 5 Project Work 2023";
         public InfluxClient(IConfiguration configuration)
         {
             var token = configuration.GetConnectionString("Token");
-            Bucket = "ActivitiesMonitor";
-            Org = "Gruppo 5 Project Work 2023";
-
             Client = new InfluxDBClient("https://westeurope-1.azure.cloud2.influxdata.com", token);
         }
 
-        public IResult WriteData(ActivityData data)
+        public async Task<IResult> WriteData(ActivityData data)
         {
             try
             {
-                if (data.Heartbeat < 20 || data.Heartbeat > 200 || data.Position.Latitude < -90 || data.Position.Latitude > 90 || data.Position.Longitude < -180 || data.Position.Longitude > 180) return Results.Problem("Almeno un dato generato contiene un errore");
                 using var client = Client;
                 var activityData = new ActivitiesMonitor(data);
                 using var writeApi = client.GetWriteApi();
+
+                if (data.Heartbeat < 20 || data.Heartbeat > 200 || data.Position.Latitude < -90 || data.Position.Latitude > 90 || data.Position.Longitude < -180 || data.Position.Longitude > 180)
+                {
+                    writeApi.WriteMeasurement(activityData, WritePrecision.Ns, ErrorsBucket, Org);
+                    return Results.Ok();
+                }
+
                 writeApi.WriteMeasurement(activityData, WritePrecision.Ns, Bucket, Org);
                 return Results.Ok();
             }
@@ -39,6 +43,22 @@ namespace ITS.PW2023.API.DataAccess
             {
                 return Results.Problem(ex.Message);
             }
+
+
+            //try
+            //{
+            //    if (data.Heartbeat < 20 || data.Heartbeat > 200 || data.Position.Latitude < -90 || data.Position.Latitude > 90 || data.Position.Longitude < -180 || data.Position.Longitude > 180) return Results.Problem("Almeno un dato generato contiene un errore");
+            //    using var client = Client;
+            //    var activityData = new ActivitiesMonitor(data);
+            //    using var writeApi = client.GetWriteApi();
+            //    writeApi.WriteMeasurement(activityData, WritePrecision.Ns, Bucket, Org);
+            //    return Results.Ok();
+            //}
+            //catch (Exception ex)
+            //{
+            //    return Results.Problem(ex.Message);
+            //}
+            //ciao
         }
 
         public async Task<IResult> ReadActivities(string devGUID)
@@ -132,6 +152,24 @@ namespace ITS.PW2023.API.DataAccess
                 }
 
                 return Results.Ok(Math.Round((decimal) totallaps / tables.Count, 1));
+            }
+            catch (Exception ex)
+            {
+                return Results.Problem(ex.Message);
+            }
+        }
+
+        public async Task<IResult> GetErrors()
+        {
+            try
+            {
+                using var client = Client;
+
+                var readapi = client.GetQueryApi();
+                List<FluxTable> tables = await readapi.QueryAsync(_queryErrors, Org);
+                List<ReturnedError> errors = ReturnedError.GetReturnedErrors(tables);
+
+                return Results.Ok(errors);
             }
             catch (Exception ex)
             {
