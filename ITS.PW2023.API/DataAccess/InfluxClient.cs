@@ -2,6 +2,7 @@
 using InfluxDB.Client.Api.Domain;
 using InfluxDB.Client.Core.Flux.Domain;
 using ITS.PW2023.API.Models;
+using Newtonsoft.Json.Linq;
 
 namespace ITS.PW2023.API.DataAccess
 {
@@ -12,21 +13,21 @@ namespace ITS.PW2023.API.DataAccess
         private const string _queryActivities = "from(bucket: \"ActivitiesMonitor\")\r\n    |> range(start: 0)\r\n    |> filter(fn: (r) => r._measurement == \"ActivitiesMonitor\")\r\n    |> filter(fn: (r) => r.Device == \"%%DEVICEHERE%%\")";
         private const string _queryActivity = "from(bucket: \"ActivitiesMonitor\")\r\n    |> range(start: 0)\r\n    |> filter(fn: (r) => r._measurement == \"ActivitiesMonitor\")\r\n    |> filter(fn: (r) => r.Device == \"%%DEVICEHERE%%\")\r\n    |> filter(fn: (r) => r.Activity == \"%%ACTIVITYHERE%%\")";
         private const string _queryErrors = "from(bucket: \"SmartwatchErrors\")\r\n    |> range(start: 0)\r\n    |> filter(fn: (r) => r._measurement == \"ActivitiesMonitor\")\r\n";
-        private InfluxDBClient Client { get; set; }
+
+        private readonly string Token;
         private const string Bucket = "ActivitiesMonitor";
         private const string ErrorsBucket = "SmartwatchErrors";
         private const string Org = "Gruppo 5 Project Work 2023";
         public InfluxClient(IConfiguration configuration)
         {
-            var token = configuration.GetConnectionString("Token");
-            Client = new InfluxDBClient("https://westeurope-1.azure.cloud2.influxdata.com", token);
+            Token = configuration.GetConnectionString("Token");
         }
 
         public async Task<IResult> WriteData(ActivityData data)
         {
             try
             {
-                using var client = Client;
+                using var client = new InfluxDBClient("https://westeurope-1.azure.cloud2.influxdata.com", Token);
                 var activityData = new ActivitiesMonitor(data);
                 using var writeApi = client.GetWriteApi();
 
@@ -65,7 +66,7 @@ namespace ITS.PW2023.API.DataAccess
         {
             try
             {
-                using var client = Client;
+                using var client = new InfluxDBClient("https://westeurope-1.azure.cloud2.influxdata.com", Token);
 
                 string query = _queryActivities.Replace("%%DEVICEHERE%%", devGUID);
 
@@ -85,7 +86,7 @@ namespace ITS.PW2023.API.DataAccess
         {
             try
             {
-                using var client = Client;
+                using var client = new InfluxDBClient("https://westeurope-1.azure.cloud2.influxdata.com", Token);
 
                 string query = _queryActivity.Replace("%%ACTIVITYHERE%%", actGUID);
                 query = query.Replace("%%DEVICEHERE%%", devGUID);
@@ -106,7 +107,7 @@ namespace ITS.PW2023.API.DataAccess
         {
             try
             {
-                using var client = Client;
+                using var client = new InfluxDBClient("https://westeurope-1.azure.cloud2.influxdata.com", Token);
 
                 string query = _queryAvgHB.Replace("%%DEVICEHERE%%", devGUID);
 
@@ -137,7 +138,7 @@ namespace ITS.PW2023.API.DataAccess
         {
             try
             {
-                using var client = Client;
+                using var client = new InfluxDBClient("https://westeurope-1.azure.cloud2.influxdata.com", Token);
 
                 string query = _queryAvgLaps.Replace("%%DEVICEHERE%%", devGUID);
 
@@ -163,7 +164,7 @@ namespace ITS.PW2023.API.DataAccess
         {
             try
             {
-                using var client = Client;
+                using var client = new InfluxDBClient("https://westeurope-1.azure.cloud2.influxdata.com", Token);
 
                 var readapi = client.GetQueryApi();
                 List<FluxTable> tables = await readapi.QueryAsync(_queryErrors, Org);

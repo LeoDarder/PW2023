@@ -4,7 +4,7 @@
     {
         public string GuidDevice { get; set; }
         public string Username { get; set; }
-        public int? DesiredLaps { get; set; }
-        public string? DeviceName { get; set; }
+        public int DesiredLaps { get; set; }
+        public string DeviceName { get; set; }
     }
 }
