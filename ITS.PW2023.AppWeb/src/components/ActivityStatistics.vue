@@ -4,9 +4,9 @@
         <div v-if="!loading" class="activities">
             <activity-card
                 v-for="activity in activities"
-                :key="activity.guid"
-                :id="activity.guid"
-                :date="activity.date"
+                :key="activity.idDevice"
+                :id="activity.idDevice"
+                :date="activity.time"
                 :duration="activity.duration"
                 :avgHB="activity.avgHB"
                 :position="activity.position"
@@ -61,9 +61,9 @@ export default {
             /* STRUTTURA OGGETTO
             {
                 avgHB: 136.5
-                date: "2023-05-04T10:00:04.066517Z"
+                time: "2023-05-04T10:00:04.066517Z"
                 duration: 0
-                guid: "bc3da806-f738-49a6-912b-83a9e29fb70d"
+                idDevice: "bc3da806-f738-49a6-912b-83a9e29fb70d"
                 laps: 0
                 position: {
                     latitude: 10.289943348874695
