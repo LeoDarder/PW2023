@@ -20,19 +20,54 @@
                     <span><i class="bi bi-person-fill-check" style="font-size: large;"></i></span>
                 </button>
             </div>
+            <div class="alert alert-danger align-items-center errorAlert" role="alert" ref="error" :class="{ 'classError': classError }">
+                <i class="bi bi-person-fill-slash"></i>&nbsp;{{ error }}
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+import { SHA256 } from 'crypto-js';
+
+const baseUrl = "https://cper-pw2023-gruppo5-api.azurewebsites.net";
+const username = "Carletto";
+const pw = "ccc";
+
 export default {
     name: "LoginPage",
+    data() {
+        return {
+            error: "",
+            classError: false
+        }
+    },
     methods: {
-        validateCredentials() {
-            this.reditectToHomePage();
+        async validateCredentials() {
+            var criptedPassw = SHA256(pw).toString();
+
+            const credentials = await fetch(`${baseUrl}/getUserData?username=${username}&password=${criptedPassw}`);
+            console.log(credentials.status);
+
+            if (credentials.status === 200) {
+                this.reditectToHomePage();
+            }
+            else if (credentials.status === 400) {
+                this.changeErrorMessage("Incorrect username or password");
+            }
+            else {
+                this.changeErrorMessage("Unknown error");
+            }
         },
         reditectToHomePage() {
             this.$emit("changeComponent", "HomePage")
+        },
+        changeErrorMessage(error) {
+            this.error = error;
+            this.classError = true;
+            setTimeout(() => {
+                this.classError = false;
+            }, 4000)
         }
     }
 }
@@ -63,7 +98,7 @@ export default {
 }
 
 .loginField {
-    width: 60%;
+    width: 50%;
     height: 40px;
     margin: 0px auto 15px;
 }
@@ -84,6 +119,7 @@ export default {
     border: 2px solid var(--color-darkblue);
     color: var(--color-darkblue);
     background-color: transparent;
+    margin: 0px auto 15px;
 }
 
 .loginButton:hover {
@@ -118,4 +154,36 @@ export default {
     display: block;
     opacity: 1;
     right: 0;
-}</style>
+}
+
+.errorAlert {
+    visibility: hidden;
+    font-size: initial;
+    width: fit-content;
+    margin: auto;
+}
+
+.classError {
+    animation-name: displayAlert;
+    animation-duration: 4s; 
+}
+
+@keyframes displayAlert {
+    0% {
+        visibility: hidden;
+        opacity: 0;
+    }
+    25% { 
+        visibility: visible;
+        opacity: 1;
+    }
+    75% {
+        visibility: visible;
+        opacity: 1;
+    }
+    100% { 
+        visibility: hidden;
+        opacity: 0;
+    }
+}
+</style>
