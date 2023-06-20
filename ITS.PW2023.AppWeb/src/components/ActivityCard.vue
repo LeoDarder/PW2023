@@ -60,7 +60,7 @@ export default {
     font-size: xx-large;
     color: var(--color-blue);
     text-shadow: 1.5px 1.5px var(--color-darkblue);
-    margin: 0px;
+    margin-top: 10px;
 }
 
 .cardSubtitle {
