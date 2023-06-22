@@ -42,6 +42,9 @@ const devGuid = "36cd50f0-fc01-4ddb-930d-011a7afcb417";
 
 export default {
     name: "ActivityDetails",
+    props: [
+        'userData'
+    ],
     data() {
         return {
             loading: true,
@@ -66,6 +69,7 @@ export default {
         this.$emit("openedDetails");
         
         this.actGuid = this.$route.params.id;
+
         this.getValues()
             .then((data) => {
                 console.log(data);
@@ -105,7 +109,11 @@ export default {
             })
         },
         initLapsGraph(data) {
-            this.goal = 10; // da prendere dal login
+            this.userData.forEach(data => {
+                if (data.guidDevice === devGuid) {
+                    this.goal = data.desiredLaps;
+                }
+            })
             var laps = data.laps;
             var perc = (laps / this.goal);
 

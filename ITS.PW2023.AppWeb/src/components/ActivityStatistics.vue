@@ -1,6 +1,9 @@
 <template>
     <div class="statistics">
-        <side-bar @reloadActivities="getValues"></side-bar>
+        <side-bar
+            :userData="userData"
+            @reloadActivities="getValues">
+        </side-bar>
         <div v-if="!loading" class="activities">
             <activity-card
                 v-for="activity in activities"
@@ -11,6 +14,7 @@
                 :avgHB="activity.avgHB"
                 :position="activity.position"
                 :laps="activity.laps"
+                :userData="userData"
                 @openedDetails="openedDetails"
             ></activity-card>
         </div>
@@ -34,6 +38,9 @@ export default {
         ActivityCard,
         SideBar
     },
+    props: [
+        'userData'
+    ],
     data() {
         return {
             loading: true,

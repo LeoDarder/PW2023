@@ -8,7 +8,7 @@
             <p class="card-text"><b style="font-family: LemonMilk;">Position</b><br>LON {{ position.longitude }}<br>LAT {{ position.latitude }}</p>
             <p class="card-text"><b style="font-family: LemonMilk;">Laps</b><br>{{ laps }}</p>
         </div>
-        <router-link :to="{ name: 'ActivityDetails', params: { id: id } }" class="btn details" @openedDetails="openedDetails">DETAILS</router-link>
+        <router-link :to="{ name: 'ActivityDetails', params: { id: id } }" class="btn details" :userData="userData" @openedDetails="openedDetails">DETAILS</router-link>
     </div>
 </template>
 
@@ -21,7 +21,8 @@ export default {
         'duration',
         'avgHB',
         'position',
-        'laps'
+        'laps',
+        'userData'
     ],
     data() {
         return {

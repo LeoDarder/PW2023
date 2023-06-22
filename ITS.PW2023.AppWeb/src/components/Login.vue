@@ -38,7 +38,6 @@ export default {
     name: "LoginPage",
     data() {
         return {
-            credentials: null,
             error: "",
             classError: false
         }
@@ -46,13 +45,15 @@ export default {
     methods: {
         async validateCredentials() {
             var criptedPassw = SHA256(pw).toString();
-            this.credentials = await fetch(`${baseUrl}/getUserData?username=${username}&password=${criptedPassw}`);
-            console.log(this.credentials.status);
-
-            if (this.credentials.status === 200) {
+            var credentials = await fetch(`${baseUrl}/getUserData?username=${username}&password=${criptedPassw}`);
+            var userData = await credentials.json();
+            console.log("Request status", credentials.status);
+            
+            if (credentials.status === 200) {
                 this.reditectToHomePage();
+                this.$emit("successfulLogin", userData);
             }
-            else if (this.credentials.status === 400) {
+            else if (credentials.status === 400) {
                 this.changeErrorMessage("Incorrect username or password");
             }
             else {
@@ -60,14 +61,14 @@ export default {
             }
         },
         reditectToHomePage() {
-            this.$emit("changeComponent", "HomePage")
+            this.$emit("changeComponent", "HomePage");
         },
         changeErrorMessage(error) {
             this.error = error;
             this.classError = true;
             setTimeout(() => {
                 this.classError = false;
-            }, 4000)
+            }, 3000)
         }
     }
 }

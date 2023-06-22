@@ -14,7 +14,10 @@
             </nav>
         </div>
         <div class="body">
-            <router-view @openedDetails="changeTitleDetails" @openedActivities="changeTitleActivities"/>
+            <router-view
+                :userData="userData"
+                @openedDetails="changeTitleDetails"
+                @openedActivities="changeTitleActivities"/>
         </div>
     </div>
 </template>
@@ -22,6 +25,9 @@
 <script>
 export default {
     name: "HomePage",
+    props: [
+        'userData'
+    ],
     data() {
         return {
             title: ''

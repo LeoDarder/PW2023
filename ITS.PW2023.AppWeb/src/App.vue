@@ -1,5 +1,10 @@
 <template>
-  <component @changeComponent="changeComponent" v-bind:is="displayedComponent"></component>
+  <component
+    :is="displayedComponent"
+    :userData="userData"
+    @changeComponent="changeComponent"
+    @successfulLogin="successfulLogin">
+  </component>
 </template>
 
 <script>
@@ -14,12 +19,16 @@ export default {
   },
   data() {
     return {
-      displayedComponent: "LoginPage"
+      displayedComponent: "LoginPage",
+      userData: []
     }
   },
   methods: {
     changeComponent(otherComponent) {
-      this.displayedComponent = otherComponent
+      this.displayedComponent = otherComponent;
+    },
+    successfulLogin(data) {
+      this.userData = data;
     }
   }
 }
