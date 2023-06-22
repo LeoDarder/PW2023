@@ -60,7 +60,6 @@ export default {
             this.$emit('reloadActivities');
         },
         async getAvgs() {
-            console.log("ciaoooo");
             const avgHB = await fetch(`${baseUrl}/getAvgHB?devGUID=${devGuid}`);
             this.avgHeartBeat = await avgHB.json();
 
