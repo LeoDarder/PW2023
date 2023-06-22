@@ -2,14 +2,15 @@
     <div class="sidebar">
         <div class="device-reload">
             <select class="form-select selectDevice">
-                da cambiare con gli alias presi da db
                 <option selected disabled>Select a device</option>
-                <option value="0">All</option>
-                <option value="1">Device 1</option>
-                <option value="2">Device 2</option>
-                <option value="3">Device 2</option>
+                <option
+                    v-for="data in userData"
+                    :key="data.guidDevice"
+                    :value="data.deviceName">
+                    {{ data.deviceName }}
+                </option>
             </select>
-            <button class="btn reload" type="button" @click="$emit('reloadActivities')">
+            <button class="btn reload" type="button" @click="reloadData">
                 <span><i class="bi bi-cloud-download-fill"></i></span>
             </button>
         </div>
@@ -38,6 +39,9 @@ const devGuid = "36cd50f0-fc01-4ddb-930d-011a7afcb417";
 
 export default {
     name: "SideBar",
+    props: [
+        'userData'
+    ],
     data() {
         return {
             loading: true,
@@ -52,9 +56,11 @@ export default {
     },
     methods: {
         async reloadData() {
-            // TODO da gestire
+            this.getAvgs();
+            this.$emit('reloadActivities');
         },
         async getAvgs() {
+            console.log("ciaoooo");
             const avgHB = await fetch(`${baseUrl}/getAvgHB?devGUID=${devGuid}`);
             this.avgHeartBeat = await avgHB.json();
 
