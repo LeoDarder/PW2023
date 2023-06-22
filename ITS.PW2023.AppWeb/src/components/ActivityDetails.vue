@@ -105,6 +105,14 @@ export default {
                             tension: 0.3
                         }
                     ]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            min: 50,
+                            max: 200,
+                        }
+                    }
                 }
             })
         },
