@@ -56,6 +56,20 @@ export default {
     src: url(../../fonts/LEMONMILK-Medium.otf);
 }
 
+.card {
+    width: 240px;
+    min-width: 220px;
+    height: 61vh;
+    margin: 0vh 5vh 5vh 0vh;
+    background-color: rgba(255, 255, 255, 0.3); /* --color-white */
+    transition: 0.5s;
+}
+
+.card:hover {
+    background: var(--color-white);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* --color-black */
+}
+
 .cardTitle {
     font-family: LemonMilk;
     font-size: xx-large;
@@ -78,5 +92,18 @@ export default {
     display: flex;
     flex-direction: column;
     justify-content: center;
+}
+
+.details {
+    font-family: LemonMilk;
+    margin: 10px auto;
+    border: 2px solid var(--color-darkblue);
+    color: var(--color-darkblue);
+    background-color: transparent;
+}
+
+.details:hover {
+    color: var(--color-lightblue);
+    background-color: var(--color-darkblue);
 }
 </style>

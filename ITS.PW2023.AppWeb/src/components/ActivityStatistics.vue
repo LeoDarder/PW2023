@@ -99,6 +99,16 @@ export default {
 </script>
 
 <style>
+.statistics {
+    display: flex;
+    flex-direction: row;
+}
+
+.reload-section {
+    display: flex;
+    margin: 5vh 0vh -2vh 5vh;
+}
+
 .reload {
     font-family: LemonMilk;
     font-size: large;
@@ -111,5 +121,12 @@ export default {
 .reload:hover {
     color: var(--color-lightblue);
     background-color: var(--color-darkblue);
+}
+
+.activities {
+    display: flex;
+    justify-content: start;
+    flex-wrap: wrap;
+    margin: 5vh 0vh 0vh 5vh;
 }
 </style>

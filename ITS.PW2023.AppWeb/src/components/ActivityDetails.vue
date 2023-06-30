@@ -190,6 +190,20 @@ export default {
     background-color: var(--color-white);
 }
 
+.back {
+    font-family: LemonMilk;
+    font-size: large;
+    margin: 10px auto;
+    border: 2px solid var(--color-darkblue);
+    color: var(--color-darkblue);
+    background-color: transparent;
+}
+
+.back:hover {
+    color: var(--color-lightblue);
+    background-color: var(--color-darkblue);
+}
+
 .graphs {
     display: flex;
     flex-direction: row;

@@ -98,4 +98,20 @@ export default {
     color: var(--color-black);
     background-color: var(--color-lightblue);
 }
+
+.card-title {
+    font-weight: bold;
+    margin-bottom: 0px;
+}
+
+.card-icon {
+    font-size: 70px;
+    color: var(--color-darkblue);
+}
+
+.card-value {
+    font-weight: bold;
+    font-size: xx-large;
+    margin-bottom: 0px;
+}
 </style>
