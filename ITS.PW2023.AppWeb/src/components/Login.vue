@@ -7,13 +7,19 @@
         <div class="loginForm">
             <div class="input-group flex-nowrap loginField">
                 <span class="input-group-text icon" id="addon-wrapping"><i class="bi bi-person-fill"></i></span>
-                <input type="text" class="form-control font" placeholder="Username" aria-label="Username"
-                    aria-describedby="addon-wrapping">
+                <input
+                    class="form-control font"
+                    type="text"
+                    v-model="username"
+                    placeholder="Username">
             </div>
             <div class="input-group flex-nowrap loginField">
                 <span class="input-group-text icon" id="addon-wrapping"><i class="bi bi-key-fill"></i></span>
-                <input type="password" class="form-control font" placeholder="Password" aria-label="Password"
-                    aria-describedby="addon-wrapping">
+                <input
+                    class="form-control font"
+                    type="password"
+                    v-model="password"
+                    placeholder="Password">
             </div>
             <div class="col-12">
                 <button type="submit" class="btn loginButton" @click="validateCredentials" value="">
@@ -31,21 +37,21 @@
 import { SHA256 } from 'crypto-js';
 
 const baseUrl = "https://cper-pw2023-gruppo5-api.azurewebsites.net";
-const username = "Carletto";
-const pw = "cagasbura";
 
 export default {
     name: "LoginPage",
     data() {
         return {
             error: "",
-            classError: false
+            classError: false,
+            username: "",
+            password: ""
         }
     },
     methods: {
         async validateCredentials() {
-            var criptedPassw = SHA256(pw).toString();
-            var credentials = await fetch(`${baseUrl}/getUserData?username=${username}&password=${criptedPassw}`);
+            var criptedPassw = SHA256(this.password).toString();
+            var credentials = await fetch(`${baseUrl}/getUserData?username=${this.username}&password=${criptedPassw}`);
             var userData = await credentials.json();
             console.log("Request status", credentials.status);
             
