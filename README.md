@@ -30,3 +30,49 @@ The configuration file is in `/Config/configuration.json` and have these value t
    
 4. **PoolLenghts**
    - `Array` Represents the Lenghts of the swimming pool, default `[25, 50]`
+
+
+## API
+
+### DOCUMENTATION
+
+**POST /writeData**
+   - `Guid IdDevice` Represents the GUID of the device that the data is from
+   - `Guid IdActivity` Represents the GUID of the activity that the data is from
+   - `int Heartbeat` Represents the value of the heartbeat, out of range `<20 || 200>`
+   - `Postion Position` Represents the geografical position expressed in coordinates, object formed by
+      - `Longitude` X geografical coordinate, out of range `<-180 || >180`
+      - `Latitude` Y geografical coordinate, out of range `<-90 || >90`
+   - `int Laps` Represents the number of laps done during the current activity
+   - `DateTime Time` Represent the time of the measurement  
+
+**GET /getActivities**
+- PARAMETERS:
+   - `string devGUID` Represents the GUID of the device that the data is from
+- RETURNS:
+   List of:
+   - `Guid? IdDevice` Represents the GUID of the device that the data is requested
+   - `DateTime Time` Represent the time of the measurement
+   - `int Duration` Represent, in minutes, the duration of the activity
+   - `int AvgHB` Represent the average heartbeat during the activity
+   - `Postion Position` Represents the geografical position expressed in coordinates, object formed by
+      - `Longitude` X geografical coordinate, out of range
+      - `Latitude` Y geografical coordinate
+   - `int Laps` Represents the number of laps done during the activity
+      
+**GET /getRows**
+- PARAMETERS:
+   - `string devGUID` Represents the GUID of the device that the data is from
+   - `string actGUID` Represents the GUID of the activity that the data is from
+- RETURNS:
+   - `DateTime Date` Represent the dateTime of the first data in the selected activity
+   - `int Duration` Represent, in minutes, the duration of the activity
+   - `Postion Position` Represents the geografical position expressed in coordinates, object formed by
+      - `Longitude` X geografical coordinate, out of range
+      - `Latitude` Y geografical coordinate
+   - `int Laps` Represents the number of laps done during the activity
+   - List of: `HBInstance` Represent the single instance of an hartbeat measurement, object formed by:
+      - `long HeartBeat` Represents the value of the heartbeat
+      - `Datetime Time` Represents the time when the value was measured
+            
+  
