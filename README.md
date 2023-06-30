@@ -75,4 +75,22 @@ The configuration file is in `/Config/configuration.json` and have these value t
       - `long HeartBeat` Represents the value of the heartbeat
       - `Datetime Time` Represents the time when the value was measured
             
-  
+**GET /getAvgHB**
+- PARAMETERS:
+  - `string devGUID` Represents the GUID of the device that the data is from
+- RETURNS:
+  - `int HeartBeat` Represents the average value of the heartbeat of a device
+
+**GET /getAvgLaps**
+- PARAMETERS:
+  - `string devGUID` Represents the GUID of the device that the data is from
+- RETURNS:
+  - `int Laps` Represents the average value of the laps of a device
+
+**GET /getErrors**
+- RETURNS
+  - `string devGUID` Represents the GUID of the device that the data comes from
+  - `string actGUID` Represents the GUID of the activity that the data comes from
+  - `string field` Represents the name of the field
+  - `string data` Represents the date that resulted in an error
+   
