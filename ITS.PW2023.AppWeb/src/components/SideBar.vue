@@ -1,8 +1,8 @@
 <template>
     <div class="sidebar">
-        <div class="device-reload">
+        <div class="device-selection">
+            <h5 class="device-label">Device</h5>
             <select class="form-select" v-model="deviceAlias">
-                <option disabled selected >Select a device</option>
                 <option
                     v-for="data in userData"
                     :key="data.guidDevice"
@@ -42,7 +42,7 @@ export default {
         return {
             loading: true,
             loadingImage: require("../../public/loading.gif"),
-            deviceAlias: "Select a device",
+            deviceAlias: "",
             deviceSelected: {},
             values: [],
             avgHeartBeat: null,
@@ -50,7 +50,10 @@ export default {
         }
     },
     mounted() {
-        this.getAvgs(this.deviceSelected.guidDevice);
+        this.getAvgs(this.deviceSelected.guidDevice)
+            .then(() => {
+                this.deviceAlias = this.userData[0].deviceName;
+            });
     },
     methods: {
         async getAvgs(device) {
@@ -88,9 +91,17 @@ export default {
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
 }
 
-.device-reload {
+.device-selection {
     display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     margin-bottom: 3vh;
+}
+
+.device-label {
+    font-family: LemonMilk;
+    font-size: initial;
+    margin-bottom: 5px;
 }
 
 .general-data {
