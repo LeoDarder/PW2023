@@ -18,7 +18,7 @@
                         <div class="lapsGraph" ref="laps"></div>
                         <div class="description">
                             <span><b class="costumFont desc">Goal</b> {{ goal }}</span><br>
-                            <span><b class="costumFont desc">Distance</b> 1.5km</span>
+                            <span><b class="costumFont desc">Distance</b> {{ distance }} m</span>
                         </div>
                     </div>
                 </div>
@@ -51,6 +51,7 @@ export default {
             loadingImage: require("../../public/swimming-loader-2.gif"),
             laps: null,
             goal: null,
+            distance: null,
             actGuid: null,
             values: {}
         }
@@ -124,6 +125,11 @@ export default {
             })
             var laps = data.laps;
             var perc = (laps / this.goal);
+
+            
+            this.distance = (data.laps * 50);
+            console.log("data.laps", data.laps);
+            console.log("distance", this.distance);
 
             var lapsCompleted = new ProgressBar.Circle(this.$refs.laps, {
                 strokeWidth: 4,
