@@ -52,7 +52,8 @@ export default {
     mounted() {
         this.getAvgs(this.deviceSelected.guidDevice)
             .then(() => {
-                this.deviceAlias = this.userData[0].deviceName;
+                var deviceName = sessionStorage.getItem("selectedDevice");
+                deviceName === null ? this.deviceAlias = this.userData[0].deviceName : this.deviceAlias = deviceName;   
             });
     },
     methods: {
@@ -71,8 +72,12 @@ export default {
             this.userData.forEach(data => {
                 if (data.deviceName === newVal) {
                     this.deviceSelected = data;
+
                     this.getAvgs(this.deviceSelected.guidDevice);
                     this.$emit("deviceSelected", this.deviceSelected);
+
+                    sessionStorage.clear();
+                    sessionStorage.setItem("selectedDevice", newVal);
                 }
             });
         }

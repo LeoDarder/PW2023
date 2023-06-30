@@ -35,6 +35,7 @@ export default {
     },
     methods: {
         logout() {
+            sessionStorage.clear();
             this.$emit("changeComponent", "LoginPage");
         },
         changeTitleDetails() {
