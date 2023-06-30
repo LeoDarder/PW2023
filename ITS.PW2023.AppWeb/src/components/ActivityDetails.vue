@@ -38,7 +38,6 @@ import Chart from 'chart.js/auto';
 import ProgressBar from 'progressbar.js'
 
 const baseUrl = "https://cper-pw2023-gruppo5-api.azurewebsites.net";
-const devGuid = "36cd50f0-fc01-4ddb-930d-011a7afcb417";
 
 export default {
     name: "ActivityDetails",
@@ -49,6 +48,8 @@ export default {
         return {
             loading: true,
             loadingImage: require("../../public/swimming-loader-2.gif"),
+            name: null,
+            deviceSelected: {},
             laps: null,
             goal: null,
             distance: null,
@@ -70,18 +71,25 @@ export default {
         this.$emit("openedDetails");
         
         this.actGuid = this.$route.params.id;
+        this.name = this.$route.params.name;
 
-        this.getValues()
+        this.userData.forEach(data => {
+            if (data.deviceName === this.name) {
+                this.deviceSelected = data;
+            }
+        })
+
+        this.getValues(this.deviceSelected.guidDevice)
             .then((data) => {
                 console.log(data);
                 this.initHBGraph(data);
                 this.initLapsGraph(data);
                 this.initMap(data);
-            })
+            });
     },
     methods: {
-        async getValues() {
-            const response = await fetch(`${baseUrl}/getRows?devGUID=${devGuid}&actGUID=${this.actGuid}`);
+        async getValues(device) {
+            const response = await fetch(`${baseUrl}/getRows?devGUID=${device}&actGUID=${this.actGuid}`);
             this.values = await response.json();
             this.loading = false;
             return this.values;
@@ -119,7 +127,7 @@ export default {
         },
         initLapsGraph(data) {
             this.userData.forEach(data => {
-                if (data.guidDevice === devGuid) {
+                if (data.guidDevice === this.deviceSelected.guidDevice) {
                     this.goal = data.desiredLaps;
                 }
             })

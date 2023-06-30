@@ -8,7 +8,13 @@
             <p class="card-text"><b style="font-family: LemonMilk;">Position</b><br>LON {{ position.longitude }}<br>LAT {{ position.latitude }}</p>
             <p class="card-text"><b style="font-family: LemonMilk;">Laps</b><br>{{ laps }}</p>
         </div>
-        <router-link :to="{ name: 'ActivityDetails', params: { id: id } }" class="btn details" :userData="userData" @openedDetails="openedDetails">DETAILS</router-link>
+        <router-link
+            :to="{ name: 'ActivityDetails', params: { id: id, name: deviceName } }"
+            class="btn details"
+            :userData="userData"
+            @openedDetails="openedDetails">
+            DETAILS
+        </router-link>
     </div>
 </template>
 
@@ -22,7 +28,8 @@ export default {
         'avgHB',
         'position',
         'laps',
-        'userData'
+        'userData',
+        'deviceName'
     ],
     data() {
         return {
@@ -30,9 +37,6 @@ export default {
         }
     },
     computed: {
-        shortId() {
-            return this.id.toString().slice(0, 4);
-        },
         formatDate() {
             var date = new Date(this.date);
             return `${date.toLocaleDateString()}`

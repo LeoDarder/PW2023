@@ -3,7 +3,8 @@
         <side-bar
             ref="sideBar"
             :userData="userData"
-            @reloadActivities="getValues">
+            @reloadActivities="getValues"
+            @deviceSelected="getDevice">
         </side-bar>
         <div v-if="!loading" class="statistics-page">
             <div class="reload-section">
@@ -22,6 +23,7 @@
                     :position="activity.position"
                     :laps="activity.laps"
                     :userData="userData"
+                    :deviceName="deviceSelected.deviceName"
                     @openedDetails="openedDetails"
                 ></activity-card>
             </div>
@@ -38,7 +40,6 @@ import ActivityCard from './ActivityCard.vue';
 import SideBar from './SideBar.vue';
 
 const baseUrl = "https://cper-pw2023-gruppo5-api.azurewebsites.net";
-const devGuid = "36cd50f0-fc01-4ddb-930d-011a7afcb417";
 
 export default {
     name: "ActivityStatistics",
@@ -53,6 +54,7 @@ export default {
         return {
             loading: true,
             loadingImage: require("../../public/swimming-loader-1.gif"),
+            deviceSelected: {},
             activities: [],
             avgHeartBeat: null,
             avgLaps: null
@@ -60,23 +62,25 @@ export default {
     },
     mounted() {
         this.$emit("openedActivities");
-
-        this.getValues();
+        this.getValues(this.deviceSelected.guidDevice);
     },
     methods: {
-        reloadData() {
-            this.getValues();
-            this.$refs.sideBar.getAvgs();
+        getDevice(device) {
+            this.deviceSelected = device;
         },
-        async getValues() {
-            const activities = await fetch(`${baseUrl}/getActivities?devGUID=${devGuid}`);
+        reloadData() {
+            this.getValues(this.deviceSelected.guidDevice);
+            this.$refs.sideBar.getAvgs(this.deviceSelected.guidDevice);
+        },
+        async getValues(device) {
+            const activities = await fetch(`${baseUrl}/getActivities?devGUID=${device}`);
             this.activities = await activities.json();
             this.loading = false;
-
+            
             this.activities.sort(function(a,b){
                 return new Date(b.date) - new Date(a.date);
             });
-
+            
             /* STRUTTURA OGGETTO
             {
                 avgHB: 136.5
@@ -93,6 +97,16 @@ export default {
         },
         openedDetails() {
             this.$emit("openedDetails")
+        }
+    },
+    watch: {
+        deviceSelected(newVal) {
+            this.userData.forEach(data => {
+                if (data === newVal) {
+                    this.deviceSelected = data;
+                    this.getValues(this.deviceSelected.guidDevice);
+                }
+            });
         }
     }
 }

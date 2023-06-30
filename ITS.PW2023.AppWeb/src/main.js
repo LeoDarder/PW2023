@@ -11,7 +11,7 @@ const routes = [
       component: ActivityStatistics
     },
     {
-      path: '/Activity/:id',
+      path: '/Activity/:id/Device/:name',
       name: 'ActivityDetails',
       component: ActivityDetails,
       params: true

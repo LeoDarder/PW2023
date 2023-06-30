@@ -1,8 +1,8 @@
 <template>
     <div class="sidebar">
         <div class="device-reload">
-            <select class="form-select">
-                <option selected disabled>Select a device</option>
+            <select class="form-select" v-model="deviceAlias">
+                <option disabled selected >Select a device</option>
                 <option
                     v-for="data in userData"
                     :key="data.guidDevice"
@@ -32,7 +32,6 @@
 
 <script>
 const baseUrl = "https://cper-pw2023-gruppo5-api.azurewebsites.net";
-const devGuid = "36cd50f0-fc01-4ddb-930d-011a7afcb417";
 
 export default {
     name: "SideBar",
@@ -43,23 +42,36 @@ export default {
         return {
             loading: true,
             loadingImage: require("../../public/loading.gif"),
+            deviceAlias: "Select a device",
+            deviceSelected: {},
             values: [],
             avgHeartBeat: null,
-            avgLaps: null
+            avgLaps: null,
         }
     },
     mounted() {
-        this.getAvgs();
+        this.getAvgs(this.deviceSelected.guidDevice);
     },
     methods: {
-        async getAvgs() {
-            const avgHB = await fetch(`${baseUrl}/getAvgHB?devGUID=${devGuid}`);
+        async getAvgs(device) {
+            const avgHB = await fetch(`${baseUrl}/getAvgHB?devGUID=${device}`);
             this.avgHeartBeat = await avgHB.json();
 
-            const avgLaps = await fetch(`${baseUrl}/getAvgLaps?devGUID=${devGuid}`);
+            const avgLaps = await fetch(`${baseUrl}/getAvgLaps?devGUID=${device}`);
             this.avgLaps = await avgLaps.json();
 
             this.loading = false;
+        }
+    },
+    watch: {
+        deviceAlias(newVal) {
+            this.userData.forEach(data => {
+                if (data.deviceName === newVal) {
+                    this.deviceSelected = data;
+                    this.getAvgs(this.deviceSelected.guidDevice);
+                    this.$emit("deviceSelected", this.deviceSelected);
+                }
+            });
         }
     }
 }
