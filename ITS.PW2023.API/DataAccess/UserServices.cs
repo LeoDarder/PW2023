@@ -19,15 +19,11 @@ namespace ITS.PW2023.API.DataAccess
         }
         public List<UserData> GetUserData(string username, string password)
         {
-            var hashedBytes = SHA256.HashData(Encoding.UTF8.GetBytes(password));
-            string hashedPassword = BitConverter.ToString(hashedBytes).Replace("-", "").ToLower();
-
-            string query = _queryRead.Replace("@username", username).Replace("@password", hashedPassword);
+            string query = _queryRead.Replace("@username", username).Replace("@password", password);
 
             using var conn = new SqlConnection(connString);
             var comm = new SqlCommand(query, conn);
-            //comm.Parameters.AddWithValue("username", username);
-            //comm.Parameters.AddWithValue("password", hashedPassword);
+
             conn.Open();
             var reader = comm.ExecuteReader();
             if(reader.HasRows)
@@ -38,16 +34,16 @@ namespace ITS.PW2023.API.DataAccess
                     users.Add(new UserData
                     {
                         GuidDevice = reader.GetGuid(0).ToString(),
-                        Username = reader.GetString(1),
+                        Username = reader.GetString(1).Trim(),
                         DesiredLaps = reader.GetInt32(2),
-                        DeviceName = reader.GetString(3)
+                        DeviceName = reader.GetString(3).Trim()
                     });
                 }
                 return users;
             }
             else
             {
-                throw new NotFoundException("Wrong User or Password!");
+                return new();
             }
         }
 

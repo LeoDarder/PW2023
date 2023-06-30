@@ -5,12 +5,12 @@ namespace ITS.PW2023.API.Models
 {
     public class ReturnedActivity
     {
-        public string Guid { get; set; }
-        public DateTime Date { get; set; }
+        public Guid? IdDevice { get; set; }
+        public DateTime Time { get; set; }
         public int Duration { get; set; }
         public int AvgHB { get; set; }
         public Position Position { get; set; }
-        public long Laps { get; set; }
+        public int Laps { get; set; }
 
         public static List<ReturnedActivity> GetReturnedActivities(List<FluxTable> tables)
         {
@@ -29,12 +29,12 @@ namespace ITS.PW2023.API.Models
                 {
                     var firstRecord = table.Records.First();
 
-                    if (act.Guid is null)
+                    if (act.IdDevice is null)
                     {
-                        act.Guid = firstRecord.GetValueByKey("Activity").ToString();
-                        act.Date = (DateTime)firstRecord.GetTimeInDateTime();
-                        minDate = act.Date;
-                        maxDate = act.Date;
+                        act.IdDevice = new Guid(firstRecord.GetValueByKey("Activity").ToString());
+                        act.Time = (DateTime)firstRecord.GetTimeInDateTime();
+                        minDate = act.Time;
+                        maxDate = act.Time;
                     }
 
                     DateTime minDateTimeRow = (DateTime)table.Records.Min(x => x.GetTimeInDateTime());
@@ -62,7 +62,7 @@ namespace ITS.PW2023.API.Models
                     }
                     else if (String.Equals(firstRecord.GetField(), "Laps"))
                     {
-                        act.Laps = table.Records.Max(x =>(long) x.GetValueByKey("_value"));
+                        act.Laps = (int) table.Records.Max(x =>(long) x.GetValueByKey("_value"));
                     }
                 }
 

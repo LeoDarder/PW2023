@@ -65,19 +65,22 @@ app.MapGet("/getErrors", (InfluxClient influx) =>
 
 app.MapGet("/getUserData", (string username, string password, UserServices userServices) =>
 {
-    return userServices.GetUserData(username, password);
+    var urs = userServices.GetUserData(username, password);
+
+    if (urs.Any())
+    {
+        return Results.Ok(urs);
+    }
+    else
+    {
+        return Results.BadRequest("Credentials not valid");
+    }
 });
 
 app.MapPost("/changeDevName", (string devName, string devGUID, UserServices userServices) =>
 {
-    if(userServices.PostDeviceName(devGUID, devName) == 1)
-    {
+        userServices.PostDeviceName(devGUID, devName);
         return Results.Ok();
-    }
-    else
-    {
-        return Results.NotFound("Name not valid");
-    };
 });
 
 app.Run();

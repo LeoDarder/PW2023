@@ -31,7 +31,7 @@ namespace ITS.PW2023.API.DataAccess
                 var activityData = new ActivitiesMonitor(data);
                 using var writeApi = client.GetWriteApi();
 
-                if (data.Heartbeat < 20 || data.Heartbeat > 200 || data.Position.Latitude < -90 || data.Position.Latitude > 90 || data.Position.Longitude < -180 || data.Position.Longitude > 180)
+                if (data.Heartbeat < 30 || data.Heartbeat > 200 || data.Position.Latitude < -90 || data.Position.Latitude > 90 || data.Position.Longitude < -180 || data.Position.Longitude > 180)
                 {
                     writeApi.WriteMeasurement(activityData, WritePrecision.Ns, ErrorsBucket, Org);
                     return Results.Ok();
@@ -44,22 +44,6 @@ namespace ITS.PW2023.API.DataAccess
             {
                 return Results.Problem(ex.Message);
             }
-
-
-            //try
-            //{
-            //    if (data.Heartbeat < 20 || data.Heartbeat > 200 || data.Position.Latitude < -90 || data.Position.Latitude > 90 || data.Position.Longitude < -180 || data.Position.Longitude > 180) return Results.Problem("Almeno un dato generato contiene un errore");
-            //    using var client = Client;
-            //    var activityData = new ActivitiesMonitor(data);
-            //    using var writeApi = client.GetWriteApi();
-            //    writeApi.WriteMeasurement(activityData, WritePrecision.Ns, Bucket, Org);
-            //    return Results.Ok();
-            //}
-            //catch (Exception ex)
-            //{
-            //    return Results.Problem(ex.Message);
-            //}
-            //ciao
         }
 
         public async Task<IResult> ReadActivities(string devGUID)
@@ -68,13 +52,13 @@ namespace ITS.PW2023.API.DataAccess
             {
                 using var client = new InfluxDBClient("https://westeurope-1.azure.cloud2.influxdata.com", Token);
 
-                string query = _queryActivities.Replace("%%DEVICEHERE%%", devGUID);
+                string query = _queryActivities.Replace("%%DEVICEHERE%%", devGUID.ToLower());
 
                 var readapi = client.GetQueryApi();
                 List<FluxTable> table = await readapi.QueryAsync(query, Org);
                 List<ReturnedActivity> activities = ReturnedActivity.GetReturnedActivities(table);
 
-                return Results.Ok(activities);
+                return Results.Ok(activities.OrderByDescending(x => x.Time));
             }
             catch (Exception ex)
             {
@@ -126,7 +110,14 @@ namespace ITS.PW2023.API.DataAccess
                     });
                 }
 
-                return Results.Ok(Convert.ToInt32(totalHB / instancesHB));
+                if(instancesHB > 0)
+                {
+                    return Results.Ok(Convert.ToInt32(totalHB / instancesHB));
+                }
+                else
+                {
+                    return Results.Ok(0);
+                }
             }
             catch (Exception ex)
             {
@@ -152,7 +143,14 @@ namespace ITS.PW2023.API.DataAccess
                     totallaps += Convert.ToInt32(table.Records.Max(record => record.GetValueByKey("_value")));
                 }
 
-                return Results.Ok(Math.Round((decimal) totallaps / tables.Count, 1));
+                if(tables.Count > 0)
+                {
+                    return Results.Ok(Math.Round((decimal)totallaps / tables.Count, 1));
+                }
+                else
+                {
+                    return Results.Ok(0);
+                }
             }
             catch (Exception ex)
             {

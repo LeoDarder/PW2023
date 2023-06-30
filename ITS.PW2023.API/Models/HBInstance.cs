@@ -2,12 +2,12 @@
 {
     public class HBInstance
     {
-        public long HeartBeat { get; set; }
+        public int HeartBeat { get; set; }
         public DateTime Time { get; set; }
 
         public HBInstance(long heartBeat, DateTime time)
         {
-            HeartBeat = heartBeat;
+            HeartBeat = (int) heartBeat;
             Time = time;
         }
 

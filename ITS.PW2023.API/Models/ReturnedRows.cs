@@ -5,9 +5,9 @@ namespace ITS.PW2023.API.Models
     public class ReturnedRows
     {
         public DateTime Date { get; set; }
-        public double Duration { get; set; }
+        public int Duration { get; set; }
         public Position Position { get; set; }
-        public long Laps { get; set; }
+        public int Laps { get; set; }
 
         public List<HBInstance> HBInstances { get; set; }
 
@@ -36,7 +36,7 @@ namespace ITS.PW2023.API.Models
                 }
                 else if (String.Equals(firstRecord.GetField(), "Laps"))
                 {
-                    rows.Laps = table.Records.Max(x => (long)x.GetValueByKey("_value"));
+                    rows.Laps = (int)table.Records.Max(x => (long)x.GetValueByKey("_value"));
                 }
                 else if (String.Equals(firstRecord.GetField(), "HeartBeat"))
                 {
