@@ -31,6 +31,11 @@ body {
     flex-direction: row;
 }
 
+.reload-section {
+    display: flex;
+    margin: 5vh 0vh -2vh 5vh;
+}
+
 .activities {
     display: flex;
     justify-content: start;
@@ -43,14 +48,13 @@ body {
     min-width: 220px;
     height: 61vh;
     margin: 0vh 5vh 5vh 0vh;
-    background-color: rgba(255, 255, 255, 0.3);
-    /* --color-white */
+    background-color: rgba(255, 255, 255, 0.3); /* --color-white */
     transition: 0.5s;
 }
 
 .card:hover {
     background: var(--color-white);
-    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5); /* --color-black */
 }
 
 .card-title {

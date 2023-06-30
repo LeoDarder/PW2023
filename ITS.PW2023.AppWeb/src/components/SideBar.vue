@@ -1,7 +1,7 @@
 <template>
     <div class="sidebar">
         <div class="device-reload">
-            <select class="form-select selectDevice">
+            <select class="form-select">
                 <option selected disabled>Select a device</option>
                 <option
                     v-for="data in userData"
@@ -10,9 +10,6 @@
                     {{ data.deviceName }}
                 </option>
             </select>
-            <button class="btn reload" type="button" @click="reloadData">
-                <span><i class="bi bi-cloud-download-fill"></i></span>
-            </button>
         </div>
         <div v-if="!loading" class="general-data">
             <div class="general">
@@ -55,10 +52,6 @@ export default {
         this.getAvgs();
     },
     methods: {
-        async reloadData() {
-            this.getAvgs();
-            this.$emit('reloadActivities');
-        },
         async getAvgs() {
             const avgHB = await fetch(`${baseUrl}/getAvgHB?devGUID=${devGuid}`);
             this.avgHeartBeat = await avgHB.json();
@@ -86,23 +79,6 @@ export default {
 .device-reload {
     display: flex;
     margin-bottom: 3vh;
-}
-
-.selectDevice {
-    margin-right: 10px;
-}
-
-.reload {
-    font-family: LemonMilk;
-    height: 45px;
-    border: 2px solid var(--color-darkblue);
-    color: var(--color-darkblue);
-    background-color: transparent;
-}
-
-.reload:hover {
-    color: var(--color-lightblue);
-    background-color: var(--color-darkblue);
 }
 
 .general-data {

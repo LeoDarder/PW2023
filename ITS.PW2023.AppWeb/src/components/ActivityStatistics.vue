@@ -1,22 +1,30 @@
 <template>
     <div class="statistics">
         <side-bar
+            ref="sideBar"
             :userData="userData"
             @reloadActivities="getValues">
         </side-bar>
-        <div v-if="!loading" class="activities">
-            <activity-card
-                v-for="activity in activities"
-                :key="activity.idDevice"
-                :id="activity.idDevice"
-                :date="activity.time"
-                :duration="activity.duration"
-                :avgHB="activity.avgHB"
-                :position="activity.position"
-                :laps="activity.laps"
-                :userData="userData"
-                @openedDetails="openedDetails"
-            ></activity-card>
+        <div v-if="!loading" class="statistics-page">
+            <div class="reload-section">
+                <button class="btn reload" type="button" @click="reloadData">
+                    <span><b><i class="bi bi-arrow-clockwise"></i></b></span>
+                </button>
+            </div>
+            <div class="activities">
+                <activity-card
+                    v-for="activity in activities"
+                    :key="activity.idDevice"
+                    :id="activity.idDevice"
+                    :date="activity.time"
+                    :duration="activity.duration"
+                    :avgHB="activity.avgHB"
+                    :position="activity.position"
+                    :laps="activity.laps"
+                    :userData="userData"
+                    @openedDetails="openedDetails"
+                ></activity-card>
+            </div>
         </div>
         <div v-else class="loading">
             <img :src="loadingImage" />
@@ -56,6 +64,10 @@ export default {
         this.getValues();
     },
     methods: {
+        reloadData() {
+            this.getValues();
+            this.$refs.sideBar.getAvgs();
+        },
         async getValues() {
             const activities = await fetch(`${baseUrl}/getActivities?devGUID=${devGuid}`);
             this.activities = await activities.json();
@@ -85,3 +97,19 @@ export default {
     }
 }
 </script>
+
+<style>
+.reload {
+    font-family: LemonMilk;
+    font-size: large;
+    height: 45px;
+    border: 1px solid var(--color-darkblue);
+    color: var(--color-darkblue);
+    background-color: transparent;
+}
+
+.reload:hover {
+    color: var(--color-lightblue);
+    background-color: var(--color-darkblue);
+}
+</style>
