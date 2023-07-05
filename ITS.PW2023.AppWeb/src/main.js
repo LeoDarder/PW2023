@@ -1,33 +1,21 @@
 import { createApp } from 'vue';
 import App from './App.vue';
 import {createRouter, createWebHistory} from 'vue-router';
-import WorkoutStatistics from './components/WorkoutStatistics.vue';
-import WorkoutDetails from './components/WorkoutDetails.vue';
-import GeneralStatistics from './components/GeneralStatistics.vue';
-import GeneralDetails from './components/GeneralDetails.vue';
+import ActivityStatistics from './components/ActivityStatistics.vue';
+import ActivityDetails from './components/ActivityDetails.vue';
 
 const routes = [
     {
       path: '/',
-      name: 'Workouts',
-      component: WorkoutStatistics
+      name: 'Activities',
+      component: ActivityStatistics
     },
     {
-      path: '/general',
-      name: 'General',
-      component: GeneralStatistics
-    },
-    {
-      path: '/workout/:id',
-      name: 'WorkoutDetails',
-      component: WorkoutDetails,
+      path: '/Activity/:id/Device/:name',
+      name: 'ActivityDetails',
+      component: ActivityDetails,
       params: true
-    },
-    {
-      path: '/general/:title',
-      name: 'GeneralDetails',
-      component: GeneralDetails
-    },
+    }
 ];
 
 const router = createRouter({
