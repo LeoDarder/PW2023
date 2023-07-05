@@ -2,12 +2,6 @@
 
 ## SIMULATOR
 
-//TODO
-
-### START
-
-//TODO
-
 ### OPTIONS OF CONFIG FILE
 The configuration file is in `/Config/configuration.json` and have these value to customise:
 
