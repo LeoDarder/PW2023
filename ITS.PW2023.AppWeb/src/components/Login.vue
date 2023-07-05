@@ -51,7 +51,7 @@ export default {
     methods: {
         async validateCredentials() {
             var criptedPassw = SHA256(this.password).toString();
-            var credentials = await fetch(`${baseUrl}/getUserData?username=${this.username}&password=${criptedPassw}`);
+            var credentials = await fetch(`${baseUrl}/getUser?username=${this.username}&password=${criptedPassw}`);
             var userData = await credentials.json();
             console.log("Request status", credentials.status);
             
