@@ -48,6 +48,11 @@ export default {
             password: ""
         }
     },
+    mounted() {
+        if (window.location.pathname != "/") {
+            window.location.href="/";
+        }
+    },
     methods: {
         async validateCredentials() {
             var criptedPassw = SHA256(this.password).toString();
