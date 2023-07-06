@@ -8,6 +8,7 @@
             <div class="input-group flex-nowrap loginField">
                 <span class="input-group-text icon" id="addon-wrapping"><i class="bi bi-person-fill"></i></span>
                 <input
+                    ref="field"
                     class="form-control font"
                     type="text"
                     v-model="username"
@@ -16,13 +17,14 @@
             <div class="input-group flex-nowrap loginField">
                 <span class="input-group-text icon" id="addon-wrapping"><i class="bi bi-key-fill"></i></span>
                 <input
+                    ref="password"
                     class="form-control font"
                     type="password"
                     v-model="password"
                     placeholder="Password">
             </div>
             <div class="col-12">
-                <button type="submit" class="btn loginButton" @click="validateCredentials" value="">
+                <button ref="login" type="submit" class="btn loginButton" @click="validateCredentials" value="">
                     <span><i class="bi bi-person-fill-check" style="font-size: large;"></i></span>
                 </button>
             </div>
@@ -58,9 +60,14 @@ export default {
             this.validateCredentials();
         }
 
-        if (window.location.pathname != "/") {
-            window.location.href="/";
-        }
+        this.$refs.field.focus();
+        var validateCredentials = this.validateCredentials;
+        this.$refs.password.addEventListener("keyup", function(event) {
+            event.preventDefault();
+            if (event.key === "Enter") {
+                validateCredentials();
+            }
+        })
     },
     methods: {
         async validateCredentials() {

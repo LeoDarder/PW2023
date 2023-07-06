@@ -6,6 +6,8 @@
 
     --color-white: #ffffff;
     --color-black: #000000;
+
+    --width-sidebar: 308px;
 }
 
 body {
