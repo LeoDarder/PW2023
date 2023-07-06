@@ -146,7 +146,7 @@ paths:
     get:
       tags:
         - Users
-      summary: Get known errors
+      summary: Log-in
       description: Check if the user exists and gets his devices' info
       parameters:
         - name: username
