@@ -27,3 +27,10 @@ body {
 .loading.side {
     width: 100%;
 }
+
+.loadingHomepage {
+    top: 50%;
+    position: fixed;
+    width: max-content;
+    margin-left: var(--width-sidebar);
+}

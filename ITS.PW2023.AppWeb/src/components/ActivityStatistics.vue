@@ -28,9 +28,11 @@
                 ></activity-card>
             </div>
         </div>
-        <div v-else class="loading">
-            <img :src="loadingImage" />
-            <h4>LOADING ...</h4>
+        <div v-else class="loadingHomepage">
+            <div class="loading">
+                <img :src="loadingImage" />
+                <h4>LOADING ...</h4>
+            </div>
         </div>
     </div>
 </template>
