@@ -118,7 +118,7 @@ export default {
                 options: {
                     scales: {
                         y: {
-                            min: 50,
+                            min: 30,
                             max: 200,
                         }
                     }
