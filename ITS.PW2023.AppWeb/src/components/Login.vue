@@ -8,6 +8,7 @@
             <div class="input-group flex-nowrap loginField">
                 <span class="input-group-text icon" id="addon-wrapping"><i class="bi bi-person-fill"></i></span>
                 <input
+                    ref="field"
                     class="form-control font"
                     type="text"
                     v-model="username"
@@ -61,6 +62,8 @@ export default {
         if (window.location.pathname != "/") {
             window.location.href="/";
         }
+
+        this.$refs.field.focus();
     },
     methods: {
         async validateCredentials() {
