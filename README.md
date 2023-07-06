@@ -24,3 +24,6 @@ The configuration file is in `/Config/configuration.json` and have these value t
    
 4. **PoolLenghts**
    - `Array` Represents the Lenghts of the swimming pool, default `[25, 50]`
+
+### API DOCUMENTATION
+The documentation of the API endpoints is written in `api_documentation.yaml`. Load it in a reader that supports swagger, like https://editor.swagger.io
