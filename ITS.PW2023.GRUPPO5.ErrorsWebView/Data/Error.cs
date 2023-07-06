@@ -22,7 +22,7 @@ namespace ITS.PW2023.GRUPPO5.ErrorsWebView.Data
             List<Error> errors = new(); 
             using (HttpClient client = new())
             {
-                client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", "c23efd29026645f7bb09b935f440a55d");
+                //add azure subkey line
                 var json = await client.GetStringAsync(_endpoint);
                 errors = JsonSerializer.Deserialize<List<Error>>(json);
             };
