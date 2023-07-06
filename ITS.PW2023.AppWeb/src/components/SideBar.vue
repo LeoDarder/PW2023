@@ -76,7 +76,6 @@ export default {
                     this.getAvgs(this.deviceSelected.guidDevice);
                     this.$emit("deviceSelected", this.deviceSelected);
 
-                    sessionStorage.clear();
                     sessionStorage.setItem("selectedDevice", newVal);
                 }
             });

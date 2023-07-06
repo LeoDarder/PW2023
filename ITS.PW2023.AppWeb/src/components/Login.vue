@@ -45,26 +45,43 @@ export default {
             error: "",
             classError: false,
             username: "",
-            password: ""
+            password: "",
+            criptedPw: null,
+            credentials: {}
         }
     },
     mounted() {
+        this.credentials = JSON.parse(sessionStorage.getItem("credentials"));
+        if (this.credentials) {
+            this.username = this.credentials.username;
+            this.criptedPw = this.credentials.criptedPassword;
+            this.validateCredentials();
+        }
+
         if (window.location.pathname != "/") {
             window.location.href="/";
         }
     },
     methods: {
         async validateCredentials() {
-            var criptedPassw = SHA256(this.password).toString();
-            var credentials = await fetch(`${baseUrl}/getUser?username=${this.username}&password=${criptedPassw}`);
-            var userData = await credentials.json();
-            console.log("Request status", credentials.status);
+            if (!this.credentials) {
+                this.criptedPw = SHA256(this.password).toString();
+            }
+            var user = await fetch(`${baseUrl}/getUser?username=${this.username}&password=${this.criptedPw}`);
+            var userData = await user.json();
+            console.log("Request status", user.status);
             
-            if (credentials.status === 200) {
+            if (user.status === 200) {
                 this.reditectToHomePage();
                 this.$emit("successfulLogin", userData);
+
+                var credentials = {
+                    username: this.username,
+                    criptedPassword: this.criptedPw
+                }
+                sessionStorage.setItem("credentials", JSON.stringify(credentials));
             }
-            else if (credentials.status === 400) {
+            else if (user.status === 400) {
                 this.changeErrorMessage("Incorrect username or password");
             }
             else {
