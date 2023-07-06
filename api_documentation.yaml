@@ -1,0 +1,300 @@
+openapi: 3.0.1
+info:
+  title: Earth4Sport - API Documentation
+  description: |-
+    API Documentation of ITS Alto Adriatico's project work, group 5 of CPER 2022.
+    [Git repo link](https://github.com/LeoDarder/PW2023)
+  version: 1.0.11
+servers:
+  - url: https://petstore3.swagger.io/api/v3
+
+paths:
+  /writeData:
+    post:
+      tags:
+        - Write
+      summary: Add new data from a smartwatch
+      description: Use this API only for uploading data from smartwatches to the databse
+      operationId: writeData
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SmartwatchData'
+          application/xml:
+            schema:
+              $ref: '#/components/schemas/SmartwatchData'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SmartwatchData'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+  /getActivities:
+    get:
+      tags: 
+        - Read
+      summary: Get data of a smartwatch
+      description: Get a list and a summary of the activities from a single smartwatch
+      parameters:
+        - name: devGUID
+          in: query
+          description: GUID of the wanted device
+          required: true
+          schema: 
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/MultipleActivitySummary'
+  /getRows:
+    get:
+      tags:
+        - Read
+      summary: Get data of an activity
+      description: Get a list of data from the selected activity of the selected device
+      parameters:
+        - name: devGUID
+          in: query
+          description: GUID of the wanted device
+          required: true
+          schema: 
+            type: string
+        - name: actGUID
+          in: query
+          description: GUID of the wanted activity
+          required: true
+          schema: 
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ActivityData'
+  /getAvgHB:
+    get:
+      tags:
+        - Read
+      summary: Get avg hb of a device
+      description: Get the average heartbeat from the selected device
+      parameters:
+        - name: devGUID
+          in: query
+          description: GUID of the wanted device
+          required: true
+          schema: 
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: number
+                format: float
+                example: 92.4
+  /getAvgLaps:
+    get:
+      tags:
+        - Read
+      summary: Get avg laps of a device
+      description: Get the average laps from the selected device
+      parameters:
+        - name: devGUID
+          in: query
+          description: GUID of the wanted device
+          required: true
+          schema: 
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: number
+                format: float
+                example: 2.6
+
+                
+  /getErrors:
+    get:
+      tags:
+        - Errors
+      summary: Get known errors
+      description: Get every error known for out of range value
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ActivityError'
+  /getUser:
+    get:
+      tags:
+        - Users
+      summary: Get known errors
+      description: Check if the user exists and gets his devices' info
+      parameters:
+        - name: username
+          in: query
+          required: true
+          schema: 
+            type: string
+        - name: password
+          in: query
+          required: true
+          schema: 
+            type: string
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ActivitySummary'
+
+components:
+  schemas:
+    SmartwatchData:
+      type: object
+      properties:
+        idDevice:
+          $ref: '#/components/schemas/IdDevice'
+        idActivity:
+          $ref: '#/components/schemas/IdActivity'
+        heartbeat:
+          $ref: '#/components/schemas/Heartbeat'
+        position:
+          $ref: '#/components/schemas/Position'
+        laps:
+          $ref: '#/components/schemas/Laps'
+        time:
+          $ref: '#/components/schemas/Time'
+
+    Position:
+      type: object
+      properties: 
+        longitude:
+          type: number
+          format: double
+          example: 90.0
+        latitude:
+          type: number
+          format: double
+          example: 90.0
+    
+    Heartbeat:
+          type: integer
+          format: int32
+          example: 60
+    
+    Time:
+          type: string
+          format: date-time
+          example: "2023-01-01T12:00:00.000Z"
+    
+    Laps:
+      type: integer
+      format: int32
+      example: 5
+
+    IdDevice:
+      type: string
+      format: guid
+      example: "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+
+    IdActivity:
+      type: string
+      format: guid
+      example: "3fa85f64-5717-4562-b3fc-2c963f66afa6"
+
+    MultipleActivitySummary:
+      type: object
+      properties:
+        idActivity:
+          $ref: '#/components/schemas/IdActivity'
+        time:
+          $ref: '#/components/schemas/Time'
+        duration:
+          type: integer
+          format: int32
+          example: 5
+        avgHB:
+          type: integer
+          format: int32
+          example: 60
+        position:
+          $ref: '#/components/schemas/Position'
+        laps:
+          $ref: '#/components/schemas/Laps'
+
+    ActivityData:
+      type: object
+      properties:
+        date:
+          $ref: '#/components/schemas/Time'
+        duration:
+          type: integer
+          format: int32
+          example: 5
+        position:
+          $ref: '#/components/schemas/Position'
+        laps:
+          $ref: '#/components/schemas/Laps'
+        hbInstances:
+          type: array
+          items:
+            $ref: '#/components/schemas/Position'
+            
+    hbInstance:
+      type: object
+      properties:
+        heartbeat:
+              $ref: '#/components/schemas/Heartbeat'
+        time:
+          $ref: '#/components/schemas/Time'
+    
+    ActivityError:
+      type: object
+      properties:
+        devGUID:
+          $ref: '#/components/schemas/IdDevice'
+        actGUID:
+          $ref: '#/components/schemas/IdActivity'
+        field:
+          type: string
+          example: PositionX
+        data:
+          type: string
+          example: -369.085768
+        time:
+          $ref: '#/components/schemas/Time'
+    
+    ActivitySummary:
+      type: object
+      properties:
+        guidDevice:
+          $ref: '#/components/schemas/IdActivity'
+        username:
+          type: string
+        desiredLaps:
+          $ref: '#/components/schemas/Laps'
+        devicename:
+          type: string
+        
