@@ -8,6 +8,7 @@ namespace ITS.PW2023.API.Models
         public string ActGUID { get; set; }
         public string Field { get; set; }
         public string Data { get; set; }
+        public DateTime Time { get; set; }
 
         public static List<ReturnedError> GetReturnedErrors(List<FluxTable> tables)
         {
@@ -22,7 +23,8 @@ namespace ITS.PW2023.API.Models
                         DevGUID = row.GetValueByKey("Device").ToString(),
                         ActGUID = row.GetValueByKey("Activity").ToString(),
                         Field = row.GetField(),
-                        Data = row.GetValue().ToString()
+                        Data = row.GetValue().ToString(),
+                        Time = (DateTime)row.GetTimeInDateTime()
                     }) ;
                 }
             }

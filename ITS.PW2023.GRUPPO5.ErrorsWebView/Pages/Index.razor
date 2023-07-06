@@ -10,15 +10,23 @@
         <RadzenDataGridColumn TItem="Error" Property="field" Title="Field" />
         <RadzenDataGridColumn TItem="Error" Property="data" Title="Data" />
         <RadzenDataGridColumn TItem="Error" Property="batch" Title="Batch" />
+        <RadzenDataGridColumn TItem="Error" Property="time" Title="Time" />
     </Columns>
 </RadzenDataGrid>
 
 @code {
     IEnumerable<Error> errors;
+    private System.Threading.Timer? timer;
 
     protected override async Task OnInitializedAsync()
     {
         await base.OnInitializedAsync();
         errors = await Error.GetErrorsAsync();
+
+        timer = new System.Threading.Timer(async (object? stateInfo) =>
+        {
+            errors = await Error.GetErrorsAsync();
+            StateHasChanged();
+        }, new System.Threading.AutoResetEvent(false), 60000, 60000);
     }
 }

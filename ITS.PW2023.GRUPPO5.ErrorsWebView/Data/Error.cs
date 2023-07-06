@@ -10,6 +10,7 @@ namespace ITS.PW2023.GRUPPO5.ErrorsWebView.Data
         public string actGUID { get; set; }
         public string field { get; set; }
         public string data { get; set; }
+        public DateTime time { get; set; }
 
         public int? batch { get; set; } 
 
@@ -21,7 +22,7 @@ namespace ITS.PW2023.GRUPPO5.ErrorsWebView.Data
             List<Error> errors = new(); 
             using (HttpClient client = new())
             {
-                //insert azure subkey line
+                client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", "c23efd29026645f7bb09b935f440a55d");
                 var json = await client.GetStringAsync(_endpoint);
                 errors = JsonSerializer.Deserialize<List<Error>>(json);
             };
@@ -52,7 +53,7 @@ namespace ITS.PW2023.GRUPPO5.ErrorsWebView.Data
                 }
             }
 
-            return errors;
+            return errors.OrderByDescending(x => x.time).ToList();
         }
     }
 }

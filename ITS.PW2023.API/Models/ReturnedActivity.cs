@@ -5,7 +5,7 @@ namespace ITS.PW2023.API.Models
 {
     public class ReturnedActivity
     {
-        public Guid? IdDevice { get; set; }
+        public Guid? IdActivity { get; set; }
         public DateTime Time { get; set; }
         public int Duration { get; set; }
         public int AvgHB { get; set; }
@@ -29,9 +29,9 @@ namespace ITS.PW2023.API.Models
                 {
                     var firstRecord = table.Records.First();
 
-                    if (act.IdDevice is null)
+                    if (act.IdActivity is null)
                     {
-                        act.IdDevice = new Guid(firstRecord.GetValueByKey("Activity").ToString());
+                        act.IdActivity = new Guid(firstRecord.GetValueByKey("Activity").ToString());
                         act.Time = (DateTime)firstRecord.GetTimeInDateTime();
                         minDate = act.Time;
                         maxDate = act.Time;
