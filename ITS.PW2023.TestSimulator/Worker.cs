@@ -1,6 +1,8 @@
 using ITS.PW2023.Simulator.Models;
 using ITS.PW2023.Simulator.Engine;
 using Microsoft.Data.SqlClient;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace ITS.PW2023.TestSimulator
 {
@@ -16,8 +18,8 @@ namespace ITS.PW2023.TestSimulator
             _logger = logger;
             _httpClient = httpClientFactory.CreateClient();
             _httpClient.Timeout = new TimeSpan(0, 0, 20);
-            _config = new Config();
             _configuration = configuration;
+            _config = new Config();
             configuration.GetSection(Config.ConfigPosition).Bind(_config);
             _httpClient.BaseAddress = new Uri(configuration.GetSection("Api").GetValue<string>("Endpoint"));
         }
