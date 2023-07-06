@@ -60,9 +60,9 @@ export default {
             this.validateCredentials();
         }
 
-        if (window.location.pathname != "/") {
-            window.location.href="/";
-        }
+        // if (window.location.pathname != "/") {
+        //     window.location.href="/";
+        // }
 
         this.$refs.field.focus();
         var validateCredentials = this.validateCredentials;
