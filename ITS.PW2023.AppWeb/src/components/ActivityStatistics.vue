@@ -118,6 +118,10 @@ export default {
     flex-direction: row;
 }
 
+.statistics-page {
+    margin-left: var(--width-sidebar);
+}
+
 .reload-section {
     display: flex;
     margin: 5vh 0vh -2vh 5vh;

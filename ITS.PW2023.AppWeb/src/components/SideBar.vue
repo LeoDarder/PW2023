@@ -86,10 +86,9 @@ export default {
 
 <style>
 .sidebar {
-    /* width: 30%; */
-    width: 308px;
-    min-width: 308px;
-    min-height: 100vh;
+    width: var(--width-sidebar);
+    height: 100%;
+    position: fixed;
     padding: 5vh;
     background-color: rgba(175, 211, 226, 0.3); /* --color-lightblue */
     box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.3);
