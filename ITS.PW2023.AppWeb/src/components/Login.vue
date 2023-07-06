@@ -60,10 +60,6 @@ export default {
             this.validateCredentials();
         }
 
-        // if (window.location.pathname != "/") {
-        //     window.location.href="/";
-        // }
-
         this.$refs.field.focus();
         var validateCredentials = this.validateCredentials;
         this.$refs.password.addEventListener("keyup", function(event) {
