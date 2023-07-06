@@ -2,7 +2,8 @@
 
 @using Data
 
-<RadzenDataGrid Data="@errors" LoadData="@LoadData" TItem="Error" AllowGrouping="true" AllowFiltering="true" AllowColumnResize="true" AllowAlternatingRows="false" AllowSorting="true">
+<RadzenDataGrid Data="@errors" TItem="Error" AllowGrouping="true" AllowFiltering="true" AllowColumnResize="true"
+                AllowAlternatingRows="false" AllowSorting="true" PageSize="20" AllowPaging="true">
     <Columns>
         <RadzenDataGridColumn TItem="Error" Property="devGUID" Title="Device" />
         <RadzenDataGridColumn TItem="Error" Property="actGUID" Title="Activity" />
@@ -15,8 +16,9 @@
 @code {
     IEnumerable<Error> errors;
 
-    async Task LoadData()
+    protected override async Task OnInitializedAsync()
     {
+        await base.OnInitializedAsync();
         errors = await Error.GetErrorsAsync();
     }
 }

@@ -10,6 +10,7 @@ namespace ITS.PW2023.GRUPPO5.ErrorsWebView.Data
         public string actGUID { get; set; }
         public string field { get; set; }
         public string data { get; set; }
+
         public int? batch { get; set; } 
 
         private const string _endpoint = "https://cper-pw2023-gruppo5-api.azure-api.net/getErrors";
@@ -20,7 +21,7 @@ namespace ITS.PW2023.GRUPPO5.ErrorsWebView.Data
             List<Error> errors = new(); 
             using (HttpClient client = new())
             {
-                client.DefaultRequestHeaders.Add("Ocp-Apim-Subscription-Key", "c23efd29026645f7bb09b935f440a55d");
+                //insert azure subkey line
                 var json = await client.GetStringAsync(_endpoint);
                 errors = JsonSerializer.Deserialize<List<Error>>(json);
             };

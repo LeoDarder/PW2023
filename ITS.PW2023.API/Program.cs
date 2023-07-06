@@ -63,7 +63,7 @@ app.MapGet("/getErrors", (InfluxClient influx) =>
     return influx.GetErrors();
 });
 
-app.MapGet("/getUserData", (string username, string password, UserServices userServices) =>
+app.MapGet("/getUser", (string username, string password, UserServices userServices) =>
 {
     var urs = userServices.GetUserData(username, password);
 
