@@ -29,20 +29,31 @@ namespace ITS.PW2023.Simulator.Models
         {
             guid = deviceGuid;
 
-            MaxHeartbeat = config.Heartbeat.Max;
-            MinHeartbeat = config.Heartbeat.Min;
-            LowHeartbeatLimit = config.Heartbeat.LowLimit;
-            HighHeartbeatLimit = config.Heartbeat.HighLimit;
-            HeartbeatErrorRate = config.Heartbeat.ErrorRate;
-            HeartbeatMaxIncrease = config.Heartbeat.MaxIncrease;
-            HeartbeatMaxDecrease = config.Heartbeat.MaxDecrease;
+            //MaxHeartbeat = config.Heartbeat.Max;
+            //MinHeartbeat = config.Heartbeat.Min;
+            //LowHeartbeatLimit = config.Heartbeat.LowLimit;
+            //HighHeartbeatLimit = config.Heartbeat.HighLimit;
+            //HeartbeatErrorRate = config.Heartbeat.ErrorRate;
+            //HeartbeatMaxIncrease = config.Heartbeat.MaxIncrease;
+            //HeartbeatMaxDecrease = config.Heartbeat.MaxDecrease;
+            MaxHeartbeat = 300;
+            MinHeartbeat = 0;
+            LowHeartbeatLimit = 30;
+            HighHeartbeatLimit = 200;
+            HeartbeatErrorRate = 5;
+            HeartbeatMaxIncrease = 5;
+            HeartbeatMaxDecrease = -5;
 
-            LapsTotal = Random.Shared.Next(config.Lap.Min, config.Lap.Max + 1);
-            LapsCount = config.Lap.LapsCount;
+            //LapsTotal = Random.Shared.Next(config.Lap.Min, config.Lap.Max + 1);
+            //LapsCount = config.Lap.LapsCount;
+            LapsTotal = Random.Shared.Next(2, 6 + 1);
+            LapsCount = 3;
 
-            PoolLenghts = config.PoolLenghts.ToArray();
+            //PoolLenghts = config.PoolLenghts.ToArray();
+            PoolLenghts = new int[] { 25, 50 };
 
-            PositionErrorRate = config.Position.ErrorRate;
+            //PositionErrorRate = config.Position.ErrorRate;
+            PositionErrorRate = 20;
 
             CurrentActivity = null;
         }
