@@ -15,8 +15,8 @@
             <div class="activities">
                 <activity-card
                     v-for="activity in activities"
-                    :key="activity.idDevice"
-                    :id="activity.idDevice"
+                    :key="activity.idActivity"
+                    :id="activity.idActivity"
                     :date="activity.time"
                     :duration="activity.duration"
                     :avgHB="activity.avgHB"
@@ -86,7 +86,7 @@ export default {
                 avgHB: 136.5
                 time: "2023-05-04T10:00:04.066517Z"
                 duration: 0
-                idDevice: "bc3da806-f738-49a6-912b-83a9e29fb70d"
+                idActivity: "bc3da806-f738-49a6-912b-83a9e29fb70d"
                 laps: 0
                 position: {
                     latitude: 10.289943348874695
